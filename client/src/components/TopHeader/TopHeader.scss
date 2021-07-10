@@ -1,0 +1,25 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.TopHeader{
+    @include flex-row{
+        justify-content: center;
+    }
+    position: sticky;
+    top:0;
+    z-index: 1;
+    padding:1rem 0;
+    background:$background-color-orangeflower;
+
+    &__text{
+        color: $white;
+    }
+    
+    &__icon{
+        width: 1.2rem;
+    }
+}
+

@@ -7,22 +7,4 @@
 .RestaurantPage{
     position: relative;
 
-    &__header{
-        @include flex-row{
-            justify-content: center;
-        }
-        position: sticky;
-        top:0;
-        z-index: 1;
-        padding:1rem 0;
-        background:$background-color-orangeflower;
-    }
-
-    &__header-text{
-        color: $white;
-    }
-
-    &__header-icon{
-        width: 1.2rem;
-    }
 }

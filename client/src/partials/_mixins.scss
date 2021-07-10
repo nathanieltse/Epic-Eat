@@ -127,18 +127,6 @@
 }
 
 
-@mixin text-link{
-    color:$primary-color-indigo;
-    text-decoration: none;
-
-    @include tablet {
-        
-        &:hover{
-            text-decoration: underline;
-        }
-    }
-}
-
 @mixin formfield {
     border-radius: 1.25rem;
     border: 1px solid $secondary-color-cloud;

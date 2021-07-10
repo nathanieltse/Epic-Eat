@@ -1,5 +1,6 @@
 import NavBar from './components/NavBar/NavBar'
 import RestaurantPage from './pages/RestaurantPage/RestaurantPage'
+import RecommendationPage from './pages/RecommendationPage/RecommendationPage'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import axios from 'axios'
 import './App.scss'
@@ -14,13 +15,6 @@ class App extends Component {
   }
 
   componentDidMount(){
-
-    // async function getLocation() {
-    //   let position = await navigator.geolocation.getCurrentPosition((position) => position)
-    //   console.log(position)
-    //   
-    // }
-    // getLocation()
 
     const getPosition = async() => {
       return new Promise((res,rej) =>{
@@ -53,12 +47,24 @@ class App extends Component {
   }
 
   render(){
-
+    const {onPage, longitude, latitude, location} = this.state
     return (
       <BrowserRouter>
         <div className="App">
-          <RestaurantPage location={this.state.location}/>
-          <NavBar onPage={this.state.onPage} handlePageChange={this.handlePageChange}/>
+          
+            {onPage === "restaurants" && longitude && latitude && location && <RestaurantPage 
+            location={location} 
+            latitude={latitude} 
+            longitude={longitude}/>}
+            
+            {onPage === "recommends" && longitude && latitude && location && <RecommendationPage
+              latitude={latitude} 
+              longitude={longitude}/>}
+            
+            <p>loading</p>
+          
+          
+          <NavBar onPage={onPage} handlePageChange={this.handlePageChange}/>
         </div>
       </BrowserRouter>
     )

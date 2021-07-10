@@ -7,14 +7,22 @@
 .RestaurantCard{
     max-width: 95%;
     margin:2.5% auto;
-    
+    border-bottom: $divider;
     
 
     &__image-container{
-        max-height: 10rem;
+        height: 10rem;
         overflow: hidden;
         border-radius: 0.25rem;
         box-shadow: 0px 0px 10px rgba(19, 24, 44, 0.201);
+        cursor: pointer;
+
+        &--loading{
+            background-color: $secondary-color-cloud;
+            border-radius: 0.25rem;
+            height: 10rem;
+            box-shadow: none;
+        }
     }
 
     &__image{

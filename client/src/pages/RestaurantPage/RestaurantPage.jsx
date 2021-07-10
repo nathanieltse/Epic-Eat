@@ -1,23 +1,64 @@
 import RestaurantCard from "../../components/RestaurantCard/RestaurantCard"
-import arrow from '../../assets/icons/arrow-down.svg'
+
+import axios from 'axios'
+import TopHeader from "../../components/TopHeader/TopHeader"
 import './RestaurantPage.scss'
 import { Component } from "react"
 
 class RestaurantPage extends Component {
+    state={
+        restaurants:null
+    }
+
+    componentDidMount(){
+        if(this.props.latitude){
+            axios
+                .get('/api/restaurants',{
+                    params:{
+                        latitude:this.props.latitude,
+                        longitude:this.props.longitude
+                    }
+                })
+                .then(res => {
+                    this.setState({restaurants:res.data.businesses})
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
+    selectHandler = (id) => {
+        return 
+    }
 
     render(){
+        let nearby =[]
+        if(this.state.restaurants){ 
+            nearby = this.state.restaurants.sort((a, b) => {
+            return (a.distance - b.distance)
+        })}
+
         return (
             <section className="RestaurantPage">
-                <div className="RestaurantPage__header">
-                    <p className="RestaurantPage__header-text">{this.props.location ? this.props.location : "location private"}</p>
-                    <img className="RestaurantPage__header-icon" src={arrow} alt="arrow icon"/>
-                </div>
-                <RestaurantCard/>
-                <RestaurantCard/>
-                <RestaurantCard/>
-                <RestaurantCard/>
-                <RestaurantCard/>
-                <RestaurantCard/>
+                <TopHeader location={this.props.location}/>
+
+                {this.state.restaurants ? 
+                    nearby.map(restaurant => {
+                        return <RestaurantCard key={restaurant.id} id={restaurant.id} image={restaurant.image_url} name={restaurant.name} distance={restaurant.distance}/>
+                    })
+                    
+                    :
+                    <>
+                    <RestaurantCard/>
+                    <RestaurantCard/>
+                    <RestaurantCard/>
+                    <RestaurantCard/>
+                    <RestaurantCard/>
+                    <RestaurantCard/>
+                    <RestaurantCard/>
+                    <RestaurantCard/>
+                    </>
+                }
+                
             </section>
         )
     }
