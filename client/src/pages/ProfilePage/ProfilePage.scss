@@ -1,0 +1,129 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.ProfilePage{
+    width: 95%;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+
+    &__booking{
+        position: relative;
+        border-radius: $card-radius;
+        background-color: $white;
+        overflow: hidden;
+        height: 10rem;
+        box-shadow: $card-shadow;
+
+        &::before{
+            position: absolute;
+            content: "";
+            background-color: $support-color-background-black;
+            z-index: 1;
+            height:100%;
+            width: 100%;
+        }
+        
+
+        &-title{
+            position: absolute;
+            top:0;
+            margin: 0.25rem 1rem;
+            z-index: 1;
+            color: $white;
+
+        }
+
+        &-subtitle{
+            @include medium-body-text;
+            position: absolute;
+            margin: 0.25rem 1rem;
+            bottom:1rem;
+            z-index: 1;
+            color: $white;
+        }
+
+        &-text{
+            @include medium-body-text;
+            position: absolute;
+            bottom:0;
+            margin: 0.25rem 1rem;
+            z-index: 1;
+            color: $white;
+        }
+        
+        &-image{
+            width: 100%;
+            transform: translateY(-25%);
+        }
+    }
+
+    &__contact{
+        @include flex-column{
+            justify-content: space-between;
+        }
+        border-radius: $card-radius;
+        background-color: $white;
+        margin-top: 1rem;
+        padding:1rem;
+        box-shadow: $card-shadow;
+
+        &-name-container, &-phone-container{
+            @include flex-row{
+                justify-content: space-between;
+                align-items:baseline;
+            }
+            margin:0.25rem 0;
+        }
+
+    }
+
+    &__preference{
+        @include flex-row{
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        border-radius: $card-radius;
+        background-color: $white;
+        margin-top: 1rem;
+        padding:1rem;
+        box-shadow: $card-shadow;
+
+        &-add{
+            margin-left: auto;
+        }
+
+        &-btn-container{
+            @include flex-row{
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap:0.5rem;
+            }
+            width:100%;
+            margin-top: 1rem;
+        }
+
+        &-add{
+            border:none;
+            background: none;
+        }
+
+        &-btn{
+            @include tag;
+
+        }
+    }
+
+    &__logout{
+        @include button;
+        @include button-cta;
+        margin-top:1rem;
+        margin-bottom: 5rem;
+    }
+
+    
+    
+}

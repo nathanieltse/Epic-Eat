@@ -1,6 +1,6 @@
 import './RestaurantCard.scss'
 
-const RestaurantCard = ({image, name, distance, id}) => {
+const RestaurantCard = ({image, name, distance, id, details}) => {
     
     return (
         image || name || distance || id ? 

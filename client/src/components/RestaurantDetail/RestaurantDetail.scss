@@ -1,0 +1,88 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.RestaurantDetail{
+    position: absolute;
+    background-color: $support-color-background-black;
+    height: 100vh;
+    width: 100vw;
+    z-index: 2;
+    
+
+    &__container{
+        background-color: $white;
+        height: 100vh;
+        width: 100%;
+        margin: 2rem auto 0 ;
+        border-radius: $card-radius;
+        overflow: hidden;
+    }
+
+    &__image-container{
+        width: 100%;
+        height:25%;
+        overflow: hidden;
+    }
+
+    &__image{
+        width: 100%;
+        transform: translateY(-25%);
+    }
+
+    &__text-container{
+        @include flex-column;
+        transform: translateY(-10px);
+        border-radius: $card-radius;
+        height:70%;
+        background-color: white;
+        padding:0.5rem 1rem;
+    }
+
+    &__category-container{
+        @include flex-row{
+            gap:0.5rem;
+            flex-wrap: wrap;
+        }
+    }
+
+    &__category{
+        @include medium-body-text;
+        color:$primary-color-sunflower;
+    }
+
+    &__phone-btn{
+        position: absolute;
+        right:1rem;
+        border:2px solid $secondary-color-cloud;
+        background:none;
+        width: 2.5rem;
+        height:2.5rem;
+        border-radius: 5rem;
+    }
+
+    &__name{
+        margin:0;
+    }
+
+    &__address{
+        @include medium-body-text;
+        font-weight: $weight-semi;
+        color:$secondary-color-slate;
+    }
+
+    &__distance{
+        @include medium-body-text;
+        color:$secondary-color-slate;
+        margin-left: 1rem;
+    }
+
+    &__book-btn{
+        @include button;
+        @include button-cta;
+        margin-top: auto;
+    }
+    
+}

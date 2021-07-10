@@ -11,6 +11,7 @@
     
 
     &__image-container{
+        position: relative;
         height: 10rem;
         overflow: hidden;
         border-radius: 0.25rem;
@@ -18,10 +19,13 @@
         cursor: pointer;
 
         &--loading{
+            @include loading;
+            position: relative;
             background-color: $secondary-color-cloud;
             border-radius: 0.25rem;
             height: 10rem;
             box-shadow: none;
+            
         }
     }
 

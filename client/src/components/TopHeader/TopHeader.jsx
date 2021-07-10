@@ -1,12 +1,12 @@
-import arrow from '../../assets/icons/arrow-down.svg'
+import locationIcon from '../../assets/icons/location.svg'
 import './TopHeader.scss'
 
 
 const TopHeader = ({location}) => {
     return(
         <div className="TopHeader">
-                <p className="TopHeader__text">{location}</p>
-                <img className="TopHeader__icon" src={arrow} alt="arrow icon"/>
+                <h1 className="TopHeader__text">{location}</h1>
+                <img className="TopHeader__icon" src={locationIcon} alt="location icon"/>
         </div>
     )
 }

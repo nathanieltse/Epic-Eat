@@ -1,5 +1,4 @@
 import RestaurantCard from "../../components/RestaurantCard/RestaurantCard"
-
 import axios from 'axios'
 import TopHeader from "../../components/TopHeader/TopHeader"
 import './RestaurantPage.scss'
@@ -7,7 +6,7 @@ import { Component } from "react"
 
 class RestaurantPage extends Component {
     state={
-        restaurants:null
+        restaurants:null,
     }
 
     componentDidMount(){
@@ -26,6 +25,24 @@ class RestaurantPage extends Component {
         }
     }
 
+    componentDidUpdate(prevProps){{
+        if(prevProps !== this.props){
+            axios
+                .get('/api/restaurants',{
+                    params:{
+                        latitude:this.props.latitude,
+                        longitude:this.props.longitude
+                    }
+                })
+                .then(res => {
+                    setTimeout(()=>{
+                        this.setState({restaurants:res.data.businesses})
+                    }, 3000)
+                })
+                .catch(err => console.log(err))
+        }
+    }}
+
     selectHandler = (id) => {
         return 
     }
@@ -43,9 +60,8 @@ class RestaurantPage extends Component {
 
                 {this.state.restaurants ? 
                     nearby.map(restaurant => {
-                        return <RestaurantCard key={restaurant.id} id={restaurant.id} image={restaurant.image_url} name={restaurant.name} distance={restaurant.distance}/>
+                        return <RestaurantCard key={restaurant.id} id={restaurant.id} image={restaurant.image_url} name={restaurant.name} distance={restaurant.distance} detail={restaurant}/>
                     })
-                    
                     :
                     <>
                     <RestaurantCard/>

@@ -1,6 +1,8 @@
 import NavBar from './components/NavBar/NavBar'
 import RestaurantPage from './pages/RestaurantPage/RestaurantPage'
 import RecommendationPage from './pages/RecommendationPage/RecommendationPage'
+import ProfilePage from './pages/ProfilePage/ProfilePage'
+import RestaurantDetail from './components/RestaurantDetail/RestaurantDetail'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import axios from 'axios'
 import './App.scss'
@@ -8,10 +10,11 @@ import { Component } from 'react'
 
 class App extends Component {
   state={
-    onPage:"recommends",
+    onPage:"restaurants",
     latitude:null,
     longitude:null,
-    location:null
+    location:null,
+    selected:true,
   }
 
   componentDidMount(){
@@ -46,22 +49,34 @@ class App extends Component {
     this.setState({onPage:page})
   }
 
+  
+
   render(){
-    const {onPage, longitude, latitude, location} = this.state
+    const {onPage, longitude, latitude, location,selected} = this.state
     return (
       <BrowserRouter>
         <div className="App">
-          
-            {onPage === "restaurants" && longitude && latitude && location && <RestaurantPage 
+            {selected && <RestaurantDetail/>}
+
+            {onPage === "restaurants" && longitude && latitude && location ? 
+            <RestaurantPage 
             location={location} 
             latitude={latitude} 
-            longitude={longitude}/>}
+            longitude={longitude}/>
+            :
+            onPage === "restaurants" && <RestaurantPage
+              location={location} 
+              latitude={latitude} 
+              longitude={longitude}/>
+            }
             
             {onPage === "recommends" && longitude && latitude && location && <RecommendationPage
               latitude={latitude} 
               longitude={longitude}/>}
+
+            {onPage === "profile" && <ProfilePage/>}
             
-            <p>loading</p>
+            
           
           
           <NavBar onPage={onPage} handlePageChange={this.handlePageChange}/>

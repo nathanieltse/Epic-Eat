@@ -18,7 +18,7 @@ h1{
 
   @include tablet{
     font-size: $normal-header-font;
-  line-height: $normal-header-line-height;
+    line-height: $normal-header-line-height;
   }
 
 }
@@ -51,12 +51,12 @@ h3{
 
 h4{
   font-weight: $weight-regular;
-  font-size: $mobile-table-font;
-  line-height: $mobile-table-line-height;
+  font-size: $mobile-sublabel-font;
+  line-height: $mobile-sublabel-line-height;
 
   @include tablet{
-  font-size: $normal-table-font;
-  line-height: $normal-table-line-height;
+  font-size: $normal-sublabel-font;
+  line-height: $normal-sublabel-line-height;
   }
   
 }
