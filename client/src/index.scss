@@ -1,0 +1,74 @@
+@use './partials/colors' as *;
+@use './partials/variables' as *;
+@use './partials/typographys' as *;
+@use './partials/spacings' as *;
+@use './partials/mixins' as *;
+
+*{
+  margin:0;
+  box-sizing: border-box;
+  color:$primary-color-black;
+  font-family: $primary-font;
+}
+
+h1{
+  font-weight: $weight-semi;
+  font-size: $mobile-header-font;
+  line-height: $mobile-header-line-height;
+
+  @include tablet{
+    font-size: $normal-header-font;
+  line-height: $normal-header-line-height;
+  }
+
+}
+
+
+h2{
+  font-weight: $weight-semi;
+  font-size: $mobile-subheader-font;
+  line-height: $mobile-subheader-line-height;
+
+  @include tablet{
+    font-size: $normal-subheader-font;
+  line-height: $normal-subheader-line-height;
+  }
+  
+}
+
+h3{
+  font-weight: $weight-semi;
+  font-size: $mobile-label-btn-link-font;
+  line-height: $mobile-label-btn-link-line-height;
+
+  @include tablet{
+    font-size: $normal-label-btn-link-font;
+  line-height: $normal-label-btn-link-line-height;
+  }
+  
+}
+
+
+h4{
+  font-weight: $weight-semi;
+  font-size: $mobile-table-font;
+  line-height: $mobile-table-line-height;
+
+  @include tablet{
+  font-size: $normal-table-font;
+  line-height: $normal-table-line-height;
+  }
+  
+}
+
+p{
+  font-weight: $weight-regular;
+  font-size: $mobile-l-body-font;
+  line-height: $mobile-l-body-line-height;
+
+  @include tablet{
+  font-size: $normal-l-body-font;
+  line-height: $normal-l-body-line-height;
+  }
+  
+}

@@ -19,7 +19,7 @@ mongoose
   })
   .then(() => console.log("DB connection successful!"));
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 
 
 app.use(cors())

@@ -1,0 +1,11 @@
+@use './partials/colors' as *;
+@use './partials/variables' as *;
+@use './partials/typographys' as *;
+@use './partials/spacings' as *;
+@use './partials/mixins' as *;
+
+.App {
+  display: relative;
+  background-color: $background-color-grey;
+  min-height: 100vh;
+}

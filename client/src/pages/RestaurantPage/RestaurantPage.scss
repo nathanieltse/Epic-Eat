@@ -1,0 +1,28 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.RestaurantPage{
+    position: relative;
+
+    &__header{
+        @include flex-row{
+            justify-content: center;
+        }
+        position: sticky;
+        top:0;
+        z-index: 1;
+        padding:0.75rem 0;
+        background:$background-color-orangeflower;
+    }
+
+    &__header-text{
+        color: $white;
+    }
+
+    &__header-icon{
+        width: 1rem;
+    }
+}

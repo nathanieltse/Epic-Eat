@@ -1,0 +1,51 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.NavBar{
+    @include flex-row{
+        justify-content: space-around;
+    }
+    position: fixed;
+    width: 95%;
+    left: 2.5%;
+    bottom: 2.5%;
+    background-color: $white; 
+    box-shadow: 0px 0px 30px rgba(19, 24, 44, 0.502);
+    border-radius: 0.5rem;
+    padding:0.5rem;
+    
+
+    &__item{
+        @include flex-column{
+            align-items: center;
+        }
+        width: 6rem;
+        border-radius: 5rem;
+        padding:0.5rem 1.2rem;
+
+        &--selected{
+            background-color: $primary-color-sunflower;
+            fill: $white;
+        }
+    }
+
+    &__icon{
+        width: 1.2rem;
+
+        &--selected{
+            fill: $white;
+        }
+    }
+
+    &__text{
+        @include small-body-text;
+
+        &--selected{
+            color: $white;
+        }
+    }
+
+}

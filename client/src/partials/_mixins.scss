@@ -1,0 +1,171 @@
+@use './colors' as *;
+@use './variables' as *;
+@use './typographys' as *;
+@use './spacings' as *;
+
+//spacing mixins
+
+@mixin tablet {
+    @media (min-width:$tablet-size) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width:$desktop-size) {
+        @content;
+    }
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+    @content;
+}
+
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+    @content;
+}
+
+@mixin wrapper-sidespace {
+    margin:$mobile-block-sidespace;
+
+    @include tablet {
+        margin:$tablet-block-sidespace;
+    }
+
+    @include desktop {
+        margin: $normal-block-sidespace;
+    }
+}
+
+//typography mixins
+@mixin medium-body-text{
+    font-weight: $weight-regular;
+    font-size: $mobile-m-body-font;
+    line-height: $mobile-m-body-line-height;
+
+    @include tablet{
+    font-size: $normal-m-body-font;
+    line-height: $normal-m-body-line-height;
+    }
+}
+
+@mixin small-body-text{
+    font-weight: $weight-regular;
+    font-size: $mobile-s-body-font;
+    line-height: $mobile-s-body-line-height;
+
+    @include tablet{
+    font-size: $normal-s-body-font;
+    line-height: $normal-s-body-line-height;
+    }
+}
+
+//elements mixins
+
+@mixin element-body {
+    position: relative;
+    top:-4rem;
+    background-color: $white;
+    box-shadow: 0px 2px 5px rgba(19, 24, 44, 0.1);
+    border-radius: 0.1875rem;
+
+    @include tablet{
+        top:-5.5rem;
+    }
+}
+
+@mixin element-block{
+    padding:$normal-space;
+
+    @include tablet{
+        padding: $normal-space $medium-space;
+
+    }
+}
+
+@mixin button {
+    font-size: $mobile-label-btn-link-font;
+    font-weight: $weight-semi;
+    line-height: $mobile-label-btn-link-line-height;
+    text-align: center;
+    height: 2.25rem;
+    width: 100%;
+    padding: 0 1rem;
+    border-radius: 1.25rem;
+    border-style: none;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    @include tablet {
+        font-size: $normal-label-btn-link-font;
+        line-height: $normal-label-btn-link-line-height;
+        height: 2.375rem;
+        width: auto;
+    }
+} 
+@mixin button-cancel{
+    background-color: $white;
+    border:1px solid $secondary-color-cloud;
+    color: $secondary-color-slate;
+}
+
+@mixin button-cta{
+    background-color: $primary-color-indigo;
+    color:$white
+
+}
+
+@mixin button-warning {
+    background-color: $support-color-red;
+    color:$white
+}
+
+
+@mixin text-link{
+    color:$primary-color-indigo;
+    text-decoration: none;
+
+    @include tablet {
+        
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+}
+
+@mixin formfield {
+    border-radius: 1.25rem;
+    border: 1px solid $secondary-color-cloud;
+    padding: 0.5rem 1rem;
+    background-color: $white;
+    font-size: $mobile-m-body-font;
+    line-height: $mobile-m-body-line-height;
+    color: $primary-color-black;
+
+    &::placeholder {
+        color:$secondary-color-slate
+    }
+
+    &:focus{
+        outline:none;
+        border:1px solid $primary-color-indigo;
+    }
+
+    
+    @include tablet {
+        font-size: $normal-m-body-font;
+        line-height: $normal-m-body-line-height;
+    }
+}
+
+@mixin formfield-error {
+    border:1px solid $support-color-red;
+}
+
+

@@ -1,0 +1,10 @@
+@use './colors' as *;
+
+//screen size
+$desktop-size:1280px;
+$tablet-size:767px;
+$mobile-size:320px;
+
+
+//divider
+$divider: 1px solid $secondary-color-cloud;

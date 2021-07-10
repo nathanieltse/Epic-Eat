@@ -10,15 +10,22 @@ router.get('/user/:username', (_req,res)=>{
 
 router.post('/user', (req, res) => {
     const {userName, password, firstName, lastName} = req.body
+    if (!userName || !password || !firstName || !lastName ) return res.status(400).json("empty field")
+
     User
-        .create({
-            userName : userName,
-            password:  password,
-            fistName:  firstName,
-            lastName:  lastName
+        .find({userName: userName}, (err, found) => {
+            if(found.length) return res.status(400).json("username already exsist")
+            
+            User
+                .create({
+                    userName : userName,
+                    password:  password,
+                    fistName:  firstName,
+                    lastName:  lastName
+                })
+                .then(user => res.status(200).json(user))
+                .catch(err => res.status(500).json(err))
         })
-        .then(user => res.status(200).json(user))
-        .catch(err => res.status(400).json(err))
 })
 
 

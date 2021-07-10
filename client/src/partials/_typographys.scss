@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format('woff2');
+}
+
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    src: url(https://fonts.gstatic.com/s/roboto/v27/KFOlCnqEu92Fr1MmWUlfBBc4AMP6lQ.woff2) format('woff2');
+}
+
+//font family
+
+$primary-font:'Roboto';
+
+//font weight
+
+$weight-regular:400;
+$weight-semi:700;
+
+
+// normal font size
+$normal-header-font:2rem;
+$normal-subheader-font:1.5rem;
+$normal-l-body-font:1rem;
+$normal-m-body-font:0.875rem;
+$normal-s-body-font:0.75rem;
+$normal-label-btn-link-font:0.875rem;
+$normal-table-font:0.75rem;
+
+// mobile font size
+
+$mobile-header-font:1.75rem;
+$mobile-subheader-font:1.5rem;
+$mobile-l-body-font:0.9375rem;
+$mobile-m-body-font:0.8125rem;
+$mobile-s-body-font:0.6875rem;
+$mobile-label-btn-link-font:0.8125rem;
+$mobile-table-font:0.6875rem;
+
+//normal line height
+
+$normal-header-line-height:2.5rem;
+$normal-subheader-line-height:2rem;
+$normal-l-body-line-height:1.75rem;
+$normal-m-body-line-height:1.375rem;
+$normal-s-body-line-height:1.125rem;
+$normal-label-btn-link-line-height:1.375rem;
+$normal-table-line-height:1.125rem;
+
+// mobile line height
+
+$mobile-header-line-height:2.25rem;
+$mobile-subheader-line-height:1.75rem;
+$mobile-l-body-line-height:1.625rem;
+$mobile-m-body-line-height:1.25rem;
+$mobile-s-body-line-height:1rem;
+$mobile-label-btn-link-line-height:1.25rem;
+$mobile-table-line-height:1rem;
+

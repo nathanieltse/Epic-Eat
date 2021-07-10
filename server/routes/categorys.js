@@ -1,12 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const categorys = require('../data/categoryData.json')
 const Categories = require('../models/categoryModel')
 
 require('dotenv').config()
 
 router.get('/categorys', (_req,res)=>{
-    res.status(200).json(categorys)
+    Categories
+        .find(category)
+        .then(data => res.status(200).json(data))
+        .catch(err => res.status(500).json("server error"))
+    
 })
 
 //initial data for categorys
