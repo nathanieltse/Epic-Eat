@@ -1,22 +1,26 @@
 import RestaurantCard from "../../components/RestaurantCard/RestaurantCard"
 import arrow from '../../assets/icons/arrow-down.svg'
 import './RestaurantPage.scss'
+import { Component } from "react"
 
-const RestaurantPage = () => {
-    return (
-        <section className="RestaurantPage">
-            <div className="RestaurantPage__header">
-                <p className="RestaurantPage__header-text">88 wellesley street</p>
-                <img className="RestaurantPage__header-icon" src={arrow} alt="arrow icon"/>
-            </div>
-            <RestaurantCard/>
-            <RestaurantCard/>
-            <RestaurantCard/>
-            <RestaurantCard/>
-            <RestaurantCard/>
-            <RestaurantCard/>
-        </section>
-    )
+class RestaurantPage extends Component {
+
+    render(){
+        return (
+            <section className="RestaurantPage">
+                <div className="RestaurantPage__header">
+                    <p className="RestaurantPage__header-text">{this.props.location ? this.props.location : "location private"}</p>
+                    <img className="RestaurantPage__header-icon" src={arrow} alt="arrow icon"/>
+                </div>
+                <RestaurantCard/>
+                <RestaurantCard/>
+                <RestaurantCard/>
+                <RestaurantCard/>
+                <RestaurantCard/>
+                <RestaurantCard/>
+            </section>
+        )
+    }
 }
 
 export default RestaurantPage
