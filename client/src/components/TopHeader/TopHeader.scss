@@ -11,16 +11,16 @@
     position: sticky;
     top:0;
     z-index: 1;
-    padding:1rem 0;
-    background:$background-color-orangeflower;
-
-    &__text{
-        color: $white;
-    }
+    padding:1rem 0 0.5rem;
     
     &__icon{
         margin-left: 0.5rem;
         width: 1.5rem;
+    }
+
+    &__text{
+        color:$secondary-color-gold;
+        font-weight: $weight-regular;
     }
 }
 

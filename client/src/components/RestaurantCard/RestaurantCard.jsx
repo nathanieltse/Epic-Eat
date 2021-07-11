@@ -1,10 +1,10 @@
 import './RestaurantCard.scss'
 
-const RestaurantCard = ({image, name, distance, id, details}) => {
+const RestaurantCard = ({image, name, distance, id, restaurant, handleSelect}) => {
     
     return (
-        image || name || distance || id ? 
-        <article className="RestaurantCard">
+        image && name && distance && id && restaurant? 
+        <article className="RestaurantCard" onClick={()=>handleSelect(restaurant)}>
             <div className="RestaurantCard__image-container">
                 <img 
                     className="RestaurantCard__image" 

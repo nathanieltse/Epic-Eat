@@ -5,12 +5,11 @@
 @use '../../partials/mixins' as *;
 
 .RestaurantDetail{
-    position: absolute;
+    position: fixed;
     background-color: $support-color-background-black;
     height: 100vh;
     width: 100vw;
     z-index: 2;
-    
 
     &__container{
         background-color: $white;
@@ -19,12 +18,57 @@
         margin: 2rem auto 0 ;
         border-radius: $card-radius;
         overflow: hidden;
+        animation: detail-loading 0.5s;
+
+        @keyframes detail-loading {
+            0%{
+                transform:translateY(100%);
+            }
+    
+            100%{
+                transform:translateY(0%);
+            }
+        }
+    }
+
+    &__container--close{
+        animation: detail-closing 0.5s;
+
+        @keyframes detail-closing {
+            0%{
+                transform:translateY(0);
+            }
+    
+            100%{
+                transform:translateY(100%);
+            }
+        }
     }
 
     &__image-container{
+        position: relative;
         width: 100%;
         height:25%;
         overflow: hidden;
+
+        &::before{
+            position: absolute;
+            content: "";
+            background-color: $support-color-background-black;
+            z-index: 1;
+            height:100%;
+            width: 100%;
+        }
+    }
+
+    &__back-btn{
+        position: absolute;
+        right:1rem;
+        top:0.5rem;
+        background: none;
+        border:none;
+        z-index: 1;
+        cursor: pointer;
     }
 
     &__image{
@@ -34,11 +78,13 @@
 
     &__text-container{
         @include flex-column;
+        position: relative;
         transform: translateY(-10px);
         border-radius: $card-radius;
         height:70%;
         background-color: white;
         padding:0.5rem 1rem;
+        z-index: 2;
     }
 
     &__category-container{
@@ -61,6 +107,7 @@
         width: 2.5rem;
         height:2.5rem;
         border-radius: 5rem;
+        
     }
 
     &__name{
@@ -70,12 +117,12 @@
     &__address{
         @include medium-body-text;
         font-weight: $weight-semi;
-        color:$secondary-color-slate;
+        color:$secondary-color-gold;
     }
 
     &__distance{
         @include medium-body-text;
-        color:$secondary-color-slate;
+        color:$secondary-color-gold;
         margin-left: 1rem;
     }
 

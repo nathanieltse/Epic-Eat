@@ -8,4 +8,8 @@
     position: relative;
     max-width: 100vw;
     overflow: hidden;
+
+    &--popup{
+        position: fixed; 
+    }
 }

@@ -3,7 +3,6 @@ import RestaurantPage from './pages/RestaurantPage/RestaurantPage'
 import RecommendationPage from './pages/RecommendationPage/RecommendationPage'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import RestaurantDetail from './components/RestaurantDetail/RestaurantDetail'
-import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import axios from 'axios'
 import './App.scss'
 import { Component } from 'react'
@@ -14,7 +13,7 @@ class App extends Component {
     latitude:null,
     longitude:null,
     location:null,
-    selected:true,
+    selected:null,
   }
 
   componentDidMount(){
@@ -49,20 +48,28 @@ class App extends Component {
     this.setState({onPage:page})
   }
 
+  handleBack = () => {
+      this.setState({selected:null})
+  }
+
+  handleSelect = (restaurant) => {
+    this.setState({selected:restaurant})
+  }
   
 
   render(){
-    const {onPage, longitude, latitude, location,selected} = this.state
+    const {onPage, longitude, latitude, location, selected} = this.state
     return (
-      <BrowserRouter>
         <div className="App">
-            {selected && <RestaurantDetail/>}
+            {selected && <RestaurantDetail handleBack={this.handleBack} selected={selected}/>}
 
             {onPage === "restaurants" && longitude && latitude && location ? 
             <RestaurantPage 
             location={location} 
             latitude={latitude} 
-            longitude={longitude}/>
+            longitude={longitude}
+            selected={selected}
+            handleSelect={this.handleSelect}/>
             :
             onPage === "restaurants" && <RestaurantPage
               location={location} 
@@ -81,7 +88,6 @@ class App extends Component {
           
           <NavBar onPage={onPage} handlePageChange={this.handlePageChange}/>
         </div>
-      </BrowserRouter>
     )
   }
 }
