@@ -4,14 +4,16 @@ import RecommendationPage from './pages/RecommendationPage/RecommendationPage'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import RestaurantDetail from './components/RestaurantDetail/RestaurantDetail'
 import WelcomePage from './pages/WecomePage/WelcomePage'
+import PageFooter from './components/PageFooter/PageFooter'
 import axios from 'axios'
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import './App.scss'
 import { Component } from 'react'
 
 class App extends Component {
   state={
-    onPage:"welcome",
-    loggedIn:false,
+    onPage:"recommends",
+    loggedIn:true,
     latitude:null,
     longitude:null,
     location:null,
@@ -46,11 +48,11 @@ class App extends Component {
   }
 
 
-  handlePageChange = (page) => {
+  handleNavChange = (page) => {
     this.setState({onPage:page})
   }
 
-  handleBack = () => {
+  handleModalBack = () => {
       this.setState({selected:null})
   }
 
@@ -63,34 +65,38 @@ class App extends Component {
     const {onPage, loggedIn,longitude, latitude, location, selected} = this.state
     return (
         <div className="App">
-            {selected && <RestaurantDetail handleBack={this.handleBack} selected={selected}/>}
+          <BrowserRouter>
+            {selected && <RestaurantDetail handleModalBack={this.handleModalBack} selected={selected}/>}
+            <Switch>
 
-            {onPage === "welcome" && <WelcomePage/>}
-            
-            {onPage === "restaurants" && loggedIn && longitude && latitude && location ? 
-            <RestaurantPage 
-            location={location} 
-            latitude={latitude} 
-            longitude={longitude}
-            selected={selected}
-            handleSelect={this.handleSelect}/>
-            :
-            onPage === "restaurants" && loggedIn && <RestaurantPage
-              location={location} 
-              latitude={latitude} 
-              longitude={longitude}/>
-            }
-            
-            {onPage === "recommends" && loggedIn && longitude && latitude && location && <RecommendationPage
-              latitude={latitude} 
-              longitude={longitude}/>}
+              <Route exact path="/" component={WelcomePage}/>
 
-            {onPage === "profile" && loggedIn && <ProfilePage/>}
+              <Route path="/restaurants" render={()=>{
+                return <RestaurantPage
+                  location={location} 
+                  latitude={latitude} 
+                  longitude={longitude}
+                  selected={selected}
+                  handleSelect={this.handleSelect}
+                  />
+                }}/>
+
+              <Route path="/recommends" render={(routeProps) => {
+                return <RecommendationPage
+                latitude={latitude} 
+                longitude={longitude}
+                {...routeProps}/>
+              }}/>
+
+              <Route path="/profile" render={(routeProps) => {
+                return <ProfilePage {...routeProps}/>
+              }}/>
+              
+            </Switch>
             
-            
-          
-          
-          {loggedIn && <NavBar onPage={onPage} handlePageChange={this.handlePageChange}/>}
+            {loggedIn && <NavBar onPage={onPage} handleNavChange={this.handleNavChange}/>}
+            {!selected && <PageFooter/>}
+          </BrowserRouter>
         </div>
     )
   }

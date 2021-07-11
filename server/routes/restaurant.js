@@ -7,7 +7,7 @@ require('dotenv').config();
 router.get('/restaurants',(req,res) => {
     const {latitude, longitude} = req.query
     axios
-        .get(`https://api.yelp.com/v3/businesses/search?term="restaurants"&open_now=true&limit=50&latitude=${latitude}&longitude=${longitude}`,{
+        .get(`https://api.yelp.com/v3/businesses/search?term=restaurants&open_now=true&limit=50&latitude=${latitude}&longitude=${longitude}`,{
             headers: { Authorization: `Bearer ${process.env.API_KEY}` }
         })
         .then(data =>{

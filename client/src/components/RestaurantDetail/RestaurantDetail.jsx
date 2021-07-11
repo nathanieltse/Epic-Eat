@@ -2,12 +2,12 @@ import phone from '../../assets/icons/phone.svg'
 import cross from '../../assets/icons/close-cross.svg'
 import './RestaurantDetail.scss'
 
-const RestaurantDetail = ({handleBack, selected}) => {
+const RestaurantDetail = ({handleModalBack, selected}) => {
     return (
         <section className="RestaurantDetail">
             <div className={selected ? "RestaurantDetail__container" : "RestaurantDetail__container RestaurantDetail__container--close"}>
                 <div className="RestaurantDetail__image-container">
-                    <button className="RestaurantDetail__back-btn" onClick={()=>handleBack()}>
+                    <button className="RestaurantDetail__back-btn" onClick={()=>handleModalBack()}>
                         <img className="RestaurantDetail__back-icon" src={cross} alt="close icon"/>
                     </button>
                     <img className="RestaurantDetail__image" src={selected.image_url} alt="name"/>

@@ -1,0 +1,18 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.PageFooter{
+    @include flex-row{
+        justify-content: center;
+    }
+    height:3rem;
+    margin:1rem 0 5rem;
+
+    &__text{
+        @include small-body-text;
+        color: $secondary-color-cloud;
+    }
+}
