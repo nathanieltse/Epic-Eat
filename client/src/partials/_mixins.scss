@@ -109,10 +109,14 @@
         width: auto;
     }
 } 
-@mixin button-cancel{
+@mixin button-secondary{
     background-color: $white;
-    border:1px solid $secondary-color-cloud;
-    color: $secondary-color-slate;
+    border:2px solid $secondary-color-cloud;
+    color: $secondary-color-gold;
+
+    &:hover{
+        border:2px solid $secondary-color-gold;
+    }
 }
 
 @mixin button-cta{
@@ -128,21 +132,22 @@
 
 
 @mixin formfield {
-    border-radius: 1.25rem;
-    border: 1px solid $secondary-color-cloud;
+    border-radius: 0.5rem;
+    border: 2px solid $secondary-color-cloud;
     padding: 0.5rem 1rem;
+    width: 100%;
     background-color: $white;
     font-size: $mobile-m-body-font;
     line-height: $mobile-m-body-line-height;
     color: $primary-color-black;
 
     &::placeholder {
-        color:$secondary-color-slate
+        color:$secondary-color-gold
     }
 
     &:focus{
         outline:none;
-        border:1px solid $primary-color-indigo;
+        border:2px solid $primary-color-sunflower;
     }
 
     

@@ -1,0 +1,93 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.WelcomePage{
+    @include flex-column{
+        align-items: center;
+        justify-content: center;
+    }
+    height:100vh;
+    width: 100vw;
+
+    &__ani{
+        z-index: 2;
+        animation: welcomeset 2s 2s forwards;
+
+        @keyframes welcomeset {
+            0%{
+                transform: translateY(0);
+            }
+    
+            100%{
+                transform: translateY(-70%);
+            }
+        }
+    }
+
+    &__container{
+        @include flex-row{
+            align-items: center;
+            justify-content: center;
+        }
+        position: absolute;
+        height:100%;
+        width: 100%;
+        opacity: 0;
+        animation: welcome 2s 2s forwards;
+
+        @keyframes welcome {
+            0%{
+                opacity: 0;
+                background:$background-color-orangeflower ;
+            }
+    
+            100%{
+                opacity: 1;
+                background:$background-color-orangeflower ;
+            }
+        }
+    }
+
+    &__form{
+        @include flex-column;
+        background-color: $white;
+        border-radius: $card-radius;
+        box-shadow: $card-shadow;
+        width: 80%;
+        padding:1rem;
+    }
+
+    &__input{
+        @include formfield;
+        margin-bottom: 0.5rem;
+    }
+
+    &__text{
+        text-align: end;
+    }
+
+    &__btn-container{
+        @include flex-row{
+            justify-content: space-between;
+        }
+    }
+
+    &__signup-btn, &__login-btn{
+        @include button;
+        width: 10rem;
+        height:3rem;
+        margin-top: 0.75rem;
+    }
+
+
+    &__signup-btn{
+        @include button-secondary;
+    }
+
+    &__login-btn{
+        @include button-cta;
+    }
+}

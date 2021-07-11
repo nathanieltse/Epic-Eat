@@ -3,13 +3,15 @@ import RestaurantPage from './pages/RestaurantPage/RestaurantPage'
 import RecommendationPage from './pages/RecommendationPage/RecommendationPage'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import RestaurantDetail from './components/RestaurantDetail/RestaurantDetail'
+import WelcomePage from './pages/WecomePage/WelcomePage'
 import axios from 'axios'
 import './App.scss'
 import { Component } from 'react'
 
 class App extends Component {
   state={
-    onPage:"restaurants",
+    onPage:"welcome",
+    loggedIn:false,
     latitude:null,
     longitude:null,
     location:null,
@@ -58,12 +60,14 @@ class App extends Component {
   
 
   render(){
-    const {onPage, longitude, latitude, location, selected} = this.state
+    const {onPage, loggedIn,longitude, latitude, location, selected} = this.state
     return (
         <div className="App">
             {selected && <RestaurantDetail handleBack={this.handleBack} selected={selected}/>}
 
-            {onPage === "restaurants" && longitude && latitude && location ? 
+            {onPage === "welcome" && <WelcomePage/>}
+            
+            {onPage === "restaurants" && loggedIn && longitude && latitude && location ? 
             <RestaurantPage 
             location={location} 
             latitude={latitude} 
@@ -71,22 +75,22 @@ class App extends Component {
             selected={selected}
             handleSelect={this.handleSelect}/>
             :
-            onPage === "restaurants" && <RestaurantPage
+            onPage === "restaurants" && loggedIn && <RestaurantPage
               location={location} 
               latitude={latitude} 
               longitude={longitude}/>
             }
             
-            {onPage === "recommends" && longitude && latitude && location && <RecommendationPage
+            {onPage === "recommends" && loggedIn && longitude && latitude && location && <RecommendationPage
               latitude={latitude} 
               longitude={longitude}/>}
 
-            {onPage === "profile" && <ProfilePage/>}
+            {onPage === "profile" && loggedIn && <ProfilePage/>}
             
             
           
           
-          <NavBar onPage={onPage} handlePageChange={this.handlePageChange}/>
+          {loggedIn && <NavBar onPage={onPage} handlePageChange={this.handlePageChange}/>}
         </div>
     )
   }
