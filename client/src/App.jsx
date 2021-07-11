@@ -4,20 +4,22 @@ import RecommendationPage from './pages/RecommendationPage/RecommendationPage'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import RestaurantDetail from './components/RestaurantDetail/RestaurantDetail'
 import WelcomePage from './pages/WecomePage/WelcomePage'
+import SignupPage from './pages/SignupPage/SignupPage'
 import PageFooter from './components/PageFooter/PageFooter'
 import axios from 'axios'
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import './App.scss'
 import { Component } from 'react'
 
 class App extends Component {
   state={
     onPage:"recommends",
-    loggedIn:true,
+    loggedIn:false,
     latitude:null,
     longitude:null,
     location:null,
     selected:null,
+    userInfo:null
   }
 
   componentDidMount(){
@@ -38,13 +40,20 @@ class App extends Component {
             longitude:longitude
           }
         })
-        .then(res => this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          location: res.data.split(",")[0]
-        }))
+        .then(res => {
+          this.setState({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            location: res.data.split(",")[0],
+          })
+        })
         .catch(err => console.log(err))
     })
+    const userInfo = localStorage.getItem("usertoken")
+    this.setState({            
+      userInfo: userInfo,
+      loggedIn: userInfo ? true : false})
+
   }
 
 
@@ -59,19 +68,33 @@ class App extends Component {
   handleSelect = (restaurant) => {
     this.setState({selected:restaurant})
   }
+
+  handlelogin = () =>{
+    const userInfo = localStorage.getItem("usertoken")
+    this.setState({loggedIn:true, userInfo:userInfo})
+  }
   
 
   render(){
-    const {onPage, loggedIn,longitude, latitude, location, selected} = this.state
+    const {onPage, loggedIn,longitude, latitude, location, selected, userInfo} = this.state
     return (
         <div className="App">
           <BrowserRouter>
             {selected && <RestaurantDetail handleModalBack={this.handleModalBack} selected={selected}/>}
             <Switch>
 
-              <Route exact path="/" component={WelcomePage}/>
+              <Route exact path="/"> 
+                {loggedIn ?
+                <Redirect to="/restaurants"/>
+                :
+                <WelcomePage handlelogin={this.handlelogin}/>}   
+              </Route>
 
-              <Route path="/restaurants" render={()=>{
+              <Route path="/signup" render={() => {
+                return <SignupPage handlelogin={this.handlelogin}/>
+              }}/> 
+              
+              {loggedIn &&  <Route path="/restaurants" render={()=>{
                 return <RestaurantPage
                   location={location} 
                   latitude={latitude} 
@@ -79,23 +102,23 @@ class App extends Component {
                   selected={selected}
                   handleSelect={this.handleSelect}
                   />
-                }}/>
+                }}/>}
 
-              <Route path="/recommends" render={(routeProps) => {
+              {loggedIn && <Route path="/recommends" render={(routeProps) => {
                 return <RecommendationPage
                 latitude={latitude} 
                 longitude={longitude}
                 {...routeProps}/>
-              }}/>
+              }}/>}
 
-              <Route path="/profile" render={(routeProps) => {
-                return <ProfilePage {...routeProps}/>
-              }}/>
+              {loggedIn &&  <Route path="/profile" render={(routeProps) => {
+                return <ProfilePage {...routeProps} userInfo={userInfo}/>
+              }}/>}
               
             </Switch>
             
             {loggedIn && <NavBar onPage={onPage} handleNavChange={this.handleNavChange}/>}
-            {!selected && <PageFooter/>}
+            {!selected && loggedIn && <PageFooter/>}
           </BrowserRouter>
         </div>
     )

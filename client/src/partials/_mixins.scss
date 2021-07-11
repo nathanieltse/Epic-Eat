@@ -115,7 +115,7 @@
     color: $secondary-color-gold;
 
     &:hover{
-        border:2px solid $secondary-color-gold;
+        border:2px solid $primary-color-sunflower;
     }
 }
 
@@ -158,7 +158,7 @@
 }
 
 @mixin formfield-error {
-    border:1px solid $support-color-red;
+    border:2px solid $support-color-red;
 }
 
 @mixin tag{

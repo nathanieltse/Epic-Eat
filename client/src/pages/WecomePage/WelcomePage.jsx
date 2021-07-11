@@ -1,10 +1,19 @@
 import greeting from '../../assets/animation/lf30_editor_q5izwk4x.json'
 import Lottie from 'react-lottie'
+import error from '../../assets/icons/error.svg'
 import {Link} from 'react-router-dom'
 import'./WelcomePage.scss'
+import { Component } from 'react'
+import axios from 'axios'
 
-const WelcomePage = () =>{
-    const greetingAni = {
+class WelcomePage extends Component {
+    state={
+        userName:"",
+        password:"",
+        invalid:false
+    }
+
+    greetingAni = {
         loop: false,
         autoplay: true,
         animationData: greeting,
@@ -13,33 +22,76 @@ const WelcomePage = () =>{
         }
     }
 
-    const signin = (e) =>{
+    signin = (e) =>{
         e.preventDefault()
-        console.log(e.target)
+        axios
+            .get('/api/user',{
+                params:{
+                    userName:this.state.userName,
+                    password:this.state.password
+                }
+            })
+            .then(res=>{
+                localStorage.setItem("usertoken", res)
+                this.props.handlelogin()
+            })
+            .catch(err=> {
+                this.setState({invalid:true})
+            })
     }
 
-    return (
-        <section className="WelcomePage">
-            <div className="WelcomePage__ani">
-                <Lottie  options={greetingAni} height={400} width={400}/>
-            </div>
-            <div className="WelcomePage__container" onSubmit={(e) => signin(e)}>
-                <form className="WelcomePage__form">
-                    <label htmlFor="username">
-                        <input name="username" className="WelcomePage__input" placeholder="Username" value=""></input>
-                    </label>
-                    <label htmlFor="password">
-                        <input name="password" type="password" className="WelcomePage__input" placeholder="password" value=""></input>
-                    </label>
-                    <h4 className="WelcomePage__text">Forget password?</h4>
-                    <div className="WelcomePage__btn-container">
-                        <input className="WelcomePage__signup-btn" value="Sign up"></input>
-                        <button type="submit" className="WelcomePage__login-btn" >Log In</button>
+    handleChange = (e) => {
+        this.setState({[e.target.name]:e.target.value, invalid:false})
+    }
+
+    render(){
+        const {userName, password, invalid} = this.state
+        
+        return (
+                <section className="WelcomePage">
+                    <div className="WelcomePage__ani">
+                        <Lottie  options={this.greetingAni} height={400}/>
                     </div>
-                </form>
-            </div>
-        </section>
-    )
+                    <div className="WelcomePage__container">
+                        <form className="WelcomePage__form" onSubmit={(e) => this.signin(e)}>
+                            <h1 className="WelcomePage__form-title">Sign In</h1>
+                            <label className="WelcomePage__form-label" htmlFor="userName">
+                                <input 
+                                    name="userName" 
+                                    className={invalid ? "WelcomePage__input WelcomePage__input--error" :"WelcomePage__input" }
+                                    placeholder="Username" 
+                                    value={userName}
+                                    onChange={(e) => this.handleChange(e)}/>
+                                {invalid && 
+                                <div className="WelcomePage__form-message">
+                                    <img className="WelcomePage__form-message-icon" src={error} alt="error icon"/>
+                                    <p className="WelcomePage__form-message-text">account info invalid</p>
+                                </div>}
+                            </label>
+                            <label className="WelcomePage__form-label" htmlFor="password">
+                                <input 
+                                    name="password" 
+                                    type="password" 
+                                    className={invalid ? "WelcomePage__input WelcomePage__input--error" :"WelcomePage__input" }
+                                    placeholder="password" 
+                                    value={password}
+                                    onChange={(e) => this.handleChange(e)}/>
+                                {invalid && 
+                                <div className="WelcomePage__form-message">
+                                    <img className="WelcomePage__form-message-icon" src={error} alt="error icon"/>
+                                    <p className="WelcomePage__form-message-text">account info invalid</p>
+                                </div>}
+                            </label>
+                            <h4 className="WelcomePage__text">Forget password?</h4>
+                            <div className="WelcomePage__btn-container">
+                                <Link to="/signup" className="WelcomePage__signup-btn">Sign up</Link>
+                                <button type="submit" className="WelcomePage__login-btn" >Log In</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+        )
+    }
 }
 
 export default WelcomePage

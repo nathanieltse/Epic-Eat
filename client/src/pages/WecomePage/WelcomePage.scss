@@ -22,7 +22,7 @@
             }
     
             100%{
-                transform: translateY(-70%);
+                transform: translateY(-45%);
             }
         }
     }
@@ -36,7 +36,7 @@
         height:100%;
         width: 100%;
         opacity: 0;
-        animation: welcome 2s 2s forwards;
+        animation: welcome 2s 1s forwards;
 
         @keyframes welcome {
             0%{
@@ -53,16 +53,63 @@
 
     &__form{
         @include flex-column;
+        transform: translateY(35%);
         background-color: $white;
         border-radius: $card-radius;
         box-shadow: $card-shadow;
         width: 80%;
         padding:1rem;
+        opacity: 0;
+        animation:loadform 1s 3s forwards;
+
+        @keyframes loadform {
+            0%{
+                opacity: 0;
+                transform: translateY(45%) ;
+            }
+
+            100%{
+                opacity: 1;
+                transform: translateY(35%);
+            }
+        }
+
+    }
+
+    &__form-title{
+        margin-bottom: 2rem;
+    }
+
+    &__form-label{
+        margin-bottom: 0.5rem;
+        height:3.5rem;
+    }
+    
+    &__form-message{
+        @include flex-row{
+            align-items: center;
+        }
+
+        &-icon{
+            width: 0.75rem;
+            height: 0.75rem;
+        }
+
+        &-text{
+            @include small-body-text;
+            margin-left: 0.25rem;
+            color:$support-color-red;
+        }
+
     }
 
     &__input{
         @include formfield;
-        margin-bottom: 0.5rem;
+
+        &--error{
+            @include formfield-error;
+        }
+
     }
 
     &__text{
@@ -72,6 +119,7 @@
     &__btn-container{
         @include flex-row{
             justify-content: space-between;
+            gap:1rem;
         }
     }
 
@@ -79,12 +127,14 @@
         @include button;
         width: 10rem;
         height:3rem;
-        margin-top: 0.75rem;
+        margin-top: 1.5rem;
     }
 
 
     &__signup-btn{
         @include button-secondary;
+        text-decoration: none;
+        padding:0.75rem;
     }
 
     &__login-btn{

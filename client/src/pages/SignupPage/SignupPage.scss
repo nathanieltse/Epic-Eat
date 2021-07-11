@@ -1,0 +1,115 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.SignupPage{
+    @include flex-row{
+        justify-content: center;
+        align-items: center;
+    }
+    height:100vh;
+    width: 100vw;
+    background:$background-color-orangeflower ;
+
+    &__form{
+        @include flex-column;
+        background-color: $white;
+        border-radius: $card-radius;
+        box-shadow: $card-shadow;
+        width: 80%;
+        padding:1rem;
+        max-height: 85vh;
+        overflow-y: scroll;
+    
+    }
+
+    &__form-title{
+        margin-bottom: 2rem;
+    }
+
+    &__form-label{
+        margin-bottom: 1rem;
+    }
+    
+    &__input{
+        @include formfield;
+
+        &--error{
+            @include formfield-error;
+        }
+
+    }
+
+    &__form-message{
+        @include flex-row{
+            align-items: center;
+        }
+
+        &-icon{
+            width: 0.75rem;
+            height: 0.75rem;
+        }
+
+        &-text{
+            @include small-body-text;
+            margin-left: 0.25rem;
+            color:$support-color-red;
+        }
+
+    }
+
+    &__form-validate{
+        @include flex-row{
+            align-items: center;
+        }
+        margin-top: 0.5rem;
+
+        &-icon{
+            width: 0.75rem;
+            height: 0.75rem;
+        }
+
+        &-text{
+            @include small-body-text;
+            margin-left: 0.25rem;
+            color:$secondary-color-cloud;
+            font-weight: $weight-semi;
+
+            &--valid{
+                color:$support-color-green;
+            }
+        }
+    }
+
+    &__btn-container{
+        @include flex-row{
+            justify-content: space-between;
+            gap:1rem;
+        }
+    }
+
+    &__back-btn, &__signup-btn{
+        @include button;
+        width: 10rem;
+        height:3rem;
+        margin-top: 1.5rem;
+    }
+
+
+    &__back-btn{
+        @include button-secondary;
+        text-decoration: none;
+        padding:0.75rem;
+    }
+
+    &__signup-btn{
+        @include button-cta;
+    }
+
+    
+
+
+
+}
