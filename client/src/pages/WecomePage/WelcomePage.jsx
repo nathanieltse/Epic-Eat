@@ -32,7 +32,7 @@ class WelcomePage extends Component {
                 }
             })
             .then(res=>{
-                localStorage.setItem("usertoken", res)
+                localStorage.setItem("usertoken", res.data.authToken)
                 this.props.handlelogin()
             })
             .catch(err=> {

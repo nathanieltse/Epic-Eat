@@ -15,7 +15,7 @@ router.get('/restaurants',(req,res) => {
         })
         .catch(err => {
             console.log(err)
-            res.status(500).json("can't look up restaurant")
+            res.status(500).json({message:"can't look up restaurant"})
         })
 })
 

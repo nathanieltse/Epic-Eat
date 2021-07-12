@@ -8,7 +8,7 @@ router.get('/recommendation/:userId', (_req,res)=>{
 })
 
 router.post('/recommendation/:userId/:category', (_req,res)=>{
-    res.status(200).json("message: category rateing updated!")
+    res.status(200).json({message: "category rateing updated!"})
 })
 
 

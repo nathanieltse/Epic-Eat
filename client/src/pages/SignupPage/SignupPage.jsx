@@ -146,7 +146,7 @@ class SignupPage extends Component {
         if(!phoneValid)return this.setState({phoneInput:false})
 
         axios
-            .post('api/user',{
+            .post('api/register',{
                 userName:userName,
                 password:confirm,
                 firstName:firstName,
@@ -155,7 +155,7 @@ class SignupPage extends Component {
                 email:email
             })
             .then(res => {
-                localStorage.setItem("usertoken", res)
+                localStorage.setItem("usertoken", res.data.authToken)
                 this.props.handlelogin()
                 })
             .catch(err => console.log(err))
