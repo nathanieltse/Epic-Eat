@@ -1,5 +1,6 @@
 import RestaurantCard from "../../components/RestaurantCard/RestaurantCard"
 import axios from 'axios'
+import PageFooter from '../../components/PageFooter/PageFooter'
 import TopHeader from "../../components/TopHeader/TopHeader"
 import './RestaurantPage.scss'
 import { Component } from "react"
@@ -81,7 +82,7 @@ class RestaurantPage extends Component {
                     <RestaurantCard/>
                     </>
                 }
-                
+                <PageFooter/>
             </section>
         )
     }

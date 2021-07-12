@@ -15,9 +15,19 @@
         margin:0 auto;
         border-radius: $card-radius;
         box-shadow: $card-shadow;
-        height:70vh;
+        height:65vh;
         overflow: hidden;
         cursor: pointer;
+
+        &:before{
+            position: absolute;
+            height:100%;
+            width: 100%;
+            content: "";
+            background: $support-color-shadow-black;
+
+        }
+        
     }
 
     &__image{
@@ -36,13 +46,11 @@
 
     &__title{
         color: $white;
-        text-shadow: 2px 4px 8px rgba(0,0,0,0.5);
 
     }
 
     &__distance{
         color: $white;
-        text-shadow: 2px 4px 8px rgba(0,0,0,0.5);
     }
 
     &__button-container{
@@ -51,7 +59,8 @@
             align-items: center;
         }
         width: 95%;
-        height:12vh;
+        height:35vh;
+        padding-bottom: 4.5rem;
         margin:0 auto;
     }
 

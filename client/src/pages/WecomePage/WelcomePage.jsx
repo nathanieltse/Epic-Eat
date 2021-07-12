@@ -50,7 +50,7 @@ class WelcomePage extends Component {
         return (
                 <section className="WelcomePage">
                     <div className="WelcomePage__ani">
-                        <Lottie  options={this.greetingAni} height={400}/>
+                        <Lottie  options={this.greetingAni} height={400} width={400}/>
                     </div>
                     <div className="WelcomePage__container">
                         <form className="WelcomePage__form" onSubmit={(e) => this.signin(e)}>
@@ -88,6 +88,7 @@ class WelcomePage extends Component {
                                 <button type="submit" className="WelcomePage__login-btn" >Log In</button>
                             </div>
                         </form>
+                        
                     </div>
                 </section>
         )

@@ -13,7 +13,7 @@ import { Component } from 'react'
 
 class App extends Component {
   state={
-    onPage:"recommends",
+    onPage:"restaurants",
     loggedIn:false,
     latitude:null,
     longitude:null,
@@ -49,6 +49,8 @@ class App extends Component {
         })
         .catch(err => console.log(err))
     })
+    .catch(err => console.log(err))
+    
     const userInfo = localStorage.getItem("usertoken")
     this.setState({            
       userInfo: userInfo,
@@ -73,6 +75,11 @@ class App extends Component {
     const userInfo = localStorage.getItem("usertoken")
     this.setState({loggedIn:true, userInfo:userInfo})
   }
+
+  handleLogout = () => {
+    localStorage.removeItem("usertoken")
+    this.setState({loggedIn:false, userInfo:null})
+  }
   
 
   render(){
@@ -90,9 +97,13 @@ class App extends Component {
                 <WelcomePage handlelogin={this.handlelogin}/>}   
               </Route>
 
-              <Route path="/signup" render={() => {
-                return <SignupPage handlelogin={this.handlelogin}/>
-              }}/> 
+              <Route path="/signup">
+                {loggedIn ?
+                  <Redirect to="/restaurants"/>
+                  :
+                  <SignupPage handlelogin={this.handlelogin}/>
+                }
+              </Route> 
               
               {loggedIn &&  <Route path="/restaurants" render={()=>{
                 return <RestaurantPage
@@ -111,14 +122,18 @@ class App extends Component {
                 {...routeProps}/>
               }}/>}
 
-              {loggedIn &&  <Route path="/profile" render={(routeProps) => {
-                return <ProfilePage {...routeProps} userInfo={userInfo}/>
-              }}/>}
+              <Route path="/profile">
+                {loggedIn ?  
+                  <ProfilePage userInfo={userInfo} handleLogout={this.handleLogout}/>
+                  :
+                  <Redirect to="/" />
+                }
+              </Route>
+
               
             </Switch>
             
             {loggedIn && <NavBar onPage={onPage} handleNavChange={this.handleNavChange}/>}
-            {!selected && loggedIn && <PageFooter/>}
           </BrowserRouter>
         </div>
     )
