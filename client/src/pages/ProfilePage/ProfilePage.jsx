@@ -5,26 +5,30 @@ import remove from '../../assets/icons/remove-circle.svg'
 import PageFooter from '../../components/PageFooter/PageFooter'
 import './ProfilePage.scss'
 
-const ProfilePage = ({handleLogout, userInfo, handleInfoUpdate}) => {
+const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
     const [categories, setCategories] = useState([])
     const [categoryBox, setCategoryBox] = useState(false)
-    const [userPrefer, setUserPrefer] = useState([])
+    const [userPrefer, setUserPrefer] = useState(null)
+    const [userInfo, setUserInfo] = useState([])
 
     const userToken = localStorage.getItem("usertoken")
+    const storageInfo = JSON.parse(localStorage.userInfo)
 
     useEffect(()=> {
+        setUserInfo(storageInfo)
+        setUserPrefer(storageInfo.categories)
         axios
             .get('/api/categories')
             .then(res => {
                 setCategories(res.data)
-                setUserPrefer(userInfo.categories)
-            })
+                })
             .catch(err => console.log(err))
     },[])
 
     const expendbox = () => {
         setCategoryBox(!categoryBox)
     }
+    
 
     const handleCategorySubmmit = (category, action) => {
         if (action === "add"){
@@ -66,8 +70,9 @@ const ProfilePage = ({handleLogout, userInfo, handleInfoUpdate}) => {
         }
     }
 
-    const filterCategory = categories.filter(category => {
-        return userPrefer.indexOf(category.category) < 0
+    const filterCategory = categories.filter(data => {
+        if(!userPrefer) return []
+        return userPrefer.indexOf(data.category) < 0
     })
 
     return (
@@ -119,7 +124,7 @@ const ProfilePage = ({handleLogout, userInfo, handleInfoUpdate}) => {
                     </div>
                 }
                 <div className="ProfilePage__preference-btn-container">
-                    {userPrefer.map((category,i) => {
+                    {userPrefer && userPrefer.map((category,i) => {
                         return <button key={i} className="ProfilePage__preference-btn" onClick={()=>handleCategorySubmmit(category, "remove")}>
                                     {category.replace(category[0], category[0].toUpperCase())}
                                 </button>
@@ -128,7 +133,9 @@ const ProfilePage = ({handleLogout, userInfo, handleInfoUpdate}) => {
             </article>
             <button className="ProfilePage__logout" onClick={handleLogout}>Log out</button>
             <PageFooter/>
+
         </section>
+
     )
     
 }

@@ -110,7 +110,6 @@ router.put('/user/categories', auth, (req,res) => {
         .findByIdAndUpdate(req.decoded.id,{categories:req.body.categories})
         .select('-password')
         .then(result => {
-            console.log(result)
             if (!result) return res.status(400).json({message:"cant find user info"})
             res.status(200).json(result)
         })

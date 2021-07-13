@@ -20,7 +20,6 @@ class App extends Component {
     longitude:null,
     location:null,
     selected:null,
-    userInfo:null
   }
 
   componentDidMount(){
@@ -31,6 +30,7 @@ class App extends Component {
         }, err => rej(err))
       }) 
     }
+    
     getPosition().then(position => {
       const {latitude, longitude} = position.coords
       axios
@@ -50,7 +50,6 @@ class App extends Component {
         .catch(err => console.log(err))
     })
     .catch(err => console.log(err))
-    
 
     axios
       .get('/api/user',{
@@ -59,13 +58,13 @@ class App extends Component {
         }
       })
       .then(res => {
-        this.setState({            
-          userInfo: res.data[0],
-          loggedIn:true})
+        this.setState({loggedIn:true})
       })
       .catch(err => {
         this.setState({loggedIn:false})
       })
+    
+    
   }
 
 
@@ -82,13 +81,25 @@ class App extends Component {
   }
 
   handlelogin = () =>{
-    const userInfo = localStorage.getItem("usertoken")
-    this.setState({loggedIn:true, userInfo:userInfo})
+    axios
+      .get('/api/user',{
+        headers:{
+          authorization:`bearer ${userToken}`
+        }
+      })
+      .then(res => {
+        localStorage.setItem("userInfo",JSON.stringify(res.data[0]))
+        this.setState({loggedIn:true})
+      })
+      .catch(err => {
+        this.setState({loggedIn:false})
+      })
   }
 
   handleLogout = () => {
     localStorage.removeItem("usertoken")
-    this.setState({loggedIn:false, userInfo:null})
+    localStorage.removeItem("userInfo")
+    this.setState({loggedIn:false,onPage:"restaurants"})
   }
 
   handleInfoUpdate = () => {
@@ -99,9 +110,7 @@ class App extends Component {
         }
       })
       .then(res => {
-        this.setState({            
-          userInfo: res.data[0],
-          loggedIn:true})
+        sessionStorage.setItem("userInfo",JSON.stringify(res.data[0]))
       })
       .catch(err => {
         this.setState({loggedIn:false})
@@ -157,7 +166,7 @@ class App extends Component {
 
               <Route path="/profile">
                 {loggedIn ?  
-                  <ProfilePage userInfo={userInfo} handleLogout={this.handleLogout} handleInfoUpdate={this.handleInfoUpdate}/>
+                  <ProfilePage handleLogout={this.handleLogout} handleInfoUpdate={this.handleInfoUpdate}/>
                   :
                   <Redirect to="/" />
                 }

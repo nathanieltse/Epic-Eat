@@ -14,8 +14,8 @@ const RestaurantDetail = ({handleModalBack, selected}) => {
                 </div>
                 <div className="RestaurantDetail__text-container">
                     <div className="RestaurantDetail__category-container">
-                        {selected.categories.map(category => {
-                            return <p className="RestaurantDetail__category">{category.title}</p>
+                        {selected.categories.map((category, i) => {
+                            return <p ket={i} className="RestaurantDetail__category">{category.title}</p>
                         })}
                     </div>
                     <button className="RestaurantDetail__phone-btn">
