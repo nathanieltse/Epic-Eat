@@ -5,11 +5,12 @@ import ProfilePage from './pages/ProfilePage/ProfilePage'
 import RestaurantDetail from './components/RestaurantDetail/RestaurantDetail'
 import WelcomePage from './pages/WecomePage/WelcomePage'
 import SignupPage from './pages/SignupPage/SignupPage'
-import PageFooter from './components/PageFooter/PageFooter'
 import axios from 'axios'
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import './App.scss'
 import { Component } from 'react'
+
+const userToken = localStorage.getItem("usertoken")
 
 class App extends Component {
   state={
@@ -23,7 +24,6 @@ class App extends Component {
   }
 
   componentDidMount(){
-
     const getPosition = async() => {
       return new Promise((res,rej) =>{
         navigator.geolocation.getCurrentPosition(position => {
@@ -51,11 +51,21 @@ class App extends Component {
     })
     .catch(err => console.log(err))
     
-    const userInfo = localStorage.getItem("usertoken")
-    this.setState({            
-      userInfo: userInfo,
-      loggedIn: userInfo ? true : false})
 
+    axios
+      .get('/api/user',{
+        headers:{
+          authorization:`bearer ${userToken}`
+        }
+      })
+      .then(res => {
+        this.setState({            
+          userInfo: res.data[0],
+          loggedIn:true})
+      })
+      .catch(err => {
+        this.setState({loggedIn:false})
+      })
   }
 
 
@@ -80,6 +90,24 @@ class App extends Component {
     localStorage.removeItem("usertoken")
     this.setState({loggedIn:false, userInfo:null})
   }
+
+  handleInfoUpdate = () => {
+    axios
+      .get('/api/user',{
+        headers:{
+          authorization:`bearer ${userToken}`
+        }
+      })
+      .then(res => {
+        this.setState({            
+          userInfo: res.data[0],
+          loggedIn:true})
+      })
+      .catch(err => {
+        this.setState({loggedIn:false})
+      })
+  }
+
   
 
   render(){
@@ -104,27 +132,32 @@ class App extends Component {
                   <SignupPage handlelogin={this.handlelogin}/>
                 }
               </Route> 
-              
-              {loggedIn &&  <Route path="/restaurants" render={()=>{
-                return <RestaurantPage
+
+              <Route path="/restaurants">
+                {loggedIn ?
+                  <RestaurantPage
                   location={location} 
                   latitude={latitude} 
                   longitude={longitude}
                   selected={selected}
                   handleSelect={this.handleSelect}
                   />
-                }}/>}
+                  :
+                  <Redirect to="/" />
+                }
+              </Route> 
 
-              {loggedIn && <Route path="/recommends" render={(routeProps) => {
-                return <RecommendationPage
-                latitude={latitude} 
-                longitude={longitude}
-                {...routeProps}/>
-              }}/>}
+              <Route path="/recommends">
+                {loggedIn ?  
+                  <RecommendationPage latitude={latitude} longitude={longitude}/>
+                  :
+                  <Redirect to="/" />
+                }
+              </Route>
 
               <Route path="/profile">
                 {loggedIn ?  
-                  <ProfilePage userInfo={userInfo} handleLogout={this.handleLogout}/>
+                  <ProfilePage userInfo={userInfo} handleLogout={this.handleLogout} handleInfoUpdate={this.handleInfoUpdate}/>
                   :
                   <Redirect to="/" />
                 }

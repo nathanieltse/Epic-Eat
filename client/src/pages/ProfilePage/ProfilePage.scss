@@ -70,7 +70,7 @@
         padding:1rem;
         box-shadow: $card-shadow;
 
-        &-name-container, &-phone-container{
+        &-container{
             @include flex-row{
                 justify-content: space-between;
                 align-items:baseline;
@@ -78,6 +78,57 @@
             margin:0.25rem 0;
         }
 
+        &-text{
+            @include medium-body-text;
+        }
+
+    }
+
+    &__add-prefer{
+        width: 100%;
+        margin:0.5rem 0;
+        padding:1rem;
+        background: $white;
+        box-shadow: $card-shadow;
+        animation: loadAddPrefer 0.8s;
+
+        @keyframes loadAddPrefer {
+            0%{
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100%{
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    
+        &-title{
+            margin-bottom: 1rem;     
+        }
+
+        &-submit{
+            @include button;
+            @include button-cta;
+            width: 2.5rem;
+            height:1.5rem;
+            padding:0 0.5rem;
+        }
+
+        &-container{
+            @include flex-row{
+                justify-content: center;
+                flex-wrap: wrap;
+                gap:1rem;
+            }
+
+        }
+
+        &-btn{
+            @include tag;
+            @include secondary-tag;
+            cursor: pointer;
+        }
     }
 
     &__preference{
@@ -94,26 +145,28 @@
 
         &-add{
             margin-left: auto;
+            border:none;
+            background: none;
+            cursor: pointer;
         }
 
         &-btn-container{
             @include flex-row{
-                justify-content: space-between;
+                justify-content: center;
                 flex-wrap: wrap;
-                gap:0.5rem;
+                gap:0.7rem;
             }
             width:100%;
             margin-top: 1rem;
+            &:last-child{
+                margin-right: auto;
+            }
         }
 
-        &-add{
-            border:none;
-            background: none;
-        }
 
         &-btn{
             @include tag;
-
+            cursor: pointer;
         }
     }
 

@@ -1,8 +1,8 @@
 import { Component } from "react";
 import './RecommendationPage.scss'
 
-class RecommendationPage extends Component {
-    render() {
+const RecommendationPage = () => {
+
         return(
             <section className="RecommendationPage">
                 <div className="RecommendationPage__image-container">
@@ -28,7 +28,7 @@ class RecommendationPage extends Component {
                 </div>
             </section>
         )
-    }
+    
 }
 
 export default RecommendationPage

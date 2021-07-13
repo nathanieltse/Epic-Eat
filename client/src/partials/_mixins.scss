@@ -162,7 +162,7 @@
 }
 
 @mixin tag{
-    width: 5rem;
+    width: 6.5rem;
     padding:0.5rem;
     border-radius: 5rem;
     border:none;
@@ -175,6 +175,18 @@
     @include tablet {
         font-size: $normal-label-btn-link-font;
         line-height: $normal-label-btn-link-line-height;
+    }
+}
+
+@mixin secondary-tag{
+    color:$primary-color-sunflower;
+    border:2px solid $primary-color-sunflower;
+    background-color: $white;
+
+    &:hover{
+        color: white;
+        background-color: $primary-color-sunflower;
+        transition: 0.8s;
     }
 }
 

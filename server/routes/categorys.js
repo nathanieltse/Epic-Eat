@@ -4,9 +4,9 @@ const Categories = require('../models/categoryModel')
 
 require('dotenv').config()
 
-router.get('/categorys', (_req,res)=>{
+router.get('/categories', (_req,res)=>{
     Categories
-        .find(category)
+        .find()
         .then(data => res.status(200).json(data))
         .catch(err => res.status(500).json("server error"))
     

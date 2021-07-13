@@ -25,11 +25,9 @@ class WelcomePage extends Component {
     signin = (e) =>{
         e.preventDefault()
         axios
-            .get('/api/user',{
-                params:{
-                    userName:this.state.userName,
-                    password:this.state.password
-                }
+            .post('/api/login',{
+                userName:this.state.userName,
+                password:this.state.password
             })
             .then(res=>{
                 localStorage.setItem("usertoken", res.data.authToken)
