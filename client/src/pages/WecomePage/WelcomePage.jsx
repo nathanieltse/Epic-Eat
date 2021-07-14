@@ -82,7 +82,7 @@ class WelcomePage extends Component {
                             </label>
                             <h4 className="WelcomePage__text">Forget password?</h4>
                             <div className="WelcomePage__btn-container">
-                                <Link to="/signup" className="WelcomePage__signup-btn">Sign up</Link>
+                                <Link to="/signup" className="WelcomePage__signup-btn">Sign Up</Link>
                                 <button type="submit" className="WelcomePage__login-btn" >Log In</button>
                             </div>
                         </form>

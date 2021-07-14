@@ -7,8 +7,11 @@ import WelcomePage from './pages/WecomePage/WelcomePage'
 import SignupPage from './pages/SignupPage/SignupPage'
 import axios from 'axios'
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
-import './App.scss'
 import { Component } from 'react'
+
+
+
+import './App.scss'
 
 const userToken = localStorage.getItem("usertoken")
 
@@ -59,6 +62,7 @@ class App extends Component {
       })
       .then(res => {
         this.setState({loggedIn:true})
+        localStorage.setItem("userInfo",JSON.stringify(res.data[0]))
       })
       .catch(err => {
         this.setState({loggedIn:false})
@@ -110,7 +114,7 @@ class App extends Component {
         }
       })
       .then(res => {
-        sessionStorage.setItem("userInfo",JSON.stringify(res.data[0]))
+        localStorage.setItem("userInfo",JSON.stringify(res.data[0]))
       })
       .catch(err => {
         this.setState({loggedIn:false})
@@ -120,11 +124,13 @@ class App extends Component {
   
 
   render(){
-    const {onPage, loggedIn,longitude, latitude, location, selected, userInfo} = this.state
+    const {onPage, loggedIn,longitude, latitude, location, selected} = this.state
     return (
         <div className="App">
           <BrowserRouter>
-            {selected && <RestaurantDetail handleModalBack={this.handleModalBack} selected={selected}/>}
+
+              {selected && <RestaurantDetail handleModalBack={this.handleModalBack} id={selected.id} distance={selected.distance}/>}
+            
             <Switch>
 
               <Route exact path="/"> 

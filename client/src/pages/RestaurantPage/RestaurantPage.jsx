@@ -38,7 +38,7 @@ class RestaurantPage extends Component {
                         .then(res => {
                             setTimeout(()=>{
                                 this.setState({restaurants:res.data.businesses})
-                            }, 3000)
+                            }, 1500)
                         })
                         .catch(err => console.log(err))
         }

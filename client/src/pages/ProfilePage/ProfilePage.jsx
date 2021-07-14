@@ -12,9 +12,9 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
     const [userInfo, setUserInfo] = useState([])
 
     const userToken = localStorage.getItem("usertoken")
-    const storageInfo = JSON.parse(localStorage.userInfo)
-
+    
     useEffect(()=> {
+        const storageInfo = JSON.parse(localStorage.userInfo)
         setUserInfo(storageInfo)
         setUserPrefer(storageInfo.categories)
         axios
@@ -25,7 +25,7 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
             .catch(err => console.log(err))
     },[])
 
-    const expendbox = () => {
+    const expandbox = () => {
         setCategoryBox(!categoryBox)
     }
     
@@ -101,13 +101,13 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
             <article className="ProfilePage__preference">
                 <div className="ProfilePage__preference-tilte-container">
                     <h3 className="ProfilePage__preference-title">Your preference</h3>
-                    <h4 className="ProfilePage__preference-subtitle">tab to remove category</h4>
+                    <h4 className="ProfilePage__preference-subtitle">Tab to remove category</h4>
                 </div>
                 <button className="ProfilePage__preference-add">
                     {categoryBox? 
-                    <img className="ProfilePage__preference-add-icon" onClick={() => expendbox()} src={remove} alt="remove icon"/>
+                    <img className="ProfilePage__preference-add-icon" onClick={() => expandbox()} src={remove} alt="remove icon"/>
                     :
-                    <img className="ProfilePage__preference-add-icon" onClick={() => expendbox()} src={add} alt="add icon"/>
+                    <img className="ProfilePage__preference-add-icon" onClick={() => expandbox()} src={add} alt="add icon"/>
                     }
                 </button>
                 {categoryBox && 
@@ -131,7 +131,7 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
                     })}
                 </div>
             </article>
-            <button className="ProfilePage__logout" onClick={handleLogout}>Log out</button>
+            <button className="ProfilePage__logout" onClick={handleLogout}>Log Out</button>
             <PageFooter/>
 
         </section>

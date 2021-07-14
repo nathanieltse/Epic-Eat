@@ -94,6 +94,8 @@ class SignupPage extends Component {
                 .catch(err=> {
                     this.setState({userNameValid:false})
                 })    
+        }else {
+            this.setState({userNameValid:false})
         }
     }
 
@@ -133,7 +135,7 @@ class SignupPage extends Component {
     }
 
     handleSubmit = (e) => {
-        const {userName, password, confirm, firstName, lastName, phone, email,
+        const {userName, confirm, firstName, lastName, phone, email,
                 userNameValid, passwordCharacter,passwordNum,passwordLetter,passwordconfirm, firstNameCharacter, lastNameCharacter, emailValid, phoneValid, 
         } = this.state
         e.preventDefault()

@@ -1,4 +1,3 @@
-import { Component } from "react";
 import './RecommendationPage.scss'
 
 const RecommendationPage = () => {

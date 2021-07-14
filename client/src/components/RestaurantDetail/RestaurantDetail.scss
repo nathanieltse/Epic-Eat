@@ -15,7 +15,7 @@
         background-color: $white;
         height: 100vh;
         width: 100%;
-        margin: 2rem auto 0 ;
+        margin: 2rem auto 0;
         border-radius: $card-radius;
         overflow: hidden;
         animation: detail-loading 0.5s;
@@ -31,21 +31,7 @@
         }
     }
 
-    &__container--close{
-        animation: detail-closing 0.5s;
-
-        @keyframes detail-closing {
-            0%{
-                transform:translateY(0);
-            }
-    
-            100%{
-                transform:translateY(100%);
-            }
-        }
-    }
-
-    &__image-container{
+    &__hero{
         position: relative;
         width: 100%;
         height:25%;
@@ -59,77 +45,268 @@
             height:100%;
             width: 100%;
         }
+
+        &-back-btn{
+            position: absolute;
+            right:1rem;
+            top:0.5rem;
+            background: none;
+            border:none;
+            z-index: 1;
+            cursor: pointer;
+        }
+    
+        &-image{
+            width: 100%;
+            transform: translateY(-25%);
+        }
     }
 
-    &__back-btn{
-        position: absolute;
-        right:1rem;
-        top:0.5rem;
-        background: none;
-        border:none;
-        z-index: 1;
-        cursor: pointer;
-    }
+    
 
-    &__image{
-        width: 100%;
-        transform: translateY(-25%);
-    }
-
-    &__text-container{
+    &__info{
         @include flex-column;
         position: relative;
         transform: translateY(-10px);
         border-radius: $card-radius;
         height:70%;
+        width: 100%;
+        overflow-y: auto;
         background-color: white;
-        padding:0.5rem 1rem;
+        padding:1rem 1rem;
         z-index: 2;
+
+        &-scrollbar{
+            height:fit-content;
+        }
+        
+        &-phone-btn{
+            position: absolute;
+            right:1rem;
+            border:2px solid $secondary-color-cloud;
+            background:none;
+            width: 2.5rem;
+            height:2.5rem;
+            border-radius: 5rem;
+            
+        }
+    
+        &-name{
+            margin:0.5rem 0 0 0;
+        }
+    
+        &-address{
+            @include medium-body-text;
+            font-weight: $weight-semi;
+            color:$secondary-color-gold;
+        }
+    
+        &-distance{
+            @include medium-body-text;
+            color:$secondary-color-gold;
+            margin-left: 1rem;
+        }
+    
+        &-price{
+            @include medium-body-text;
+            color:$secondary-color-cloud;
+            margin-left: 1rem;
+        }
     }
 
-    &__category-container{
+
+    &__category{
         @include flex-row{
             gap:0.5rem;
             flex-wrap: wrap;
         }
-    }
 
-    &__category{
-        @include medium-body-text;
-        color:$primary-color-sunflower;
-    }
-
-    &__phone-btn{
-        position: absolute;
-        right:1rem;
-        border:2px solid $secondary-color-cloud;
-        background:none;
-        width: 2.5rem;
-        height:2.5rem;
-        border-radius: 5rem;
+        &-text{
+            @include medium-body-text;
+            color:$primary-color-sunflower;
+        }
         
     }
 
-    &__name{
-        margin:0;
+
+    &__photos{
+        width: 100%;
+        overflow-x: auto;
+        
+        &-scollbar{
+            @include flex-row;
+            width: fit-content;
+            padding:2rem 0;
+        }
+    
+        &-wrapper{
+            width: 14rem;
+            height: 7rem;
+            overflow: hidden;
+            margin-right:1.5rem;
+            border-radius: $card-radius;
+            box-shadow: $card-shadow;
+        }
+    
+        &-image{
+            width: 100%;
+            transform: translateY(-25%);
+        }
     }
 
-    &__address{
-        @include medium-body-text;
-        font-weight: $weight-semi;
-        color:$secondary-color-gold;
+
+    &__hour{
+        margin: 2rem 0 ;
+        overflow-x: auto;
+        position: relative;
+
+        &-title{
+            position: fixed;
+        }
+
+        &-scrollbar{
+            @include flex-row;
+            width: fit-content;
+            padding:2rem 0 ;
+        }
+
+        &-wrapper{
+            @include flex-column{
+                align-items: center;
+                justify-content: center;
+            }
+            border-radius: $card-radius;
+            box-shadow: $card-shadow;
+            width: 10rem;
+            padding:0.5rem;
+            margin-right: 1.5rem;
+        }
+
+        
+
+        &-day{
+            @include medium-body-text;
+        }
+
+        &-time{
+            @include medium-body-text;
+        }
     }
 
-    &__distance{
-        @include medium-body-text;
-        color:$secondary-color-gold;
-        margin-left: 1rem;
+    &__date-container{
+        width: 100%;
+        box-shadow: $card-shadow;
+        border-radius: $card-radius;
+        padding:0.5rem 1rem;
+        margin: auto 0;
+        animation:loaddateform 1s ;
+
+        @keyframes loaddateform {
+            0%{
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100%{
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        &--success{
+            animation:successform 1s forwards;
+
+            @keyframes successform {
+                0%{
+                    opacity: 1;
+
+                }
+                100%{
+                    opacity: 0;
+                    visibility: hidden;
+                }
+            }
+        }
+
+        &-title{
+            margin-top: 0.5rem;
+            text-align: center;
+            color: $secondary-color-gold;
+        }
+
+        &-picker{
+            @include flex-column{
+                align-items: center;
+                gap:1rem;
+            }
+            margin:1rem;
+        }
+        
+    }
+
+    &__action{
+        @include flex-column{
+            align-items: center;
+        }
+        margin-top: 1.5rem;
+
+        &-message{
+            opacity: 0;
+            color: $support-color-green;
+            animation:successcheck 0.4s 1.5s forwards;
+
+        }
+        
     }
 
     &__book-btn{
         @include button;
         @include button-cta;
-        margin-top: auto;
+        margin:0 auto;
+
+
+        &--success{
+            width: 100%;
+            padding: 0;
+            line-height: 0;
+            animation: successbtn 2s forwards;
+
+            @keyframes successbtn {
+                0%{
+                    width: 100%;
+                    transform: translateY(0);
+                }
+
+                50%{
+                    border-radius: 50%;
+                    width: 2.5rem;
+                    height:2.5rem;
+                    transform: translateY(-8rem);
+                } 
+                 
+                100%{
+                    background-color:$support-color-green ;
+                    border-radius: 50%;
+                    width: 2.5rem;
+                    height:2.5rem;
+                    transform: translateY(-8rem);
+                } 
+            }
+        }
+
+        &-check{
+            width: 2rem;
+            opacity: 0;
+            animation: successcheck 0.4s 1.5s forwards;
+
+            @keyframes successcheck {
+                0%{
+                    opacity: 0;
+                }
+                100%{
+                    opacity: 1;
+                }
+            }
+        }
     }
     
 }

@@ -40,7 +40,7 @@ router.post('/login', (req,res)=>{
             if (!result.length) return res.status(400).json({message:"user doesn't exsist"})
         })
         .catch(err => {
-            res.statusMessage(500).json({message:"user server error"})
+            res.status(500).json({message:"user server error"})
         })
 })
 
@@ -86,7 +86,8 @@ router.get('/checkusername', (req,res)=>{
 
             res.status(200).json({message:"no one has the same username"})
         })
-        then(err => {
+        .then(err => {
+            console.log(err)
             res.statusMessage(500).json({message:"user server error"})
         })
 })
@@ -114,6 +115,26 @@ router.put('/user/categories', auth, (req,res) => {
             res.status(200).json(result)
         })
         .catch(err => {
+            res.status(500).json({message:"user server error"})
+        })
+})
+
+router.post('/user/booking', auth, (req,res) => {
+    const {restaurant, image, date} = req.body
+    User
+        .findByIdAndUpdate(req.decoded.id,{$push:{"bookings":{
+            "restaurant":restaurant,
+            "image":image,
+            "date":date
+        }}}, {new: true})
+        .select('-password')
+        .then(result => {
+            if (!result) return res.status(400).json({message:"cant find user info"})
+            console.log(result)
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log(err)
             res.status(500).json({message:"user server error"})
         })
 })
