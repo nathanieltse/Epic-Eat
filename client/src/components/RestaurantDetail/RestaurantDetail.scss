@@ -252,7 +252,7 @@
         &-message{
             opacity: 0;
             color: $support-color-green;
-            animation:successcheck 0.4s 1.5s forwards;
+            animation:successcheck 0.4s 1.3s forwards;
 
         }
         
@@ -268,7 +268,7 @@
             width: 100%;
             padding: 0;
             line-height: 0;
-            animation: successbtn 2s forwards;
+            animation: successbtn 1.3s forwards;
 
             @keyframes successbtn {
                 0%{
@@ -282,6 +282,16 @@
                     height:2.5rem;
                     transform: translateY(-8rem);
                 } 
+
+                70%{
+                    width: 2.5rem;
+                    height:2.5rem;
+                }
+
+                90%{
+                    width: 3rem;
+                    height:3rem;
+                }
                  
                 100%{
                     background-color:$support-color-green ;
@@ -296,7 +306,7 @@
         &-check{
             width: 2rem;
             opacity: 0;
-            animation: successcheck 0.4s 1.5s forwards;
+            animation: successcheck 0.4s 1.3s forwards;
 
             @keyframes successcheck {
                 0%{

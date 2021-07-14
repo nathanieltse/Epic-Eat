@@ -10,6 +10,7 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
     const [categoryBox, setCategoryBox] = useState(false)
     const [userPrefer, setUserPrefer] = useState(null)
     const [userInfo, setUserInfo] = useState(null)
+    const [bookingBox, setBookingBox] = useState(false)
 
     const userToken = localStorage.getItem("usertoken")
     
@@ -26,7 +27,7 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
             .catch(err => console.log(err))
     },[])
 
-    const expandbox = () => {
+    const expandCategoryBox = () => {
         setCategoryBox(!categoryBox)
     }
     
@@ -77,33 +78,77 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
     })
 
     const dateTimeConvert = (input) => {
-        let date = `${(new Date(input)).getFullYear()}-${(new Date(input)).getMonth()}-${(new Date(input)).getDate()}`
+        let date = `${(new Date(input)).getFullYear()}-${(new Date(input)).getMonth()+1}-${(new Date(input)).getDate()}`
         let today = Date.now()
+        let todayString = `${(new Date(today)).getFullYear()}-${(new Date(today)).getMonth()+1}-${(new Date(today)).getDate()}`
         let hour = (new Date(input)).getHours()
-        let minute = (new Date(input)).getMinutes()
+        let minute = ("0" + (new Date(input)).getMinutes()).slice(-2)
         let time = hour < 11 ? `${hour}:${minute} am` : hour === 12 ? `${hour}:${minute} pm` : `${hour-12}:${minute} pm`
 
-        let difference = new Date(input).getTime() - today
-        difference = difference/(24*60*60*1000)
-
-        if (difference < 1){
-            return `Today ${time}`
+        if (date === todayString) {
+            return `Today  ${time}`
         } else {
             return `${date}  ${time}`
         }
+        
+    }
+
+
+    const expandBookingBox = () => {
+        setBookingBox(!bookingBox)
+    }
+
+    const cancelBooking = (bookingid) => {
+        axios
+            .delete('/api/user/booking',{
+                data:{
+                    id:bookingid
+                },
+                headers:{
+                    authorization:`bearer ${userToken}`
+                }
+            })
+            .then(res => {
+                setUserInfo(res.data)
+                handleInfoUpdate()
+                setBookingBox(!bookingBox)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     
     return (
         userInfo &&
         <section className="ProfilePage">
-            <article className="ProfilePage__booking">
-                <h3 className="ProfilePage__booking-title">Upcoming booking</h3>
-                <p className="ProfilePage__booking-subtitle">{dateTimeConvert(userInfo.bookings[0].date)}</p>
-                <p className="ProfilePage__booking-text">{userInfo.bookings[0].restaurant}</p>
-                <img className="ProfilePage__booking-image" src={userInfo.bookings[0].image} alt="restaurant"/>
-            </article>
-            <article className="ProfilePage__contact">
+            <section className={bookingBox ? "ProfilePage__booking ProfilePage__booking--expand" : "ProfilePage__booking ProfilePage__booking--close"} onClick={() => {!bookingBox && expandBookingBox()}}>
+                {bookingBox && !!userInfo.bookings.length && <img className="ProfilePage__booking-remove-icon" onClick={()=>expandBookingBox()} src={remove} alt="remove icon"/>}
+                {userInfo.bookings.length ? 
+                    <article className="ProfilePage__booking-container">
+                        <h3 className="ProfilePage__booking-title">Upcoming booking</h3>
+                        <p className="ProfilePage__booking-subtitle">{dateTimeConvert(userInfo.bookings[0].date)}</p>
+                        <p className="ProfilePage__booking-text">{userInfo.bookings[0].restaurant}</p>
+                        {bookingBox && <button className="ProfilePage__booking-cancel" onClick={({})=>cancelBooking(userInfo.bookings[0].id)}>Cancel</button> }
+                        <img className="ProfilePage__booking-image" src={userInfo.bookings[0].image} alt="restaurant"/>
+                    </article>
+                    :
+                    <article className="ProfilePage__booking-placeholder">
+                        <h1 className="ProfilePage__booking-placeholder-message">No booking</h1>
+                    </article>
+                }
+                {bookingBox && userInfo.bookings.slice(1).map((booking, i) => {
+                        return <article key={i} className="ProfilePage__booking-container">
+                                    <h3 className="ProfilePage__booking-title">Upcoming booking</h3>
+                                    <p className="ProfilePage__booking-subtitle">{dateTimeConvert(booking.date)}</p>
+                                    <p className="ProfilePage__booking-text">{booking.restaurant}</p>
+                                    {bookingBox && <button className="ProfilePage__booking-cancel" onClick={() => cancelBooking(booking.id)}>Cancel</button> }
+                                    <img className="ProfilePage__booking-image" src={booking.image} alt="restaurant"/>
+                                </article>
+                    
+                })}
+            </section>
+            <section className="ProfilePage__contact">
                 <h3 className="ProfilePage__contact-title">Contact Info</h3>
                 <div className="ProfilePage__contact-container">
                     <h4 className="ProfilePage__contact-label">Name</h4>
@@ -117,17 +162,17 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
                     <h4 className="ProfilePage__contact-label">Email</h4>
                     <p className="ProfilePage__contact-text">{userInfo.email}</p>
                 </div>
-            </article>
-            <article className="ProfilePage__preference">
+            </section>
+            <section className="ProfilePage__preference">
                 <div className="ProfilePage__preference-tilte-container">
                     <h3 className="ProfilePage__preference-title">Your preference</h3>
                     <h4 className="ProfilePage__preference-subtitle">Tab to remove category</h4>
                 </div>
                 <button className="ProfilePage__preference-add">
                     {categoryBox? 
-                    <img className="ProfilePage__preference-add-icon" onClick={() => expandbox()} src={remove} alt="remove icon"/>
+                    <img className="ProfilePage__preference-remove-icon" onClick={() => expandCategoryBox()} src={remove} alt="remove icon"/>
                     :
-                    <img className="ProfilePage__preference-add-icon" onClick={() => expandbox()} src={add} alt="add icon"/>
+                    <img className="ProfilePage__preference-add-icon" onClick={() => expandCategoryBox()} src={add} alt="add icon"/>
                     }
                 </button>
                 {categoryBox && 
@@ -150,7 +195,7 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
                                 </button>
                     })}
                 </div>
-            </article>
+            </section>
             <button className="ProfilePage__logout" onClick={handleLogout}>Log Out</button>
             <PageFooter/>
 

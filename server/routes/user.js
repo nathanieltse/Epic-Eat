@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
+const {v4 : uuid} = require('uuid');
 const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
 const auth = require('../middlewares/auth')
@@ -40,6 +41,7 @@ router.post('/login', (req,res)=>{
             if (!result.length) return res.status(400).json({message:"user doesn't exsist"})
         })
         .catch(err => {
+            console.log(err)
             res.status(500).json({message:"user server error"})
         })
 })
@@ -73,6 +75,7 @@ router.post('/register', (req, res) => {
             })
         })
         .catch(err => {
+            console.log(err)
             res.statusMessage(500).json({message:"user server error"})
         })
 })
@@ -83,7 +86,6 @@ router.get('/checkusername', (req,res)=>{
         .find({userName:userName})
         .then(result => {
             if (result.length) return res.status(400).json({message:"username already exsist"})
-
             res.status(200).json({message:"no one has the same username"})
         })
         .then(err => {
@@ -99,9 +101,11 @@ router.get('/user', auth, (req,res) => {
         .select('-password')
         .then(result => {
             if (!result.length) return res.status(400).json({message:"cant find user info"})
+            result[0].bookings.sort((a,b) =>  a.date-b.date)
             res.status(200).json(result)
         })
         .catch(err => {
+            console.log(err)
             res.status(500).json({message:"user server error"})
         })
 })
@@ -112,9 +116,11 @@ router.put('/user/categories', auth, (req,res) => {
         .select('-password')
         .then(result => {
             if (!result) return res.status(400).json({message:"cant find user info"})
+            result.bookings.sort((a,b) =>  a.date-b.date)
             res.status(200).json(result)
         })
         .catch(err => {
+            console.log(err)
             res.status(500).json({message:"user server error"})
         })
 })
@@ -123,6 +129,7 @@ router.post('/user/booking', auth, (req,res) => {
     const {restaurant, image, date} = req.body
     User
         .findByIdAndUpdate(req.decoded.id,{$push:{"bookings":{
+            "id":uuid(),
             "restaurant":restaurant,
             "image":image,
             "date":date
@@ -130,7 +137,25 @@ router.post('/user/booking', auth, (req,res) => {
         .select('-password')
         .then(result => {
             if (!result) return res.status(400).json({message:"cant find user info"})
+            result.bookings.sort((a,b) =>  a.date-b.date)
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({message:"user server error"})
+        })
+})
+
+router.delete('/user/booking', auth, (req,res) => {
+    console.log(req.body)
+    const {id} = req.body
+    User
+        .findByIdAndUpdate(req.decoded.id,{$pull:{bookings: {id: id}}}, {new: true})
+        .select('-password')
+        .then(result => {
             console.log(result)
+            if (!result) return res.status(400).json({message:"cant find user info"})
+            result.bookings.sort((a,b) =>  a.date-b.date)
             res.status(200).json(result)
         })
         .catch(err => {
