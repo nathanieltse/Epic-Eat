@@ -9,7 +9,7 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
     const [categories, setCategories] = useState([])
     const [categoryBox, setCategoryBox] = useState(false)
     const [userPrefer, setUserPrefer] = useState(null)
-    const [userInfo, setUserInfo] = useState([])
+    const [userInfo, setUserInfo] = useState(null)
 
     const userToken = localStorage.getItem("usertoken")
     
@@ -18,8 +18,9 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
         setUserInfo(storageInfo)
         setUserPrefer(storageInfo.categories)
         axios
-            .get('/api/categories')
-            .then(res => {
+        .get('/api/categories')
+        .then(res => {
+                
                 setCategories(res.data)
                 })
             .catch(err => console.log(err))
@@ -75,13 +76,32 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
         return userPrefer.indexOf(data.category) < 0
     })
 
+    const dateTimeConvert = (input) => {
+        let date = `${(new Date(input)).getFullYear()}-${(new Date(input)).getMonth()}-${(new Date(input)).getDate()}`
+        let today = Date.now()
+        let hour = (new Date(input)).getHours()
+        let minute = (new Date(input)).getMinutes()
+        let time = hour < 11 ? `${hour}:${minute} am` : hour === 12 ? `${hour}:${minute} pm` : `${hour-12}:${minute} pm`
+
+        let difference = new Date(input).getTime() - today
+        difference = difference/(24*60*60*1000)
+
+        if (difference < 1){
+            return `Today ${time}`
+        } else {
+            return `${date}  ${time}`
+        }
+    }
+
+    
     return (
+        userInfo &&
         <section className="ProfilePage">
             <article className="ProfilePage__booking">
                 <h3 className="ProfilePage__booking-title">Upcoming booking</h3>
-                <p className="ProfilePage__booking-subtitle">12:00 pm today </p>
-                <p className="ProfilePage__booking-text">restaurant name</p>
-                <img className="ProfilePage__booking-image" src="https://media.cntraveler.com/photos/5b22bfdff04a775484b99dfc/1:1/w_800%2Cc_limit/Alo-Restaurant__2018_Raffi-Photo-2.jpg" alt="restaurant"/>
+                <p className="ProfilePage__booking-subtitle">{dateTimeConvert(userInfo.bookings[0].date)}</p>
+                <p className="ProfilePage__booking-text">{userInfo.bookings[0].restaurant}</p>
+                <img className="ProfilePage__booking-image" src={userInfo.bookings[0].image} alt="restaurant"/>
             </article>
             <article className="ProfilePage__contact">
                 <h3 className="ProfilePage__contact-title">Contact Info</h3>
@@ -135,6 +155,7 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
             <PageFooter/>
 
         </section>
+        
 
     )
     

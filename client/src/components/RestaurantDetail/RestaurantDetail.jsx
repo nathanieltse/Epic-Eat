@@ -111,9 +111,8 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
                         <section className="RestaurantDetail__photos">
                             <div className="RestaurantDetail__photos-scollbar"> 
                                 {details.photos.map((photo,i) => {
-                                    return <div className="RestaurantDetail__photos-wrapper">
+                                    return <div key={i} className="RestaurantDetail__photos-wrapper">
                                                 <img 
-                                                    key={i} 
                                                     className="RestaurantDetail__photos-image" 
                                                     src={photo} 
                                                     alt="restaurant and food"/>
