@@ -1,4 +1,5 @@
 import RestaurantCard from "../../components/RestaurantCard/RestaurantCard"
+import NavBar from '../../components/NavBar/NavBar'
 import axios from 'axios'
 import PageFooter from '../../components/PageFooter/PageFooter'
 import TopHeader from "../../components/TopHeader/TopHeader"
@@ -28,25 +29,25 @@ class RestaurantPage extends Component {
 
     componentDidUpdate(prevProps){{
         if(prevProps !== this.props){
-            return axios
-                        .get('/api/restaurants',{
-                            params:{
-                                latitude:this.props.latitude,
-                                longitude:this.props.longitude
-                            }
-                        })
-                        .then(res => {
-                            setTimeout(()=>{
-                                this.setState({restaurants:res.data.businesses})
-                            }, 1500)
-                        })
-                        .catch(err => console.log(err))
+            axios
+                .get('/api/restaurants',{
+                    params:{
+                        latitude:this.props.latitude,
+                        longitude:this.props.longitude
+                    }
+                })
+                .then(res => {
+                    setTimeout(()=>{
+                        this.setState({restaurants:res.data.businesses})
+                    }, 1500)
+                })
+                .catch(err => console.log(err))
         }
     }}
 
     noScroll = () => {
         window.scrollTo(0, 0)
-      }
+    }
 
     render(){
         let nearby =[]
@@ -82,6 +83,7 @@ class RestaurantPage extends Component {
                     <RestaurantCard/>
                     </>
                 }
+                <NavBar onPage="restaurants"/>
                 <PageFooter/>
             </section>
         )

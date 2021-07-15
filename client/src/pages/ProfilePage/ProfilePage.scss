@@ -59,25 +59,35 @@
         }
 
         &-placeholder{
-
+            
             &::before{
-                position: absolute;
-                content: "";
-                background-color: $white;
-                height:100%;
-                width: 100%;
+                background: none;
             } 
 
-            &-message{
+            &-title{
                 position: relative;
-                z-index: 3;
+                margin: 1rem 1rem;
+                z-index: 2;
+            }
+
+            &-animate{
+                position: relative;
+                z-index: 2;
+            }
+
+            &-text{
+                @include medium-body-text;
+                position: relative;
+                text-align: center;
+                z-index: 2;
+                color:$secondary-color-gold;
             }
         }
 
         &-title{
             position: absolute;
             top:0;
-            margin: 0.25rem 1rem;
+            margin: 1rem 1rem;
             z-index: 1;
             color: $white;
 

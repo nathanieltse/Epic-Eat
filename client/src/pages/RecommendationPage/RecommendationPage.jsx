@@ -1,3 +1,4 @@
+import NavBar from '../../components/NavBar/NavBar'
 import './RecommendationPage.scss'
 
 const RecommendationPage = () => {
@@ -25,6 +26,7 @@ const RecommendationPage = () => {
                         </svg>
                     </button>
                 </div>
+                <NavBar onPage="recommends"/>
             </section>
         )
     

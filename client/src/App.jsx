@@ -1,4 +1,3 @@
-import NavBar from './components/NavBar/NavBar'
 import RestaurantPage from './pages/RestaurantPage/RestaurantPage'
 import RecommendationPage from './pages/RecommendationPage/RecommendationPage'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
@@ -17,7 +16,6 @@ const userToken = localStorage.getItem("usertoken")
 
 class App extends Component {
   state={
-    onPage:"restaurants",
     loggedIn:false,
     latitude:null,
     longitude:null,
@@ -67,14 +65,8 @@ class App extends Component {
       .catch(err => {
         this.setState({loggedIn:false})
       })
-    
-    
   }
 
-
-  handleNavChange = (page) => {
-    this.setState({onPage:page})
-  }
 
   handleModalBack = () => {
       this.setState({selected:null})
@@ -103,7 +95,7 @@ class App extends Component {
   handleLogout = () => {
     localStorage.removeItem("usertoken")
     localStorage.removeItem("userInfo")
-    this.setState({loggedIn:false,onPage:"restaurants"})
+    this.setState({loggedIn:false})
   }
 
   handleInfoUpdate = () => {
@@ -124,7 +116,7 @@ class App extends Component {
   
 
   render(){
-    const {onPage, loggedIn,longitude, latitude, location, selected} = this.state
+    const {loggedIn,longitude, latitude, location, selected} = this.state
     return (
         <div className="App">
           <BrowserRouter>
@@ -181,7 +173,6 @@ class App extends Component {
               
             </Switch>
             
-            {loggedIn && <NavBar onPage={onPage} handleNavChange={this.handleNavChange}/>}
           </BrowserRouter>
         </div>
     )

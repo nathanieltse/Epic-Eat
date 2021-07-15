@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import add from '../../assets/icons/add.svg'
+import search from '../../assets/animation/search.json'
+import Lottie from 'react-lottie'
 import remove from '../../assets/icons/remove-circle.svg'
+import NavBar from '../../components/NavBar/NavBar'
 import PageFooter from '../../components/PageFooter/PageFooter'
 import './ProfilePage.scss'
 
@@ -83,7 +86,7 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
         let todayString = `${(new Date(today)).getFullYear()}-${(new Date(today)).getMonth()+1}-${(new Date(today)).getDate()}`
         let hour = (new Date(input)).getHours()
         let minute = ("0" + (new Date(input)).getMinutes()).slice(-2)
-        let time = hour < 11 ? `${hour}:${minute} am` : hour === 12 ? `${hour}:${minute} pm` : `${hour-12}:${minute} pm`
+        let time = hour === 0 ? `12:${minute} am` : hour < 11 ? `${hour}:${minute} am` : hour === 12 ? `${hour}:${minute} pm` : `${hour-12}:${minute} pm`
 
         if (date === todayString) {
             return `Today  ${time}`
@@ -92,7 +95,6 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
         }
         
     }
-
 
     const expandBookingBox = () => {
         setBookingBox(!bookingBox)
@@ -118,6 +120,16 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
             })
     }
 
+    const searchAni = {
+        loop: true,
+        autoplay: true,
+        animationData: search,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        }
+    }
+
+
     
     return (
         userInfo &&
@@ -129,12 +141,16 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
                         <h3 className="ProfilePage__booking-title">Upcoming booking</h3>
                         <p className="ProfilePage__booking-subtitle">{dateTimeConvert(userInfo.bookings[0].date)}</p>
                         <p className="ProfilePage__booking-text">{userInfo.bookings[0].restaurant}</p>
-                        {bookingBox && <button className="ProfilePage__booking-cancel" onClick={({})=>cancelBooking(userInfo.bookings[0].id)}>Cancel</button> }
+                        {bookingBox && <button className="ProfilePage__booking-cancel" onClick={()=>cancelBooking(userInfo.bookings[0].id)}>Cancel</button> }
                         <img className="ProfilePage__booking-image" src={userInfo.bookings[0].image} alt="restaurant"/>
                     </article>
                     :
                     <article className="ProfilePage__booking-placeholder">
-                        <h1 className="ProfilePage__booking-placeholder-message">No booking</h1>
+                        <h3 className="ProfilePage__booking-placeholder-title">Upcoming booking</h3>
+                        <div className="ProfilePage__booking-animate">
+                            <Lottie  options={searchAni} height={70} width={70}/>
+                        </div>
+                        <p className="ProfilePage__booking-placeholder-text">You don't have any reservations</p>
                     </article>
                 }
                 {bookingBox && userInfo.bookings.slice(1).map((booking, i) => {
@@ -197,6 +213,7 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
                 </div>
             </section>
             <button className="ProfilePage__logout" onClick={handleLogout}>Log Out</button>
+            <NavBar onPage="profile"/>
             <PageFooter/>
 
         </section>
