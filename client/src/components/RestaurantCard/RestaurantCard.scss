@@ -19,7 +19,8 @@
         cursor: pointer;
 
         &--loading{
-            @include loading;
+            @include loadingcard;
+            animation: loadingcard 1.2s infinite;
             position: relative;
             background-color: $secondary-color-cloud;
             border-radius: 0.25rem;

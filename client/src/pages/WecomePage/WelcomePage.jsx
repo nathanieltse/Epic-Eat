@@ -30,7 +30,7 @@ class WelcomePage extends Component {
                 password:this.state.password
             })
             .then(res=>{
-                const usertoken = localStorage.setItem("usertoken", res.data.authToken)
+                localStorage.setItem("usertoken", res.data.authToken)
                 this.props.handlelogin()
             })
             .catch(err=> {

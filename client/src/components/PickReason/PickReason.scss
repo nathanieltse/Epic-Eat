@@ -3,3 +3,63 @@
 @use '../../partials/typographys' as *;
 @use '../../partials/spacings' as *;
 @use '../../partials/mixins' as *;
+
+.PickReason{
+    background-color: $background-color-grey;
+    z-index: 1;
+    position: absolute;
+    width: 100vw;
+    min-height:100vh;
+    animation: loadbookings 1s;
+
+    &__container{
+        width: 95%;
+        margin:0 auto 7rem;
+    }
+
+    &__title{
+        text-align: center;
+        margin:1rem 0 1.5rem;
+        color: $secondary-color-gold;
+        
+    }
+
+    &__btn-container{
+        @include flex-row{
+            flex-wrap: wrap;
+            gap:2rem;
+            justify-content: center;
+        }
+        width: 100%;
+    }
+
+    &__btn{
+        @include flex-column;
+        @include loadblock;
+        position: relative;
+        width: 7rem;
+        height:7rem;
+        border:none;
+        background-color: $white;
+        box-shadow: $card-shadow;
+        border-radius: $card-radius;
+        padding: 0.25rem;
+        animation: loadblock 0.4s;
+        cursor: pointer;
+
+        &-icon{
+            position: absolute;
+            height:2rem;
+        }
+
+        &-text{
+            @include medium-body-text;
+            align-self: center;
+            justify-self:end;
+            margin: auto 0;
+            width:5rem;
+            color: $primary-color-sunflower;
+            line-height: 1rem;
+        }
+    }
+}

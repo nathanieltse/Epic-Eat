@@ -5,14 +5,14 @@
 @use '../../partials/mixins' as *;
 
 .RecommendationPage{
+    position: relative;
     height: 100vh;
-    padding:2.5% 0;
     
 
     &__image-container{
         position: relative;
         width: 95%;
-        margin:0 auto;
+        margin:2.5% auto;
         border-radius: $card-radius;
         box-shadow: $card-shadow;
         height:65vh;
@@ -60,7 +60,7 @@
         }
         width: 95%;
         height:35vh;
-        padding-bottom: 4.5rem;
+        padding-bottom: 6rem;
         margin:0 auto;
     }
 

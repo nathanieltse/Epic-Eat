@@ -1,12 +1,19 @@
 import { useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
+import PickReason from '../../components/PickReason/PickReason'
 import './RecommendationPage.scss'
 
 const RecommendationPage = () => {
         const [pickReason, setPickReason] = useState(false)
-        
+
+        const picked = (reason) => {
+            setPickReason(true)
+            console.log(reason)
+        }
+
         return(
             <section className="RecommendationPage">
+                {!pickReason && <PickReason picked={picked}/>}
                 <div className="RecommendationPage__image-container">
                     <div className="RecommendationPage__text-container">
                         <h2 className="RecommendationPage__title">restaurant name</h2>

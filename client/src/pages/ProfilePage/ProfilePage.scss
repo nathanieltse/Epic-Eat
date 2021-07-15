@@ -15,7 +15,7 @@
         border-radius: $card-radius;
         border-radius: $card-radius;
         height: auto;
-        z-index: 0;
+        
 
         &--expand{
             overflow: hidden;
@@ -32,12 +32,13 @@
         }
 
         &-remove-icon{
+            @include loadblock;
             position: fixed;
             z-index: 2;
             right:0;
             margin: 0.25rem 2rem;
             cursor: pointer;
-            animation: loadAddPrefer 0.3s;
+            animation: loadblock 0.5s;
         }
 
         &-container, &-placeholder{
@@ -47,6 +48,7 @@
             overflow: hidden;
             height: 10rem;
             border-radius: $card-radius;
+            margin-bottom: 1rem;
             
             &::before{
                 position: absolute;
@@ -58,8 +60,10 @@
             } 
         }
 
+
         &-placeholder{
-            
+            margin-bottom: 0 ;
+
             &::before{
                 background: none;
             } 
@@ -118,6 +122,7 @@
         &-cancel{
             @include button;
             @include button-cta;
+            @include loadblock;
             position: absolute;
             margin: 0.5rem 1rem;
             width: 4rem;
@@ -126,7 +131,7 @@
             bottom:0;
             right:0;
             z-index: 1;
-            animation: loadAddPrefer 0.3s;
+            animation: loadblock 0.3s;
         }
     }
 
@@ -134,11 +139,14 @@
         @include flex-column{
             justify-content: space-between;
         }
+        @include loadblock;
         border-radius: $card-radius;
         background-color: $white;
         margin-top: 1rem;
         padding:1rem;
         box-shadow: $card-shadow;
+        opacity: 0;
+        animation: loadblock 0.3s 0.1s forwards;
 
         &-container{
             @include flex-row{
@@ -155,23 +163,14 @@
     }
 
     &__add-prefer{
+        @include loadblock;
         width: 100%;
         margin:0.5rem 0;
         padding:1rem;
         background: $white;
         box-shadow: $card-shadow;
-        animation: loadAddPrefer 0.8s;
+        animation: loadblock 0.8s;
 
-        @keyframes loadAddPrefer {
-            0%{
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            100%{
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
     
         &-title{
             margin-bottom: 1rem;     
@@ -186,6 +185,7 @@
         }
 
         &-container{
+            
             @include flex-row{
                 justify-content: center;
                 flex-wrap: wrap;
@@ -202,6 +202,7 @@
     }
 
     &__preference{
+        @include loadblock;
         @include flex-row{
             align-items: center;
             justify-content: space-between;
@@ -212,6 +213,8 @@
         margin-top: 1rem;
         padding:1rem;
         box-shadow: $card-shadow;
+        opacity: 0;
+        animation: loadblock 0.5s 0.3s forwards;
 
         &-add{
             margin-left: auto;
@@ -241,10 +244,13 @@
     }
 
     &__logout{
+        @include loadblock;
         @include button;
         @include button-cta;
         margin-top:1rem;
         margin-bottom: 1rem;
+        opacity: 0;
+        animation: loadblock 0.5s 0.5s forwards;
     }
 
     
