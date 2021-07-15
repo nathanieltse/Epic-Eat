@@ -102,7 +102,7 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
 
     const cancelBooking = (bookingid) => {
         axios
-            .delete('/api/user/booking',{
+            .delete('/api/booking',{
                 data:{
                     id:bookingid
                 },

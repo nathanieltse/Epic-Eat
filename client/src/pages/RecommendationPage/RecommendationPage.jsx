@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
 import './RecommendationPage.scss'
 
 const RecommendationPage = () => {
-
+        const [pickReason, setPickReason] = useState(false)
+        
         return(
             <section className="RecommendationPage">
                 <div className="RecommendationPage__image-container">

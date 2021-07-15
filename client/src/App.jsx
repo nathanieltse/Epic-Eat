@@ -7,12 +7,9 @@ import SignupPage from './pages/SignupPage/SignupPage'
 import axios from 'axios'
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import { Component } from 'react'
-
-
-
 import './App.scss'
 
-const userToken = localStorage.getItem("usertoken")
+let userToken = localStorage.getItem("usertoken")
 
 class App extends Component {
   state={
@@ -77,6 +74,9 @@ class App extends Component {
   }
 
   handlelogin = () =>{
+    userToken = localStorage.getItem("usertoken")
+    console.log(userToken)
+
     axios
       .get('/api/user',{
         headers:{

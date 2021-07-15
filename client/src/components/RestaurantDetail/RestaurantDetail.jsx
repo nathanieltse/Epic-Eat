@@ -60,7 +60,7 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
     const bookdate = () => {
         console.log(selectedDate, Date.parse(selectedDate))
         axios
-            .post('api/user/booking',{
+            .post('api/booking',{
                 restaurant:details.name,
                 image:details.image_url,
                 date:Date.parse(selectedDate)

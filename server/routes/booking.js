@@ -1,10 +1,46 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/userModel')
+const auth = require('../middlewares/auth')
+const {v4 : uuid} = require('uuid');
 
 require('dotenv').config();
 
-router.post('/booking/:userId/:restaurantId', (_req,res)=>{
-    res.status(200).json("message : restaurant booked")
+router.post('/booking', auth, (req,res) => {
+    const {restaurant, image, date} = req.body
+    User
+        .findByIdAndUpdate(req.decoded.id,{$push:{"bookings":{
+            "id":uuid(),
+            "restaurant":restaurant,
+            "image":image,
+            "date":date
+        }}}, {new: true})
+        .select('-password')
+        .then(result => {
+            if (!result) return res.status(400).json({message:"cant find user info"})
+            result.bookings.sort((a,b) =>  a.date-b.date)
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({message:"user server error"})
+        })
+})
+
+router.delete('/booking', auth, (req,res) => {
+    const {id} = req.body
+    User
+        .findByIdAndUpdate(req.decoded.id,{$pull:{bookings: {id: id}}}, {new: true})
+        .select('-password')
+        .then(result => {
+            if (!result) return res.status(400).json({message:"cant find user info"})
+            result.bookings.sort((a,b) =>  a.date-b.date)
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({message:"user server error"})
+        })
 })
 
 
