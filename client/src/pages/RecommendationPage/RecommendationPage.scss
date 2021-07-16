@@ -9,49 +9,87 @@
     height: 100vh;
     
 
-    &__image-container{
+    &__image{
         position: relative;
-        width: 95%;
+        height:65vh;
         margin:2.5% auto;
+        width: 95%;
         border-radius: $card-radius;
         box-shadow: $card-shadow;
-        height:65vh;
         overflow: hidden;
-        cursor: pointer;
 
-        &:before{
+        
+        &-wrapper,&-wrapper-2{
             position: absolute;
+            cursor: pointer;
             height:100%;
             width: 100%;
-            content: "";
-            background: $support-color-shadow-black;
 
+            &:before{
+                position: absolute;
+                height:100%;
+                width: 100%;
+                content: "";
+                background: $support-color-shadow-black;
+
+            }
+        }
+        &-wrapper-2{
+            animation: swipe-left1 1.2s forwards;
+
+            @keyframes swipe-left {
+                0%{
+                    transform: translateX(0);
+                }
+                100%{
+                    transform: translateX(-120%) rotateZ(-15deg);
+                    
+                }
+            }
+        }
+
+        &-wrapper--like{
+            animation: swipe-right 1.2s forwards;
+
+            @keyframes swipe-right {
+                0%{
+                    transform: translateX(0);
+                }
+                100%{
+                    transform: translateX(120%) rotateZ(15deg);
+                    
+                }
+            }
+        }
+    
+        &-text{
+            position: absolute;
+            width: 100%;
+            bottom:0.5rem;
+            padding-left: 1.5rem;
+            
+            
+        }
+    
+        &-title{
+            color: $white;
+    
+        }
+    
+        &-distance{
+            color: $white;
+        }
+
+
+        &-image{
+            height: 100%;
+            width: 100%;
+            
         }
         
     }
 
-    &__image{
-        height: 100%;
-        width: 100%;
-        
-    }
-
-    &__text-container{
-        position: absolute;
-        width: 100%;
-        bottom:0.5rem;
-        padding-left: 1.5rem;
-        
-    }
-
-    &__title{
-        color: $white;
-
-    }
-
-    &__distance{
-        color: $white;
-    }
+    
 
     &__button-container{
         @include flex-row{
@@ -72,18 +110,12 @@
         background-color: $white;
         box-shadow: $sunfloew-shadow;
         cursor: pointer;
-    }
 
-    &__button-icon{
-        width: 2.5rem;
-        height: 2.5rem;
-        
-        &--like{
-            fill: $primary-color-sunflower;
-        }
-
-        &--dislike{
-            fill: $primary-color-black;
+        &-icon{
+            width: 2.5rem;
+            height: 2.5rem;
+            
         }
     }
+
 }

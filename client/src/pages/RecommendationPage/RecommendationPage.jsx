@@ -1,40 +1,92 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
+import axios from 'axios'
+import heart from '../../assets/icons/heart.svg'
+import cross from '../../assets/icons/dislike_cross.svg'
 import PickReason from '../../components/PickReason/PickReason'
 import './RecommendationPage.scss'
 
-const RecommendationPage = () => {
-        const [pickReason, setPickReason] = useState(false)
+const RecommendationPage = ({latitude, longitude}) => {
+        const [pickReason, setPickReason] = useState(null)
+        const [userRec , setUserRec] = useState([])
+        const [currentView, setCurrentView] = useState(null)
+        const [nextView, setNextView] = useState(null)
+        const [like, setLike] = useState("Dxp9SElV1f5MwPxIun_47w")
+        const [dislike, setDislike] = useState("Dxp9SElV1f5MwPxIun_47w")
+
+        const userToken = localStorage.getItem("usertoken")
+
 
         const picked = (reason) => {
-            setPickReason(true)
-            console.log(reason)
+            setPickReason(reason)
+            sessionStorage.setItem("lastpickReason",reason)
+            
+            let lastpickReason = sessionStorage.getItem("lastpickReason")
+
+            
+            const userRecArr = JSON.parse(sessionStorage.getItem("userRec"))
+            shuffle(userRecArr)
+            setUserRec(userRecArr)
+
+            if(userRec.length || reason !== lastpickReason){
+                axios
+                    .get('/api/recommendation',{
+                        headers:{
+                        authorization:`bearer ${userToken}`
+                        },
+                        params:{
+                            latitude:latitude,
+                            longitude:longitude,
+                            reason:reason,
+                        }
+                    })
+                    .then(res => {
+                        console.log("axios")
+                        sessionStorage.setItem("userRec",JSON.stringify(res.data))
+                        setUserRec(shuffle(JSON.parse(sessionStorage.getItem("userRec"))))
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            } 
         }
+
+        const shuffle = (array) => {
+            let newArr = []
+            let sortArr =  array.sort((a,b)=> a.id - b.id)
+
+            newArr = sortArr.forEach((item, i) => {
+                if(i!== sortArr.length-1 && item.id !== sortArr[i+1].id){
+                    return newArr.splice(Math.floor(Math.random() * newArr.length), 0, item)
+                }
+            })
+            return newArr
+        }
+
+        
 
         return(
             <section className="RecommendationPage">
                 {!pickReason && <PickReason picked={picked}/>}
-                <div className="RecommendationPage__image-container">
-                    <div className="RecommendationPage__text-container">
-                        <h2 className="RecommendationPage__title">restaurant name</h2>
-                        <p className="RecommendationPage__distance">3.2 km away</p>
-                    </div>
-                    <img className="RecommendationPage__image" src="https://media.cntraveler.com/photos/5b22bfdff04a775484b99dfc/1:1/w_800%2Cc_limit/Alo-Restaurant__2018_Raffi-Photo-2.jpg" alt="name"/>
-                </div>
-                <div className="RecommendationPage__button-container">
+                <section className="RecommendationPage__image">
+                    {userRec.length && userRec.map(item => {
+                        return <div key={item.id} className={item.id === like ? "RecommendationPage__image-wrapper RecommendationPage__image-wrapper--like" : "RecommendationPage__image-wrapper"}>
+                                    <div className="RecommendationPage__image-text">
+                                        <h1 className="RecommendationPage__image-title">{item.name}</h1>
+                                        <p className="RecommendationPage__image-distance">{(item.distance/1000).toFixed(1)} km away</p>
+                                    </div>
+                                    <img className="RecommendationPage__image-image" src={item.image_url} alt={item.name}/>
+                                </div>
+                    })}
+                </section>
+                <section className="RecommendationPage__button-container">
                     <button className="RecommendationPage__button">
-                        <svg className="RecommendationPage__button-icon RecommendationPage__button-icon--dislike" viewBox="0 0 24 24">
-                            <path d="M0 0h24v24H0V0z" fill="none"/>
-                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
-                        </svg>
+                    <img className="RecommendationPage__button-icon" src={cross} alt="cross icon"/>
                     </button>
                     <button className="RecommendationPage__button">
-                        <svg className="RecommendationPage__button-icon RecommendationPage__button-icon--like" viewBox="0 0 24 24">
-                            <path d="M0 0h24v24H0V0z" fill="none"/>
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                        </svg>
+                        <img className="RecommendationPage__button-icon" src={heart} alt="heart icon"/>
                     </button>
-                </div>
+                </section>
                 <NavBar onPage="recommends"/>
             </section>
         )

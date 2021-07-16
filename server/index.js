@@ -6,6 +6,7 @@ const userRoute = require('./routes/user')
 const locationRoute = require('./routes/location')
 const restaurantRoute = require('./routes/restaurant')
 const bookingRoute = require('./routes/booking')
+const recommendationRoute = require('./routes/recommendation')
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
@@ -33,6 +34,7 @@ app.use('/api',userRoute)
 app.use('/api',locationRoute)
 app.use('/api',restaurantRoute)
 app.use('/api',bookingRoute)
+app.use('/api',recommendationRoute)
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

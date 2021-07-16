@@ -75,7 +75,6 @@ class App extends Component {
 
   handlelogin = () =>{
     userToken = localStorage.getItem("usertoken")
-    console.log(userToken)
 
     axios
       .get('/api/user',{
