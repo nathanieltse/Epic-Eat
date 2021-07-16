@@ -14,7 +14,7 @@ router.get('/restaurants',(req,res) => {
             res.status(200).json(data.data)
         })
         .catch(err => {
-            console.log(err)
+            console.log(err, "get resturant route")
             res.status(500).json({message:"can't look up restaurant"})
         })
 })
@@ -29,7 +29,7 @@ router.get('/restaurants/detail',(req,res) => {
             res.status(200).json(data.data)
         })
         .catch(err => {
-            console.log(err)
+            console.log(err, "get restuarant detail route")
             res.status(500).json({message:"can't look up restaurant"})
         })
 })

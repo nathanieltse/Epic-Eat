@@ -58,13 +58,13 @@ router.get('/recommendation', auth, (req,res) => {
                                 })
                 })
                 .catch(err => {
-                    console.log(err)
+                    console.log(err, "recommendation route, api issue")
                     res.status(500).json({message:"can't look up restaurant"})
                 })
                 
         })
         .catch(err => {
-            console.log(err)
+            console.log(err,"get recommendation route" )
             res.status(500).json({message:"user server error"})
         })
 })

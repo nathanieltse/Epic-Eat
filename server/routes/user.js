@@ -40,7 +40,7 @@ router.post('/login', (req,res)=>{
             if (!result.length) return res.status(400).json({message:"user doesn't exsist"})
         })
         .catch(err => {
-            console.log(err)
+            console.log(err, "post login route")
             res.status(500).json({message:"user server error"})
         })
 })
@@ -106,7 +106,7 @@ router.post('/register', (req, res) => {
             })
         })
         .catch(err => {
-            console.log(err)
+            console.log(err, "post register route")
             res.status(500).json({message:"user server error"})
         })
 })
@@ -123,7 +123,7 @@ router.get('/checkusername', (req,res)=>{
             }
         })
         .catch(err => {
-            console.log(err)
+            console.log(err,"get checkusername route")
             res.status(500).json({message:"user server error"})
         })
 })
@@ -140,7 +140,7 @@ router.get('/user', auth, (req,res) => {
             res.status(200).json(result)
         })
         .catch(err => {
-            console.log(err)
+            console.log(err,"get user route")
             res.status(500).json({message:"user server error"})
         })
 })
@@ -156,7 +156,7 @@ router.put('/user/categories', auth, (req,res) => {
             res.status(200).json(result)
         })
         .catch(err => {
-            console.log(err)
+            console.log(err, "get categories route")
             res.status(500).json({message:"user server error"})
         })
 })

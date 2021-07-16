@@ -34,8 +34,8 @@
 
             }
         }
-        &-wrapper-2{
-            animation: swipe-left1 1.2s forwards;
+        &-wrapper--dislike{
+            animation: swipe-left 0.8s forwards;
 
             @keyframes swipe-left {
                 0%{
@@ -49,7 +49,7 @@
         }
 
         &-wrapper--like{
-            animation: swipe-right 1.2s forwards;
+            animation: swipe-right 0.8s forwards;
 
             @keyframes swipe-right {
                 0%{

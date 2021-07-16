@@ -22,7 +22,7 @@ router.post('/booking', auth, (req,res) => {
             res.status(200).json(result)
         })
         .catch(err => {
-            console.log(err)
+            console.log(err, "get booking route")
             res.status(500).json({message:"user server error"})
         })
 })
@@ -38,7 +38,7 @@ router.delete('/booking', auth, (req,res) => {
             res.status(200).json(result)
         })
         .catch(err => {
-            console.log(err)
+            console.log(err, "delete booking route")
             res.status(500).json({message:"user server error"})
         })
 })

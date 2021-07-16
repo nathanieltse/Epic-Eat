@@ -155,7 +155,10 @@ class App extends Component {
 
               <Route path="/recommends">
                 {loggedIn ?  
-                  <RecommendationPage latitude={latitude} longitude={longitude}/>
+                  <RecommendationPage 
+                    latitude={latitude} 
+                    longitude={longitude}
+                    handleSelect={this.handleSelect}/>
                   :
                   <Redirect to="/" />
                 }
