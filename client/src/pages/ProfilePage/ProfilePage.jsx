@@ -9,25 +9,17 @@ import PageFooter from '../../components/PageFooter/PageFooter'
 import './ProfilePage.scss'
 
 const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
-    const [categories, setCategories] = useState([])
     const [categoryBox, setCategoryBox] = useState(false)
     const [userPrefer, setUserPrefer] = useState(null)
     const [userInfo, setUserInfo] = useState(null)
     const [bookingBox, setBookingBox] = useState(false)
 
     const userToken = localStorage.getItem("usertoken")
-    
+
     useEffect(()=> {
         const storageInfo = JSON.parse(localStorage.userInfo)
         setUserInfo(storageInfo)
-        setUserPrefer(storageInfo.categories)
-        axios
-        .get('/api/categories')
-        .then(res => {
-                
-                setCategories(res.data)
-                })
-            .catch(err => console.log(err))
+        setUserPrefer(storageInfo.categories.filter(category => category.rate !== 0) )
     },[])
 
     const expandCategoryBox = () => {
@@ -36,49 +28,35 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
     
 
     const handleCategorySubmmit = (category, action) => {
-        if (action === "add"){
-            const newCategories = [...userPrefer, category]
-            
-            axios
-                .put('/api/user/categories',{
-                    categories:newCategories
-                },{
-                    headers:{
-                      authorization:`bearer ${userToken}`
-                    }
-                })
-                .then(res => {
-                    setUserPrefer(newCategories)
-                    handleInfoUpdate()
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        } else {
-            const newCategories = userPrefer.filter(prefer => prefer !== category)
-            
-            axios
-                .put('/api/user/categories',{
-                    categories:newCategories
-                },{
-                    headers:{
-                      authorization:`bearer ${userToken}`
-                    }
-                })
-                .then(res => {
-                    setUserPrefer(newCategories)
-                    handleInfoUpdate()
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        }
+        const newCategories = userInfo.categories.map(data => {
+            if(data === category){
+                action === "add" ? data.rate++ : data.rate = 0
+            }
+            return data
+        })
+
+        axios
+            .put('/api/user/categories',{
+                categories:newCategories
+            },{
+                headers:{
+                    authorization:`bearer ${userToken}`
+                }
+            })
+            .then(res => {
+                setUserPrefer(newCategories.filter(category => category.rate !== 0))
+                handleInfoUpdate()
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
-    const filterCategory = categories.filter(data => {
-        if(!userPrefer) return []
-        return userPrefer.indexOf(data.category) < 0
-    })
+    let filterCategory = []
+    if (userInfo){
+        filterCategory = userInfo.categories.filter(data => {
+        return data.rate === 0
+    })}
 
     const dateTimeConvert = (input) => {
         let date = `${(new Date(input)).getFullYear()}-${(new Date(input)).getMonth()+1}-${(new Date(input)).getDate()}`
@@ -134,14 +112,24 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
     return (
         userInfo &&
         <section className="ProfilePage">
-            <section className={bookingBox ? "ProfilePage__booking ProfilePage__booking--expand" : "ProfilePage__booking ProfilePage__booking--close"} onClick={() => {!bookingBox && expandBookingBox()}}>
-                {bookingBox && !!userInfo.bookings.length && <img className="ProfilePage__booking-remove-icon" onClick={()=>expandBookingBox()} src={remove} alt="remove icon"/>}
+            <section 
+                className={bookingBox ? "ProfilePage__booking ProfilePage__booking--expand" : "ProfilePage__booking ProfilePage__booking--close"} 
+                onClick={() => {!bookingBox && expandBookingBox()}}>
+                {bookingBox && !!userInfo.bookings.length && 
+                    <img className="ProfilePage__booking-remove-icon" onClick={()=>expandBookingBox()} src={remove} alt="remove icon"/>}
                 {userInfo.bookings.length ? 
                     <article className="ProfilePage__booking-container">
                         <h3 className="ProfilePage__booking-title">Upcoming booking</h3>
-                        <p className="ProfilePage__booking-subtitle">{dateTimeConvert(userInfo.bookings[0].date)}</p>
+                        <p className="ProfilePage__booking-subtitle">
+                            {dateTimeConvert(userInfo.bookings[0].date)}
+                        </p>
                         <p className="ProfilePage__booking-text">{userInfo.bookings[0].restaurant}</p>
-                        {bookingBox && <button className="ProfilePage__booking-cancel" onClick={()=>cancelBooking(userInfo.bookings[0].id)}>Cancel</button> }
+                        {bookingBox && 
+                            <button 
+                                className="ProfilePage__booking-cancel" 
+                                onClick={()=>cancelBooking(userInfo.bookings[0].id)}>
+                                Cancel
+                            </button> }
                         <img className="ProfilePage__booking-image" src={userInfo.bookings[0].image} alt="restaurant"/>
                     </article>
                     :
@@ -153,12 +141,19 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
                         <p className="ProfilePage__booking-placeholder-text">You don't have any reservations</p>
                     </article>
                 }
-                {bookingBox && userInfo.bookings.slice(1).map((booking, i) => {
-                        return <article key={i} className="ProfilePage__booking-container">
-                                    <h3 className="ProfilePage__booking-title">Upcoming booking</h3>
-                                    <p className="ProfilePage__booking-subtitle">{dateTimeConvert(booking.date)}</p>
-                                    <p className="ProfilePage__booking-text">{booking.restaurant}</p>
-                                    {bookingBox && <button className="ProfilePage__booking-cancel" onClick={() => cancelBooking(booking.id)}>Cancel</button> }
+                {bookingBox && userInfo.bookings.slice(1).map((booking) => {
+                        return <article 
+                                    key={booking.id} 
+                                    className="ProfilePage__booking-container">
+                                        <h3 className="ProfilePage__booking-title">Upcoming booking</h3>
+                                        <p className="ProfilePage__booking-subtitle">{dateTimeConvert(booking.date)}</p>
+                                        <p className="ProfilePage__booking-text">{booking.restaurant}</p>
+                                    {bookingBox && 
+                                        <button 
+                                            className="ProfilePage__booking-cancel" 
+                                            onClick={() => cancelBooking(booking.id)}>
+                                                Cancel
+                                        </button> }
                                     <img className="ProfilePage__booking-image" src={booking.image} alt="restaurant"/>
                                 </article>
                     
@@ -186,9 +181,17 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
                 </div>
                 <button className="ProfilePage__preference-add">
                     {categoryBox? 
-                    <img className="ProfilePage__preference-remove-icon" onClick={() => expandCategoryBox()} src={remove} alt="remove icon"/>
+                    <img 
+                        className="ProfilePage__preference-remove-icon" 
+                        onClick={() => expandCategoryBox()} 
+                        src={remove} 
+                        alt="remove icon"/>
                     :
-                    <img className="ProfilePage__preference-add-icon" onClick={() => expandCategoryBox()} src={add} alt="add icon"/>
+                    <img 
+                        className="ProfilePage__preference-add-icon" 
+                        onClick={() => expandCategoryBox()} 
+                        src={add} 
+                        alt="add icon"/>
                     }
                 </button>
                 {categoryBox && 
@@ -196,18 +199,24 @@ const ProfilePage = ({handleLogout, handleInfoUpdate}) => {
                         <h3 className="ProfilePage__add-prefer-title">Add your preference</h3>
 
                         <div className="ProfilePage__add-prefer-container">
-                            {filterCategory.map(category => {
-                                return <button key={category._id} className="ProfilePage__add-prefer-btn" onClick={()=>handleCategorySubmmit(category.category, "add")}>
-                                            {category.category.replace(category.category[0], category.category[0].toUpperCase())}
+                            {filterCategory.map((category, i)=> {
+                                return <button 
+                                            key={i} 
+                                            className="ProfilePage__add-prefer-btn" 
+                                            onClick={()=>handleCategorySubmmit(category, "add")}>
+                                                {category.category.replace(category.category[0], category.category[0].toUpperCase())}
                                         </button>
                             })}
                         </div>
                     </div>
                 }
                 <div className="ProfilePage__preference-btn-container">
-                    {userPrefer && userPrefer.map((category,i) => {
-                        return <button key={i} className="ProfilePage__preference-btn" onClick={()=>handleCategorySubmmit(category, "remove")}>
-                                    {category.replace(category[0], category[0].toUpperCase())}
+                    {!!userPrefer.length && userPrefer.map((category,i) => {
+                        return <button 
+                                    key={i} 
+                                    className="ProfilePage__preference-btn" 
+                                    onClick={()=>handleCategorySubmmit(category, "remove")}>
+                                        {category.category.replace(category.category[0], category.category[0].toUpperCase())}
                                 </button>
                     })}
                 </div>

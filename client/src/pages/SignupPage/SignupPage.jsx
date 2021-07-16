@@ -92,9 +92,10 @@ class SignupPage extends Component {
                     this.setState({userNameValid:true})
                 })
                 .catch(err=> {
+                    console.log(err.message)
                     this.setState({userNameValid:false})
                 })    
-        }else {
+        } else {
             this.setState({userNameValid:false})
         }
     }

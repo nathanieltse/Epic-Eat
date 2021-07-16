@@ -64,7 +64,39 @@ router.post('/register', (req, res) => {
                         firstName:  firstName,
                         lastName:  lastName,
                         email: email,
-                        phone: phone
+                        phone: phone,
+                        categories: [
+                            { category: 'african', rate: 0 },
+                            { category: 'newamerican', rate: 0 },
+                            { category: 'brazilian', rate: 0 },
+                            { category: 'british', rate: 0 },
+                            { category: 'caribbean', rate: 0 },
+                            { category: 'chinese', rate: 0 },
+                            { category: 'danish', rate: 0 },
+                            { category: 'ethiopian', rate: 0 },
+                            { category: 'filipino', rate: 0 },
+                            { category: 'french', rate: 0 },
+                            { category: 'greek', rate: 0 },
+                            { category: 'indonesian', rate: 0 },
+                            { category: 'irish', rate: 0 },
+                            { category: 'italian', rate: 0 },
+                            { category: 'japanese', rate: 0 },
+                            { category: 'korean', rate: 0 },
+                            { category: 'latin', rate: 0 },
+                            { category: 'malaysian', rate: 0 },
+                            { category: 'mediterranean', rate: 0 },
+                            { category: 'mexican', rate: 0 },
+                            { category: 'mideastern', rate: 0 },
+                            { category: 'egyptian', rate: 0 },
+                            { category: 'persian', rate: 0 },
+                            { category: 'polish', rate: 0 },
+                            { category: 'russian', rate: 0 },
+                            { category: 'spanish', rate: 0 },
+                            { category: 'taiwanese', rate: 0 },
+                            { category: 'thai', rate: 0 },
+                            { category: 'turkish', rate: 0 },
+                            { category: 'vietnamese', rate: 0 }
+                        ]
                     })
                     .then(user => {
                         const token = signJWTToken(user.id)
@@ -104,6 +136,7 @@ router.get('/user', auth, (req,res) => {
         .then(result => {
             if (!result.length) return res.status(400).json({message:"cant find user info"})
             result[0].bookings.sort((a,b) =>  a.date-b.date)
+            result[0].categories.sort((a,b)=>  b.rate-a.rate)
             res.status(200).json(result)
         })
         .catch(err => {
@@ -119,6 +152,7 @@ router.put('/user/categories', auth, (req,res) => {
         .then(result => {
             if (!result) return res.status(400).json({message:"cant find user info"})
             result.bookings.sort((a,b) =>  a.date-b.date)
+            result.categories.sort((a,b)=> b.rate-a.rate)
             res.status(200).json(result)
         })
         .catch(err => {
