@@ -5,11 +5,15 @@
 @use '../../partials/mixins' as *;
 
 .RecommendationPage{
-    position: relative;
+    position: fixed;
     height: 100vh;
+    width: 100vw;
     
 
     &__image{
+        @include loadblock;
+        animation: loadblock 0.5s forwards;
+        opacity: 0;
         position: relative;
         height:65vh;
         margin:2.5% auto;
@@ -17,6 +21,21 @@
         border-radius: $card-radius;
         box-shadow: $card-shadow;
         overflow: hidden;
+
+        &--loading{
+            @include flex-column{
+                justify-content: center;
+                align-items: center;
+            }
+            background-color: $white;
+        }
+
+        &-loading-text{
+            position: relative;
+            text-align: center;
+            top:-3rem;
+            color:$primary-color-sunflower;
+        }
 
         
         &-wrapper,&-wrapper-2{

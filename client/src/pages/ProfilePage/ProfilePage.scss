@@ -197,6 +197,12 @@
         &-btn{
             @include tag;
             @include secondary-tag;
+            
+            &:hover{
+                color:$primary-color-sunflower;
+                background-color: $white;
+            }
+            
             cursor: pointer;
         }
     }

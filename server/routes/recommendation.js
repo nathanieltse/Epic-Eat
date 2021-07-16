@@ -28,7 +28,7 @@ router.get('/recommendation', auth, (req,res) => {
                 .then(data =>{
                     data.data.businesses.map(data => responseData.push(data))
                     return axios
-                                .get(`https://api.yelp.com/v3/businesses/search?term=restaurants,${reason},${topCategory[selectIndex]}&open_now=true&limit=25&latitude=${latitude}&longitude=${longitude}`,{
+                                .get(`https://api.yelp.com/v3/businesses/search?term=restaurants,${reason},${topCategory[selectIndex]},${mealtime}&open_now=true&limit=10&latitude=${latitude}&longitude=${longitude}`,{
                                     headers: { Authorization: `Bearer ${process.env.API_KEY}` }
                                 })
                                 .then(data =>{
@@ -46,7 +46,7 @@ router.get('/recommendation', auth, (req,res) => {
                                                                 .then(data =>{
                                                                     data.data.businesses.map(data => responseData.push(data))
                                                                     return axios
-                                                                                .get(`https://api.yelp.com/v3/businesses/search?term=restaurants,${reason}&open_now=true&limit=25&latitude=${latitude}&longitude=${longitude}`,{
+                                                                                .get(`https://api.yelp.com/v3/businesses/search?term=restaurants,popular,${reason}&open_now=true&limit=40&latitude=${latitude}&longitude=${longitude}`,{
                                                                                     headers: { Authorization: `Bearer ${process.env.API_KEY}` }
                                                                                 })
                                                                                 .then(data =>{
