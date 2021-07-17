@@ -8,7 +8,7 @@ import cross from '../../assets/icons/dislike_cross.svg'
 import PickReason from '../../components/PickReason/PickReason'
 import './RecommendationPage.scss'
 
-const RecommendationPage = ({latitude, longitude, handleSelect}) => {
+const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate}) => {
         const [pickReason, setPickReason] = useState(null)
         const [userRec , setUserRec] = useState([])
         const [currentView, setCurrentView] = useState(null)
@@ -17,10 +17,22 @@ const RecommendationPage = ({latitude, longitude, handleSelect}) => {
         const [dislike, setDislike] = useState("")
 
         const userToken = sessionStorage.getItem("usertoken")
-
+        
         useEffect(()=>{
             displayRec(userRec)
         },[userRec])
+        
+        let categoryList = []
+        
+        useEffect(() => {
+            axios 
+                .get('api/categories')
+                .then(res => {
+                    categoryList = res.data
+                    console.log(categoryList)
+                })
+                .catch(err => console.log(err))
+        },[])
 
 
         const picked = (reason) => {
@@ -104,7 +116,23 @@ const RecommendationPage = ({latitude, longitude, handleSelect}) => {
 
         const userAction = (restaurant, action) => {
             if(action === "like"){
+                console.log(restaurant)
                 setLike(currentView.id)
+                axios
+                    .put('/api/user/favourites',{
+                        favourite:restaurant
+                    },{
+                        headers:{
+                            authorization:`bearer ${userToken}`
+                        }
+                    })
+                    .then(res => {
+                        console.log(res.data)
+                        handleInfoUpdate()
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             } else {
                 setDislike(currentView.id)
             }
@@ -147,6 +175,24 @@ const RecommendationPage = ({latitude, longitude, handleSelect}) => {
             }
         }
 
+        const scroeUpdate = (restaurant) => {
+            restaurant.
+            axios
+                .put('/api/user/categories',{
+                    categories:"",
+                },{
+                    headers:{
+                        authorization:`bearer ${userToken}`
+                    }
+                })
+                .then(res => {
+                    handleInfoUpdate()
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
+        }
 
         
         
@@ -167,8 +213,8 @@ const RecommendationPage = ({latitude, longitude, handleSelect}) => {
                         }
                         <div 
                             onClick={() => handleSelect(currentView)}
-                            className={currentView.id === dislike? "RecommendationPage__image-wrapper RecommendationPage__image-wrapper--like" :
-                                        currentView.id === like? "RecommendationPage__image-wrapper RecommendationPage__image-wrapper--dislike" :
+                            className={currentView.id === dislike? "RecommendationPage__image-wrapper RecommendationPage__image-wrapper--dislike" :
+                                        currentView.id === like? "RecommendationPage__image-wrapper RecommendationPage__image-wrapper--like" :
                                         "RecommendationPage__image-wrapper"}>
                             <div className="RecommendationPage__image-text">
                                 <h1 className="RecommendationPage__image-title">{currentView.name}</h1>
@@ -190,10 +236,10 @@ const RecommendationPage = ({latitude, longitude, handleSelect}) => {
                 {pickReason &&
                     <section className="RecommendationPage__button-container">
                         <h3 className="RecommendationPage__button-container-header">Tab to book or view details</h3>
-                        <button className="RecommendationPage__button" onClick={()=>userAction(currentView, "like")}>
+                        <button className="RecommendationPage__button" onClick={()=>userAction(currentView, "dislike")}>
                             <img className="RecommendationPage__button-icon" src={cross} alt="cross icon"/>
                         </button>
-                        <button className="RecommendationPage__button" onClick={()=>userAction(currentView, "dislike")}>
+                        <button className="RecommendationPage__button" onClick={()=>userAction(currentView, "like")}>
                             <img className="RecommendationPage__button-icon" src={heart} alt="heart icon"/>
                         </button>
                     </section>

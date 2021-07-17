@@ -110,19 +110,20 @@
     }
 } 
 @mixin button-secondary{
-    background-color: $white;
-    border:2px solid $secondary-color-cloud;
-    color: $secondary-color-gold;
+    background-color: rgba(255,255,255,0.1);
+    border:2px solid $primary-color-sunflower;;
+    color: $primary-color-sunflower;
 
     &:hover{
-        border:2px solid $primary-color-sunflower;
+        background-color: $primary-color-sunflower;
+        color:$white;
+        transition: 0.5s;
     }
 }
 
 @mixin button-cta{
     background-color: $primary-color-sunflower;
-    color:$white
-
+    color:$white;
 }
 
 @mixin button-warning {
@@ -210,8 +211,8 @@
     }
 }
 
-@mixin loadblock {
-    @keyframes loadblock {
+@mixin block-zoom-in {
+    @keyframes block-zoom-in {
         0%{
             opacity: 0;
             transform: scale(0.8);
@@ -219,6 +220,18 @@
         100%{
             opacity: 1;
             transform: scale(1);
+        }
+    }
+}
+
+@mixin expand-block {
+
+    @keyframes expand-block {
+        0%{
+            max-height:10rem;
+        }
+        100%{
+            max-height:110vh;
         }
     }
 }

@@ -5,6 +5,9 @@
 @use '../../partials/mixins' as *;
 
 .booking{
+    @include flex-column{
+            gap:1rem;
+    }
     position: relative;
     width: 100%;
     border-radius: $card-radius;
@@ -13,27 +16,19 @@
     
 
     &--expand{
+        @include expand-block;
         overflow: hidden;
-        animation: loadbookings 1s;
-
-        @keyframes loadbookings {
-            0%{
-                max-height:10rem;
-            }
-            100%{
-                max-height:110vh;
-            }
-        }
+        animation: expand-block 1s;
     }
 
     &__remove-icon{
-        @include loadblock;
+        @include block-zoom-in;
         position: fixed;
         z-index: 2;
         right:0;
         margin: 0.25rem 2rem;
         cursor: pointer;
-        animation: loadblock 0.5s;
+        animation: block-zoom-in 0.5s;
     }
 
     &__container, &__placeholder{
@@ -43,7 +38,6 @@
         overflow: hidden;
         height: 10rem;
         border-radius: $card-radius;
-        margin-bottom: 1rem;
         
         &::before{
             position: absolute;
@@ -114,18 +108,29 @@
         transform: translateY(-25%);
     }
 
-    &__cancel{
-        @include button;
-        @include button-cta;
-        @include loadblock;
+    &__action-btn-container{
+        @include flex-row{
+            gap:0.5rem;
+        }
         position: absolute;
         margin: 0.5rem 1rem;
-        width: 4rem;
-        height:2rem;
         padding: 0;
         bottom:0;
         right:0;
         z-index: 1;
-        animation: loadblock 0.3s;
+    }
+
+    &__remove-btn{
+        @include button;
+        @include button-secondary;
+        @include block-zoom-in;
+        width: 5rem;
+        animation: block-zoom-in 0.3s;
+    }
+
+    &__detail-btn{
+        @include button;
+        @include button-cta;
+        width: 5rem;
     }
 }

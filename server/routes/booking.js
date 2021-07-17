@@ -7,10 +7,11 @@ const {v4 : uuid} = require('uuid');
 require('dotenv').config();
 
 router.post('/booking', auth, (req,res) => {
-    const {restaurant, image, date} = req.body
+    const {id,restaurant, image, date} = req.body
     User
         .findByIdAndUpdate(req.decoded.id,{$push:{"bookings":{
-            "id":uuid(),
+            "id":id,
+            "bookingID":uuid(),
             "restaurant":restaurant,
             "image":image,
             "date":date
@@ -19,6 +20,7 @@ router.post('/booking', auth, (req,res) => {
         .then(result => {
             if (!result) return res.status(400).json({message:"cant find user info"})
             result.bookings.sort((a,b) =>  a.date-b.date)
+            result.categories.sort((a,b)=> b.rate-a.rate)
             res.status(200).json(result)
         })
         .catch(err => {
@@ -30,11 +32,12 @@ router.post('/booking', auth, (req,res) => {
 router.delete('/booking', auth, (req,res) => {
     const {id} = req.body
     User
-        .findByIdAndUpdate(req.decoded.id,{$pull:{bookings: {id: id}}}, {new: true})
+        .findByIdAndUpdate(req.decoded.id,{$pull:{"bookings": {bookingID: id}}}, {new: true})
         .select('-password')
         .then(result => {
             if (!result) return res.status(400).json({message:"cant find user info"})
             result.bookings.sort((a,b) =>  a.date-b.date)
+            result.categories.sort((a,b)=> b.rate-a.rate)
             res.status(200).json(result)
         })
         .catch(err => {

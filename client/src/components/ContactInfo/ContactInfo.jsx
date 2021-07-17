@@ -3,7 +3,7 @@ import './ContactInfo.scss'
 const ContactInfo = ({userInfo}) => {
     return (
         <section className="contact">
-            <h3 className="contact__title">contact Info</h3>
+            <h3 className="contact__title">Contact Info</h3>
             <div className="contact__container">
                 <h4 className="contact__label">Name</h4>
                 <p className="contact__text">{userInfo.firstName +" "+userInfo.lastName}</p>

@@ -92,8 +92,7 @@ class App extends Component {
   }
 
   handleLogout = () => {
-    sessionStorage.removeItem("usertoken")
-    sessionStorage.removeItem("userInfo")
+    sessionStorage.clear()
     this.setState({loggedIn:false})
   }
 
@@ -120,7 +119,10 @@ class App extends Component {
         <div className="App">
           <BrowserRouter>
 
-              {selected && <RestaurantDetail handleModalBack={this.handleModalBack} id={selected.id} distance={selected.distance}/>}
+              {selected && <RestaurantDetail 
+                                handleModalBack={this.handleModalBack} 
+                                id={selected.id} 
+                                distance={selected.distance}/>}
             
             <Switch>
 
@@ -158,7 +160,8 @@ class App extends Component {
                   <RecommendationPage 
                     latitude={latitude} 
                     longitude={longitude}
-                    handleSelect={this.handleSelect}/>
+                    handleSelect={this.handleSelect}
+                    handleInfoUpdate={this.handleInfoUpdate}/>
                   :
                   <Redirect to="/" />
                 }
@@ -166,7 +169,10 @@ class App extends Component {
 
               <Route path="/profile">
                 {loggedIn ?  
-                  <ProfilePage handleLogout={this.handleLogout} handleInfoUpdate={this.handleInfoUpdate}/>
+                  <ProfilePage 
+                    handleLogout={this.handleLogout} 
+                    handleInfoUpdate={this.handleInfoUpdate}
+                    handleSelect={this.handleSelect}/>
                   :
                   <Redirect to="/" />
                 }

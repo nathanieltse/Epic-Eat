@@ -8,7 +8,8 @@ const UserSchema = new mongoose.Schema({
     email: String,
     phone: String,
     bookings:   [Object],
-    categories: [Object]
+    categories: [Object],
+    favourites: [Object]
 })
 
 const User = mongoose.model("User", UserSchema)

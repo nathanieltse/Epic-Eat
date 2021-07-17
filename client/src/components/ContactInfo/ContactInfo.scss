@@ -8,14 +8,14 @@
     @include flex-column{
         justify-content: space-between;
     }
-    @include loadblock;
+    @include block-zoom-in;
     border-radius: $card-radius;
     background-color: $white;
     margin-top: 1rem;
     padding:1rem;
     box-shadow: $card-shadow;
     opacity: 0;
-    animation: loadblock 0.3s 0.1s forwards;
+    animation: block-zoom-in 0.3s 0.1s forwards;
 
     &__container{
         @include flex-row{

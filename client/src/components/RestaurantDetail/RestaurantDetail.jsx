@@ -58,9 +58,9 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
     }
 
     const bookdate = () => {
-        console.log(selectedDate, Date.parse(selectedDate))
         axios
             .post('api/booking',{
+                id:details.id,
                 restaurant:details.name,
                 image:details.image_url,
                 date:Date.parse(selectedDate)
@@ -102,9 +102,11 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
                         <h1 className="RestaurantDetail__info-name">{details.name}</h1>
                         <p className="RestaurantDetail__info-address">
                             {details.location.address1}
-                            <span className="RestaurantDetail__info-distance">
+                            {distance && 
+                                <span className="RestaurantDetail__info-distance">
                                 {(distance/1000).toFixed(1)} km
-                            </span>
+                                </span>
+                            }
                             <span className="RestaurantDetail__info-price">
                                 {details.price}
                             </span>

@@ -5,7 +5,7 @@
 @use '../../partials/mixins' as *;
 
 .preference{
-    @include loadblock;
+    @include block-zoom-in;
     @include flex-row{
         align-items: center;
         justify-content: space-between;
@@ -17,7 +17,7 @@
     padding:1rem;
     box-shadow: $card-shadow;
     opacity: 0;
-    animation: loadblock 0.5s 0.3s forwards;
+    animation: block-zoom-in 0.5s 0.5s forwards;
 
     &__expand-btn{
         margin-left: auto;
@@ -27,13 +27,13 @@
     }
 
     &__add-prefer{
-        @include loadblock;
+        @include block-zoom-in;
         width: 100%;
         margin:0.5rem 0;
         padding:1rem;
         background: $white;
         box-shadow: $card-shadow;
-        animation: loadblock 0.8s;
+        animation: block-zoom-in 0.8s;
     
     
         &-title{

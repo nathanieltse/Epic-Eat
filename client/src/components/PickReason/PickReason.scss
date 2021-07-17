@@ -35,7 +35,7 @@
 
     &__btn{
         @include flex-column;
-        @include loadblock;
+        @include block-zoom-in;
         position: relative;
         width: 7rem;
         height:7rem;
@@ -44,7 +44,7 @@
         box-shadow: $card-shadow;
         border-radius: $card-radius;
         padding: 0.25rem;
-        animation: loadblock 0.4s;
+        animation: block-zoom-in 0.4s;
         cursor: pointer;
 
         &-icon{

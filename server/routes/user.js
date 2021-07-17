@@ -156,7 +156,41 @@ router.put('/user/categories', auth, (req,res) => {
             res.status(200).json(result)
         })
         .catch(err => {
-            console.log(err, "get categories route")
+            console.log(err, "put categories route")
+            res.status(500).json({message:"user server error"})
+        })
+})
+
+router.put('/user/favourites', auth, (req,res) => {
+    const {favourite} = req.body
+    User
+        .findByIdAndUpdate(req.decoded.id,{$push:{favourites:favourite}}, {new: true})
+        .select('-password')
+        .then(result => {
+            if (!result) return res.status(400).json({message:"cant find user info"})
+            result.bookings.sort((a,b) =>  a.date-b.date)
+            result.categories.sort((a,b)=> b.rate-a.rate)
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log(err, "put favourites route")
+            res.status(500).json({message:"user server error"})
+        })
+})
+
+router.delete('/user/favourites', auth, (req,res) => {
+    const {id} = req.body
+    User
+        .findByIdAndUpdate(req.decoded.id,{$pull:{favourites: {id: id}}}, {new: true})
+        .select('-password')
+        .then(result => {
+            if (!result) return res.status(400).json({message:"cant find user info"})
+            result.bookings.sort((a,b) =>  a.date-b.date)
+            result.categories.sort((a,b)=> b.rate-a.rate)
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log(err, "delete favourites route")
             res.status(500).json({message:"user server error"})
         })
 })

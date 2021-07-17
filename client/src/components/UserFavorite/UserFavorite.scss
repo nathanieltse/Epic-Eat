@@ -1,0 +1,104 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.favourite{
+    @include flex-column;
+    border-radius: $card-radius;
+    background-color: $white;
+    margin-top: 1rem;
+    padding:1rem;
+    box-shadow: $card-shadow;
+    opacity: 1;
+
+    &--expand{
+        @include expand-block;
+        animation: expand-block 1s;
+    }
+
+    &__header{
+        @include flex-row{
+            justify-content: space-between;
+        }
+    }
+
+    &__body{
+        @include flex-column{
+            gap:1rem;
+        }
+    }
+
+    &__container{
+        @include flex-row{
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        width: 100%;
+    }
+
+    &__empty-message{
+        @include medium-body-text;
+        color: $secondary-color-gold;
+        margin:1.5rem auto;
+    }
+
+    &__expand-btn{
+        margin-left: auto;
+        border:none;
+        background: none;
+        cursor: pointer;
+    }
+
+    &__image-container{
+        height:5rem;
+        width: 10rem;
+        overflow: hidden;
+        border-radius: $card-radius;
+        box-shadow: $card-shadow;
+    }
+
+    &__image{
+        width: 100%;
+        transform: translateY(-10%);
+    }
+
+    &__body-container{
+        @include flex-row{
+            justify-content: space-between;
+        }
+        width: 100%;
+    }
+
+    &__name{
+        margin-bottom: 0.25rem;
+        width: 100%;
+
+    }
+
+    &__action-btn-container{
+        @include flex-row{
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap:0.5rem;
+        }
+        align-self: flex-end;
+
+    }
+
+    &__remove-btn{
+        @include block-zoom-in;
+        @include button;
+        @include button-secondary;
+        width: 5rem;
+        animation: block-zoom-in 0.5s;
+    }
+
+    &__detail-btn{
+        @include button;
+        @include button-cta;
+        width: 5rem;
+    }
+}

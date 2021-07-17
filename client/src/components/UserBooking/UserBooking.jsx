@@ -5,7 +5,7 @@ import remove from '../../assets/icons/remove-circle.svg'
 import Lottie from 'react-lottie'
 import './UserBooking.scss'
 
-const UserBooking = ({userInfo, setUserInfo, handleInfoUpdate}) => {
+const UserBooking = ({userInfo, updateProfileState, handleInfoUpdate, handleSelect}) => {
     const [bookingBox, setBookingBox] = useState(false)
 
 
@@ -38,7 +38,7 @@ const UserBooking = ({userInfo, setUserInfo, handleInfoUpdate}) => {
                 }
             })
             .then(res => {
-                setUserInfo(res.data)
+                updateProfileState(res.data)
                 handleInfoUpdate()
                 setBookingBox(!bookingBox)
             })
@@ -72,12 +72,18 @@ const UserBooking = ({userInfo, setUserInfo, handleInfoUpdate}) => {
                         {dateTimeConvert(userInfo.bookings[0].date)}
                     </p>
                     <p className="booking__text">{userInfo.bookings[0].restaurant}</p>
-                    {bookingBox && 
+                    <div className="booking__action-btn-container">
+                        {bookingBox && 
+                            <button className="booking__remove-btn" 
+                                    onClick={() => cancelBooking(userInfo.bookings[0].bookingID)}>
+                                    Remove
+                            </button>}
                         <button 
-                            className="booking__cancel" 
-                            onClick={()=>cancelBooking(userInfo.bookings[0].id)}>
-                            Cancel
-                        </button> }
+                            className="booking__detail-btn"
+                            onClick={() => handleSelect(userInfo.bookings[0])}>
+                            Details
+                        </button>
+                    </div>
                     <img className="booking__image" src={userInfo.bookings[0].image} alt="restaurant"/>
                 </article>
                 :
@@ -96,12 +102,19 @@ const UserBooking = ({userInfo, setUserInfo, handleInfoUpdate}) => {
                                     <h3 className="booking__title">Upcoming booking</h3>
                                     <p className="booking__subtitle">{dateTimeConvert(booking.date)}</p>
                                     <p className="booking__text">{booking.restaurant}</p>
-                                {bookingBox && 
-                                    <button 
-                                        className="booking__cancel" 
-                                        onClick={() => cancelBooking(booking.id)}>
-                                            Cancel
-                                    </button> }
+
+                                    <div className="booking__action-btn-container">
+                                        <button 
+                                            className="booking__remove-btn" 
+                                            onClick={() => cancelBooking(booking.bookingID)}>
+                                                Remove
+                                        </button>
+                                        <button 
+                                            className="booking__detail-btn"
+                                            onClick={() => handleSelect(booking)}>
+                                            Details
+                                        </button>
+                                    </div>
                                 <img className="booking__image" src={booking.image} alt="restaurant"/>
                             </article>
                 

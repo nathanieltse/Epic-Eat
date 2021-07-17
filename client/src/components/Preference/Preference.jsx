@@ -53,7 +53,7 @@ const Preference = ({userInfo, handleInfoUpdate}) => {
         userPrefer &&
         <section className="preference">
             <div className="preference__tilte-container">
-                <h3 className="preference__title">Your preference</h3>
+                <h3 className="preference__title">Preference</h3>
                 <h4 className="preference__subtitle">Tab to remove category</h4>
             </div>
             <button className="preference__expand-btn">
