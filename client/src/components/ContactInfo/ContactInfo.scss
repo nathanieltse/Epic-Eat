@@ -1,0 +1,32 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.contact{
+    @include flex-column{
+        justify-content: space-between;
+    }
+    @include loadblock;
+    border-radius: $card-radius;
+    background-color: $white;
+    margin-top: 1rem;
+    padding:1rem;
+    box-shadow: $card-shadow;
+    opacity: 0;
+    animation: loadblock 0.3s 0.1s forwards;
+
+    &__container{
+        @include flex-row{
+            justify-content: space-between;
+            align-items:baseline;
+        }
+        margin:0.25rem 0;
+    }
+
+    &__text{
+        @include medium-body-text;
+    }
+
+}

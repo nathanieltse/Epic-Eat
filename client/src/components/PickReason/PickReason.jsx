@@ -9,7 +9,7 @@ import './PickReason.scss'
 
 const PickReason = ({picked}) => {
     const icon = [celebrate, family, date, chill, business, friends, everyday]
-    const reasons = ["Celebration", "Family Gathering", "Date", "Chill", "Business", "Friends", "Everyday Dinning"]
+    const reasons = ["Celebration", "Family Gathering", "Date", "Chill", "Business", "Friends", "Everyday Dining"]
 
     return (
         <section className="PickReason">

@@ -9,7 +9,7 @@ import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import { Component } from 'react'
 import './App.scss'
 
-let userToken = localStorage.getItem("usertoken")
+let userToken = sessionStorage.getItem("usertoken")
 
 class App extends Component {
   state={
@@ -57,7 +57,7 @@ class App extends Component {
       })
       .then(res => {
         this.setState({loggedIn:true})
-        localStorage.setItem("userInfo",JSON.stringify(res.data[0]))
+        sessionStorage.setItem("userInfo",JSON.stringify(res.data[0]))
       })
       .catch(err => {
         this.setState({loggedIn:false})
@@ -74,7 +74,7 @@ class App extends Component {
   }
 
   handlelogin = () =>{
-    userToken = localStorage.getItem("usertoken")
+    userToken = sessionStorage.getItem("usertoken")
 
     axios
       .get('/api/user',{
@@ -83,7 +83,7 @@ class App extends Component {
         }
       })
       .then(res => {
-        localStorage.setItem("userInfo",JSON.stringify(res.data[0]))
+        sessionStorage.setItem("userInfo",JSON.stringify(res.data[0]))
         this.setState({loggedIn:true})
       })
       .catch(err => {
@@ -92,8 +92,8 @@ class App extends Component {
   }
 
   handleLogout = () => {
-    localStorage.removeItem("usertoken")
-    localStorage.removeItem("userInfo")
+    sessionStorage.removeItem("usertoken")
+    sessionStorage.removeItem("userInfo")
     this.setState({loggedIn:false})
   }
 
@@ -105,7 +105,7 @@ class App extends Component {
         }
       })
       .then(res => {
-        localStorage.setItem("userInfo",JSON.stringify(res.data[0]))
+        sessionStorage.setItem("userInfo",JSON.stringify(res.data[0]))
       })
       .catch(err => {
         this.setState({loggedIn:false})

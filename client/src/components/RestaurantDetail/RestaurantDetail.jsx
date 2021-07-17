@@ -15,7 +15,7 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
     const [bookingform, setBookingform] = useState(false)
     const [bookingSuccess, setBookingSuccess] = useState(false)
 
-    const userToken = localStorage.getItem("usertoken")
+    const userToken = sessionStorage.getItem("usertoken")
 
     const pickertheme = createTheme({
         palette: {
@@ -36,7 +36,7 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
                 setDetails(res.data)
             })
             .catch(err => console.log(err))
-    },[])
+    },[id])
 
     const timeConvert = (time) => {
         let newTime = time[0]+time[1]+":"+time[2]+time[3]+(time >= 1200 ? "pm" : "am")
@@ -70,7 +70,7 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
                 }
             })
             .then(res => {
-                localStorage.setItem("userInfo",JSON.stringify(res.data))
+                sessionStorage.setItem("userInfo",JSON.stringify(res.data))
                 setBookingSuccess(true)
             })
             .catch(err => {

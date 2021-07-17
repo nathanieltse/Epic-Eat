@@ -158,7 +158,7 @@ class SignupPage extends Component {
                 email:email
             })
             .then(res => {
-                localStorage.setItem("usertoken", res.data.authToken)
+                sessionStorage.setItem("usertoken", res.data.authToken)
                 this.props.handlelogin()
                 })
             .catch(err => console.log(err))

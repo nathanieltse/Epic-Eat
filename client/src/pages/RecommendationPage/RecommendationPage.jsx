@@ -16,7 +16,7 @@ const RecommendationPage = ({latitude, longitude, handleSelect}) => {
         const [like, setLike] = useState("")
         const [dislike, setDislike] = useState("")
 
-        const userToken = localStorage.getItem("usertoken")
+        const userToken = sessionStorage.getItem("usertoken")
 
         useEffect(()=>{
             displayRec(userRec)
@@ -102,14 +102,14 @@ const RecommendationPage = ({latitude, longitude, handleSelect}) => {
 
         }
 
-        const userAction = (id, action) => {
+        const userAction = (restaurant, action) => {
             if(action === "like"){
                 setLike(currentView.id)
             } else {
                 setDislike(currentView.id)
             }
 
-            let newRec = userRec.filter(rec => rec.id !== id)
+            let newRec = userRec.filter(rec => rec.id !== restaurant.id)
             setTimeout(() => {
                 if (!!newRec.length){
                     sessionStorage.setItem("userRec",(JSON.stringify(newRec)))
@@ -189,10 +189,11 @@ const RecommendationPage = ({latitude, longitude, handleSelect}) => {
                 }
                 {pickReason &&
                     <section className="RecommendationPage__button-container">
-                        <button className="RecommendationPage__button" onClick={()=>userAction(currentView.id, "like")}>
-                        <img className="RecommendationPage__button-icon" src={cross} alt="cross icon"/>
+                        <h3 className="RecommendationPage__button-container-header">Tab to book or view details</h3>
+                        <button className="RecommendationPage__button" onClick={()=>userAction(currentView, "like")}>
+                            <img className="RecommendationPage__button-icon" src={cross} alt="cross icon"/>
                         </button>
-                        <button className="RecommendationPage__button" onClick={()=>userAction(currentView.id, "dislike")}>
+                        <button className="RecommendationPage__button" onClick={()=>userAction(currentView, "dislike")}>
                             <img className="RecommendationPage__button-icon" src={heart} alt="heart icon"/>
                         </button>
                     </section>

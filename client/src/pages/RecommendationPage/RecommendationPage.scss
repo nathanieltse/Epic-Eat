@@ -111,6 +111,7 @@
     
 
     &__button-container{
+        position: relative;
         @include flex-row{
             justify-content: space-around;
             align-items: center;
@@ -119,6 +120,13 @@
         height:35vh;
         padding-bottom: 6rem;
         margin:0 auto;
+
+        &-header{
+            position: absolute;
+            top:-0.5rem;
+            color:$secondary-color-gold;
+            font-weight: $weight-regular;
+        }
     }
 
     &__button{
@@ -129,6 +137,7 @@
         background-color: $white;
         box-shadow: $sunfloew-shadow;
         cursor: pointer;
+
 
         &-icon{
             width: 2.5rem;

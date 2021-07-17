@@ -1,0 +1,87 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.preference{
+    @include loadblock;
+    @include flex-row{
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    border-radius: $card-radius;
+    background-color: $white;
+    margin-top: 1rem;
+    padding:1rem;
+    box-shadow: $card-shadow;
+    opacity: 0;
+    animation: loadblock 0.5s 0.3s forwards;
+
+    &__expand-btn{
+        margin-left: auto;
+        border:none;
+        background: none;
+        cursor: pointer;
+    }
+
+    &__add-prefer{
+        @include loadblock;
+        width: 100%;
+        margin:0.5rem 0;
+        padding:1rem;
+        background: $white;
+        box-shadow: $card-shadow;
+        animation: loadblock 0.8s;
+    
+    
+        &-title{
+            margin-bottom: 1rem;     
+        }
+    
+        &-container{
+            
+            @include flex-row{
+                justify-content: center;
+                flex-wrap: wrap;
+                gap:1rem;
+            }
+    
+        }
+    
+        &-btn{
+            @include tag;
+            @include secondary-tag;
+            
+            &:hover{
+                color:$primary-color-sunflower;
+                background-color: $white;
+            }
+            
+            cursor: pointer;
+        }
+    }
+
+    &__btn-container{
+        @include flex-row{
+            justify-content: center;
+            flex-wrap: wrap;
+            gap:0.7rem;
+        }
+        width:100%;
+        margin-top: 1rem;
+        &:last-child{
+            margin-right: auto;
+        }
+    }
+
+
+    &__btn{
+        @include tag;
+        cursor: pointer;
+    }
+}
+
+
+

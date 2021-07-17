@@ -1,0 +1,131 @@
+@use '../../partials/colors' as *;
+@use '../../partials/variables' as *;
+@use '../../partials/typographys' as *;
+@use '../../partials/spacings' as *;
+@use '../../partials/mixins' as *;
+
+.booking{
+    position: relative;
+    width: 100%;
+    border-radius: $card-radius;
+    border-radius: $card-radius;
+    height: auto;
+    
+
+    &--expand{
+        overflow: hidden;
+        animation: loadbookings 1s;
+
+        @keyframes loadbookings {
+            0%{
+                max-height:10rem;
+            }
+            100%{
+                max-height:110vh;
+            }
+        }
+    }
+
+    &__remove-icon{
+        @include loadblock;
+        position: fixed;
+        z-index: 2;
+        right:0;
+        margin: 0.25rem 2rem;
+        cursor: pointer;
+        animation: loadblock 0.5s;
+    }
+
+    &__container, &__placeholder{
+        position: relative;
+        border-radius: $card-radius;
+        background-color: $white;
+        overflow: hidden;
+        height: 10rem;
+        border-radius: $card-radius;
+        margin-bottom: 1rem;
+        
+        &::before{
+            position: absolute;
+            content: "";
+            background-color: $support-color-background-black;
+            z-index: 1;
+            height:100%;
+            width: 100%;
+        } 
+    }
+
+
+    &__placeholder{
+        margin-bottom: 0 ;
+
+        &::before{
+            background: none;
+        } 
+
+        &-title{
+            position: relative;
+            margin: 1rem 1rem;
+            z-index: 2;
+        }
+
+        &-animate{
+            position: relative;
+            z-index: 2;
+        }
+
+        &-text{
+            @include medium-body-text;
+            position: relative;
+            text-align: center;
+            z-index: 2;
+            color:$secondary-color-gold;
+        }
+    }
+
+    &__title{
+        position: absolute;
+        top:0;
+        margin: 1rem 1rem;
+        z-index: 1;
+        color: $white;
+
+    }
+
+    &__subtitle,&__text{
+        @include medium-body-text;
+        position: absolute;
+        margin: 0.5rem 1rem;
+        z-index: 1;
+        color: $white;
+    }
+
+    &__subtitle{
+        bottom:1rem;
+        margin-bottom:1rem;
+    }
+
+    &__text{
+        bottom:0;
+    }
+    
+    &__image{
+        width: 100%;
+        transform: translateY(-25%);
+    }
+
+    &__cancel{
+        @include button;
+        @include button-cta;
+        @include loadblock;
+        position: absolute;
+        margin: 0.5rem 1rem;
+        width: 4rem;
+        height:2rem;
+        padding: 0;
+        bottom:0;
+        right:0;
+        z-index: 1;
+        animation: loadblock 0.3s;
+    }
+}
