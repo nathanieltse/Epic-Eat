@@ -19,6 +19,10 @@
     opacity: 0;
     animation: block-zoom-in 0.5s 0.5s forwards;
 
+    &__subtitle{
+        color:$secondary-color-cloud;
+    }
+
     &__expand-btn{
         margin-left: auto;
         border:none;

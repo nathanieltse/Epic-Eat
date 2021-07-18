@@ -5,6 +5,9 @@
 @use '../../partials/mixins' as *;
 
 .PickReason{
+    @include flex-column{
+        justify-content: center;
+    }
     background-color: $background-color-grey;
     z-index: 1;
     position: absolute;

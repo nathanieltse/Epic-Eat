@@ -9,7 +9,7 @@
     background-color: $support-color-background-black;
     height: 100vh;
     width: 100vw;
-    z-index: 2;
+    z-index: 4;
 
     &__container{
         background-color: $white;
@@ -265,6 +265,11 @@
 
 
         &--success{
+            @include flex-row{
+                justify-content: center;
+                align-items: center;
+            }
+            overflow: hidden;
             width: 100%;
             padding: 0;
             line-height: 0;
@@ -272,25 +277,17 @@
 
             @keyframes successbtn {
                 0%{
-                    width: 100%;
                     transform: translateY(0);
                 }
-
+            
                 50%{
                     border-radius: 50%;
-                    width: 2.5rem;
-                    height:2.5rem;
                     transform: translateY(-8rem);
                 } 
-
+            
                 70%{
                     width: 2.5rem;
                     height:2.5rem;
-                }
-
-                90%{
-                    width: 3rem;
-                    height:3rem;
                 }
                  
                 100%{
@@ -304,18 +301,7 @@
         }
 
         &-check{
-            width: 2rem;
-            opacity: 0;
-            animation: successcheck 0.4s 1.3s forwards;
-
-            @keyframes successcheck {
-                0%{
-                    opacity: 0;
-                }
-                100%{
-                    opacity: 1;
-                }
-            }
+            transform: translateY(-5%);
         }
     }
     

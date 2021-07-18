@@ -30,10 +30,11 @@ router.post('/login', (req,res)=>{
             if(result.length) {
                 bcrypt.compare(password, result[0].password, (_, success) => {
                     if (success) {
-                      const token = signJWTToken(result[0]);
-                      return res.status(200).json({ authToken: token });
+                        const tokenInfo = {id: result[0].id}
+                        const token = signJWTToken(tokenInfo);
+                        return res.status(200).json({ authToken: token });
                     } else {
-                      return res.status(403).json({ message: 'Username/password combination is wrong' });
+                        return res.status(403).json({ message: 'Username/password combination is wrong' });
                     }
                 })
             }
@@ -99,7 +100,8 @@ router.post('/register', (req, res) => {
                         ]
                     })
                     .then(user => {
-                        const token = signJWTToken(user.id)
+                        const tokenInfo = {id: user.id}
+                        const token = signJWTToken(tokenInfo);
                         res.status(200).json({ authToken: token })
                     })
                     .catch(err => res.status(500).json(err))

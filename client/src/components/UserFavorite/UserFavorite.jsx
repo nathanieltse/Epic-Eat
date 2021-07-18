@@ -39,7 +39,7 @@ const UserFavorite = ({handleInfoUpdate, updateProfileState, handleSelect, userI
     return (
         <section className={favouriteBox ? "favourite favourite--expand" : "favourite"}>
             <section className="favourite__header">
-                <h3 className="favourite__title">Liked</h3>
+                <h3 className="favourite__title">Restaurant you liked</h3>
                 <button className="favourite__expand-btn">
                     {favouriteBox? 
                     <img 

@@ -18,7 +18,7 @@
     &--expand{
         @include expand-block;
         overflow: hidden;
-        animation: expand-block 1s;
+        animation: expand-block 0.5s;
     }
 
     &__remove-icon{

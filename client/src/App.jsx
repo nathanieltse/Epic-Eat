@@ -9,6 +9,7 @@ import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import { Component } from 'react'
 import './App.scss'
 
+//will reassign
 let userToken = sessionStorage.getItem("usertoken")
 
 class App extends Component {

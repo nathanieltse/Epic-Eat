@@ -8,7 +8,7 @@ import axios from 'axios';
 const numRegex = new RegExp("^(?=.*[0-9])")
 const letterRegex = new RegExp("^(?=.*[a-z])|(?=.*[A-Z])")
 const emailRegex = new RegExp(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/)
-const phoneRegex = new RegExp (/^[+]?[1]?[- ]?[(]?[0-9]{3}[)]?[ ]?([0-9]{3})[- ]?([0-9]{4})$/)
+const phoneRegex = new RegExp (/^[+]?[1]?[- ]?[(]?[0-9]{3}[)]?[- ]?([0-9]{3})[- ]?([0-9]{4})$/)
 
 class SignupPage extends Component {
     state={
@@ -160,7 +160,7 @@ class SignupPage extends Component {
             .then(res => {
                 sessionStorage.setItem("usertoken", res.data.authToken)
                 this.props.handlelogin()
-                })
+            })
             .catch(err => console.log(err))
         
     }

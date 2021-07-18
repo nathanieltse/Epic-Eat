@@ -40,7 +40,6 @@ const UserBooking = ({userInfo, updateProfileState, handleInfoUpdate, handleSele
             .then(res => {
                 updateProfileState(res.data)
                 handleInfoUpdate()
-                setBookingBox(!bookingBox)
             })
             .catch(err => {
                 console.log(err)
@@ -97,7 +96,7 @@ const UserBooking = ({userInfo, updateProfileState, handleInfoUpdate, handleSele
             }
             {bookingBox && userInfo.bookings.slice(1).map((booking) => {
                     return <article 
-                                key={booking.id} 
+                                key={booking.bookingID} 
                                 className="booking__container">
                                     <h3 className="booking__title">Upcoming booking</h3>
                                     <p className="booking__subtitle">{dateTimeConvert(booking.date)}</p>

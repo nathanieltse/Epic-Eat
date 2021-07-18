@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
 import axios from 'axios'
 import searchRec from '../../assets/animation/searchRec.json'
+import locating from '../../assets/animation/locating.json'
 import Lottie from 'react-lottie'
 import heart from '../../assets/icons/heart.svg'
 import cross from '../../assets/icons/dislike_cross.svg'
@@ -11,28 +12,27 @@ import './RecommendationPage.scss'
 const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate}) => {
         const [pickReason, setPickReason] = useState(null)
         const [userRec , setUserRec] = useState([])
+        const [categoryList, setCategoryList] = useState([])
         const [currentView, setCurrentView] = useState(null)
         const [nextView, setNextView] = useState(null)
         const [like, setLike] = useState("")
         const [dislike, setDislike] = useState("")
 
         const userToken = sessionStorage.getItem("usertoken")
+        const userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
         
         useEffect(()=>{
             displayRec(userRec)
         },[userRec])
         
-        let categoryList = []
-        
         useEffect(() => {
             axios 
                 .get('api/categories')
                 .then(res => {
-                    categoryList = res.data
-                    console.log(categoryList)
+                    setCategoryList(res.data)
                 })
                 .catch(err => console.log(err))
-        },[])
+        },[categoryList])
 
 
         const picked = (reason) => {
@@ -116,7 +116,7 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
 
         const userAction = (restaurant, action) => {
             if(action === "like"){
-                console.log(restaurant)
+                scroeUpdate(restaurant)
                 setLike(currentView.id)
                 axios
                     .put('/api/user/favourites',{
@@ -127,7 +127,6 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                         }
                     })
                     .then(res => {
-                        console.log(res.data)
                         handleInfoUpdate()
                     })
                     .catch(err => {
@@ -175,18 +174,47 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
             }
         }
 
+        const locatingAni = {
+            loop: true,
+            autoplay: true,
+            animationData: locating,
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice",
+            }
+        }
+
         const scroeUpdate = (restaurant) => {
-            restaurant.
+            const restuarantCategory = restaurant.categories.map(category => category.alias)
+                    
+            const newUserCategory = restuarantCategory.reduce((acc,cur) => {
+                categoryList.map(category => {
+                    if (category.category === cur){
+                        acc.map(userCategory =>  {
+                            console.log(cur)
+                            if(userCategory.category === cur){
+                                return userCategory.rate++
+                            } else {
+                                return cur
+                            }
+                        })
+                    } else{
+                        return acc
+                    }
+                    return acc
+                })
+                return acc
+            },userInfo.categories)
+
             axios
                 .put('/api/user/categories',{
-                    categories:"",
+                    categories:newUserCategory,
                 },{
                     headers:{
                         authorization:`bearer ${userToken}`
                     }
                 })
                 .then(res => {
-                    handleInfoUpdate()
+                    return res
                 })
                 .catch(err => {
                     console.log(err)
@@ -194,12 +222,10 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
 
         }
 
-        
-        
         return(
             <section className="RecommendationPage">
-                {!pickReason && latitude && <PickReason picked={picked}/>}
-                {currentView && pickReason && latitude?
+                {!pickReason && latitude && longitude && <PickReason picked={picked}/>}
+                {currentView && pickReason && latitude && longitude?
                  <section className="RecommendationPage__image">
                      
                         {nextView && 
@@ -224,7 +250,8 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                         </div>
                 </section>
                 :
-                pickReason && <section className="RecommendationPage__image RecommendationPage__image--loading">
+                pickReason && 
+                <section className="RecommendationPage__image RecommendationPage__image--loading">
                     <Lottie  options={searchAni} height={300} width={300}/>
                     {like || dislike ? 
                         <h1 className="RecommendationPage__image-loading-text">That's all we can find for the moment. Try picking other occasions.</h1>
@@ -243,6 +270,12 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                             <img className="RecommendationPage__button-icon" src={heart} alt="heart icon"/>
                         </button>
                     </section>
+                }
+                {!longitude && !latitude && 
+                <section className="RecommendationPage__loading-screen">
+                    <Lottie  options={locatingAni} height={150} width={150}/>
+                    <h1 className="RecommendationPage__loading-screen-text">Looking around places near you</h1>
+                </section>
                 }
                 <NavBar onPage="recommends"/>
             </section>

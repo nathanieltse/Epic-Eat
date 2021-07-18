@@ -1,12 +1,14 @@
 import {useEffect, useState} from 'react';
 import { createTheme, ThemeProvider } from "@material-ui/core";
+import Lottie from 'react-lottie'
+import check from'../../assets/animation/check.json'
 import axios from 'axios';
 import { KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import phone from '../../assets/icons/phone.svg'
 import cross from '../../assets/icons/close-cross.svg'
-import check from '../../assets/icons/check-done.svg'
+// import check from '../../assets/icons/check-done.svg'
 import './RestaurantDetail.scss'
 
 const RestaurantDetail = ({handleModalBack, id, distance}) => {
@@ -14,6 +16,7 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
     const [details, setDetails] = useState(null);
     const [bookingform, setBookingform] = useState(false)
     const [bookingSuccess, setBookingSuccess] = useState(false)
+    const [showcheck, setShowcheck] = useState(false)
 
     const userToken = sessionStorage.getItem("usertoken")
 
@@ -72,10 +75,22 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
             .then(res => {
                 sessionStorage.setItem("userInfo",JSON.stringify(res.data))
                 setBookingSuccess(true)
+                setTimeout(() => {
+                    setShowcheck(true)
+                }, 800);
             })
             .catch(err => {
                 console.log(err)
             })
+    }
+
+    const checkAni = {
+        loop: false,
+        autoplay: true,
+        animationData: check,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        }
     }
 
     return (
@@ -101,7 +116,7 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
                         </button>
                         <h1 className="RestaurantDetail__info-name">{details.name}</h1>
                         <p className="RestaurantDetail__info-address">
-                            {details.location.address1}
+                            {details.location.address1}, {details.location.city}
                             {distance && 
                                 <span className="RestaurantDetail__info-distance">
                                 {(distance/1000).toFixed(1)} km
@@ -167,7 +182,13 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
                             {bookingform ? 
                                 <button className={bookingSuccess ? "RestaurantDetail__book-btn RestaurantDetail__book-btn--success" : "RestaurantDetail__book-btn"} onClick={bookdate}>
                                 {bookingSuccess? 
-                                <img className="RestaurantDetail__book-btn-check" src={check} alt="check icon"/> : "Confirm Booking"}
+                                    showcheck && 
+                                    <div className="RestaurantDetail__book-btn-check">
+                                        <Lottie options={checkAni} height={80} width={70}/>
+                                    </div>
+                                    : 
+                                    "Confirm Booking"
+                                }
                                 </button>
                                 :
                                 <button className="RestaurantDetail__book-btn" onClick={showbooking}>
@@ -183,5 +204,7 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
         
     )
 }
+
+{/* <img className="RestaurantDetail__book-btn-check" src={check} alt="check icon"/> */}
 
 export default RestaurantDetail
