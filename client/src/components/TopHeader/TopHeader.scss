@@ -17,15 +17,30 @@
         }
         z-index: 1;
         padding:1rem 0 0.5rem;
-        cursor: pointer;
-
+        
         &__icon{
             margin-left: 0.5rem;
             width: 1.5rem;
+            cursor: pointer;
+        }
+
+        &-text{
+            @include flex-column{
+                align-items: center;
+            }
         }
     
-        &__text{
+        &-title{
             color:$secondary-color-gold;
+
+            &--loading{
+                color: $secondary-color-gold;
+            }
+        }
+
+        &-subtitle{
+            @include medium-body-text;
+            color: $secondary-color-cloud;
         }
     }
     

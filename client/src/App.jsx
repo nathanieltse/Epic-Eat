@@ -46,9 +46,21 @@ class App extends Component {
             location: res.data.split(",")[0],
           })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.setState({
+            latitude: null,
+            longitude: null,
+            location: null
+          })
+        })
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      this.setState({
+        latitude: null,
+        longitude: null,
+        location: null
+      })
+    })
 
     axios
       .get('/api/user',{

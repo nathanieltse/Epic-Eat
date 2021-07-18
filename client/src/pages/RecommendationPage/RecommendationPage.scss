@@ -8,6 +8,7 @@
     position: relative;
     height: 100vh;
     width: 100vw;
+    padding-top:2.5%;
     
 
     &__image{
@@ -16,7 +17,7 @@
         opacity: 0;
         position: relative;
         height:55vh;
-        margin:2.5% auto;
+        margin:0 auto 2.5%;
         width: 95%;
         border-radius: $card-radius;
         box-shadow: $card-shadow;

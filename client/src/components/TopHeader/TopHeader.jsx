@@ -28,7 +28,10 @@ const TopHeader = ({location, handleLocationUpdate, resetRestaurantList}) => {
     return(
         <section className="TopHeader">
                 <div className="TopHeader__header" onClick={()=>setExpandform(true)}>
-                    <h1 className="TopHeader__header-text">{location}</h1>
+                    <div className="TopHeader__header-text">
+                        <h1 className={location ? "TopHeader__header-title" : "TopHeader__header-title--loading"}>{location || "Searching for places"}</h1>
+                        {!location && <p className="TopHeader__header-subtitle">enable location sharing to see nearby restaurants</p>}
+                    </div>
                     <img className="TopHeader__header-icon" src={locationIcon} alt="location icon"/>
                 </div>
                 {expandform &&

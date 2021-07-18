@@ -10,6 +10,6 @@
     overflow: hidden;
 
     &--popup{
-        position: fixed; 
+        overflow-y: hidden
     }
 }
