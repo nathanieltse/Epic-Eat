@@ -15,7 +15,7 @@
     padding:1rem;
     box-shadow: $card-shadow;
     opacity: 0;
-    animation: block-zoom-in 0.3s 0.1s forwards;
+    animation: block-zoom-in 0.3s 0.2s forwards;
 
     &__container{
         @include flex-row{

@@ -5,21 +5,57 @@
 @use '../../partials/mixins' as *;
 
 .TopHeader{
-    @include flex-row{
-        justify-content: center;
-    }
+    @include flex-column;
     position: sticky;
     top:0;
-    z-index: 1;
-    padding:1rem 0 0.5rem;
+    width: 95%;
+    margin: 0 auto;
+
+    &__header{
+        @include flex-row{
+            justify-content: center;
+        }
+        z-index: 1;
+        padding:1rem 0 0.5rem;
+
+        &__icon{
+            margin-left: 0.5rem;
+            width: 1.5rem;
+        }
     
-    &__icon{
-        margin-left: 0.5rem;
-        width: 1.5rem;
+        &__text{
+            color:$secondary-color-gold;
+        }
+    }
+    
+
+    &__body{
+        @include expand-block;
+        background-color: white;
+        box-shadow: $card-shadow;
+        border-radius: $card-radius;
+        animation: expand-block 1s;
+        padding:1rem;
+        
+        &-title{
+            margin-bottom: 0.5rem;
+        }
+        &-subtitle{
+            color: $secondary-color-gold;
+        }
     }
 
-    &__text{
-        color:$secondary-color-gold;
+    &__form{
+
+        &-input{
+            @include formfield;
+            margin-bottom:1rem 
+        }
+
+        &-submit{
+            @include button;
+            @include button-cta;
+        }
     }
 }
 

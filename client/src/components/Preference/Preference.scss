@@ -17,7 +17,7 @@
     padding:1rem;
     box-shadow: $card-shadow;
     opacity: 0;
-    animation: block-zoom-in 0.5s 0.5s forwards;
+    animation: block-zoom-in 0.5s 0.4s forwards;
 
     &__subtitle{
         color:$secondary-color-cloud;
