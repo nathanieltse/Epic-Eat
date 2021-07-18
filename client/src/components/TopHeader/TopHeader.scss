@@ -17,6 +17,7 @@
         }
         z-index: 1;
         padding:1rem 0 0.5rem;
+        cursor: pointer;
 
         &__icon{
             margin-left: 0.5rem;
@@ -30,13 +31,20 @@
     
 
     &__body{
-        @include expand-block;
+        @include block-zoom-in;
+        position: relative;
         background-color: white;
         box-shadow: $card-shadow;
         border-radius: $card-radius;
-        animation: expand-block 1s;
+        animation: block-zoom-in 0.5s;
         padding:1rem;
         
+        &-close-btn{
+            position: absolute;
+            right:1rem;
+            top:1.25rem;
+        }
+
         &-title{
             margin-bottom: 0.5rem;
         }
@@ -46,15 +54,33 @@
     }
 
     &__form{
+        position: relative;
+
+        &-icon{
+            position: absolute;
+            top:0.5rem;
+            left:0.5rem;
+            cursor: pointer;
+        }
 
         &-input{
             @include formfield;
-            margin-bottom:1rem 
+            padding-left:2.25rem;
+
+            &--invalid{
+                @include formfield-error;
+            }
+        }
+
+        &-message{
+            @include medium-body-text;
+            color: $support-color-red;
         }
 
         &-submit{
             @include button;
             @include button-cta;
+            margin-top: 1rem;
         }
     }
 }

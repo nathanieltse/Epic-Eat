@@ -9,12 +9,7 @@ const UserFavorite = ({handleInfoUpdate, updateProfileState, handleSelect, userI
 
     const userToken = sessionStorage.getItem("usertoken")
 
-    const expandFavouriteBox = () => {
-        setFavouriteBox(!favouriteBox)
-    }
-
     const deleteFavourite = (id) => {
-        console.log("click")
         axios
             .delete('/api/user/favourites',{
                 data:{
@@ -44,13 +39,13 @@ const UserFavorite = ({handleInfoUpdate, updateProfileState, handleSelect, userI
                     {favouriteBox? 
                     <img 
                         className="favourite__remove-icon" 
-                        onClick={() => expandFavouriteBox()} 
+                        onClick={() => setFavouriteBox(!favouriteBox)} 
                         src={remove} 
                         alt="remove icon"/>
                     :
                     <img 
                         className="favourite__add-icon" 
-                        onClick={() => expandFavouriteBox()} 
+                        onClick={() => setFavouriteBox(!favouriteBox)} 
                         src={add} 
                         alt="add icon"/>
                     }

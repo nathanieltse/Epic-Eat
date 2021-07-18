@@ -21,16 +21,6 @@
         animation: expand-block 0.5s;
     }
 
-    &__remove-icon{
-        @include block-zoom-in;
-        position: fixed;
-        z-index: 2;
-        right:0;
-        margin: 0.25rem 2rem;
-        cursor: pointer;
-        animation: block-zoom-in 0.5s;
-    }
-
     &__container, &__placeholder{
         position: relative;
         border-radius: $card-radius;
@@ -49,6 +39,47 @@
         } 
     }
 
+    &__header{
+        @include flex-row{
+            justify-content: space-between;
+        }
+        margin: 1rem;
+        position: relative;
+        z-index: 1;
+
+        &-title{
+            color: $white;
+        }
+
+        &-remove-icon, &-add-icon{
+            @include block-zoom-in;
+            cursor: pointer;
+            animation: block-zoom-in 0.5s;
+            margin-right: 0.5rem;
+        }
+    }
+
+    &__subtitle,&__text{
+        @include medium-body-text;
+        position: absolute;
+        margin: 0.5rem 1rem;
+        z-index: 1;
+        color: $white;
+    }
+
+    &__subtitle{
+        bottom:1rem;
+        margin-bottom:1rem;
+    }
+
+    &__text{
+        bottom:0;
+    }
+    
+    &__image{
+        width: 100%;
+        transform: translateY(-25%);
+    }
 
     &__placeholder{
         margin-bottom: 0 ;
@@ -77,37 +108,6 @@
         }
     }
 
-    &__title{
-        position: absolute;
-        top:0;
-        margin: 1rem 1rem;
-        z-index: 1;
-        color: $white;
-
-    }
-
-    &__subtitle,&__text{
-        @include medium-body-text;
-        position: absolute;
-        margin: 0.5rem 1rem;
-        z-index: 1;
-        color: $white;
-    }
-
-    &__subtitle{
-        bottom:1rem;
-        margin-bottom:1rem;
-    }
-
-    &__text{
-        bottom:0;
-    }
-    
-    &__image{
-        width: 100%;
-        transform: translateY(-25%);
-    }
-
     &__action-btn-container{
         @include flex-row{
             gap:0.5rem;
@@ -133,4 +133,6 @@
         @include button-cta;
         width: 5rem;
     }
+
+    
 }

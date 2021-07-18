@@ -14,10 +14,6 @@ const Preference = ({userInfo, handleInfoUpdate}) => {
         setUserPrefer(userInfo.categories.filter(category => category.rate !== 0) )
     },[])
 
-    const expandCategoryBox = () => {
-        setCategoryBox(!categoryBox)
-    }
-
     const handleCategorySubmmit = (category, action) => {
         const newCategories = userInfo.categories.map(data => {
             if(data === category){
@@ -60,13 +56,13 @@ const Preference = ({userInfo, handleInfoUpdate}) => {
                 {categoryBox? 
                 <img 
                     className="preference__remove-icon" 
-                    onClick={() => expandCategoryBox()} 
+                    onClick={() => setCategoryBox(!categoryBox)} 
                     src={remove} 
                     alt="remove icon"/>
                 :
                 <img 
                     className="preference__add-icon" 
-                    onClick={() => expandCategoryBox()} 
+                    onClick={() => setCategoryBox(!categoryBox)} 
                     src={add} 
                     alt="add icon"/>
                 }

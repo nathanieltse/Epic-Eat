@@ -2,6 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import search from '../../assets/animation/search.json'
 import remove from '../../assets/icons/remove-circle.svg'
+import add from '../../assets/icons/add.svg'
 import Lottie from 'react-lottie'
 import './UserBooking.scss'
 
@@ -54,19 +55,28 @@ const UserBooking = ({userInfo, updateProfileState, handleInfoUpdate, handleSele
             preserveAspectRatio: "xMidYMid slice",
         }
     }
-
-    const expandBookingBox = () => {
-        setBookingBox(!bookingBox)
-    }
+    
     return (
-        <section 
-            className={bookingBox ? "booking booking--expand" : "booking booking--close"} 
-            onClick={() => {!bookingBox && expandBookingBox()}}>
-            {bookingBox && !!userInfo.bookings.length && 
-                <img className="booking__remove-icon" onClick={()=>expandBookingBox()} src={remove} alt="remove icon"/>}
+        <section className={bookingBox ? "booking booking--expand" : "booking booking--close"} >
+            
             {userInfo.bookings.length ? 
                 <article className="booking__container">
-                    <h3 className="booking__title">Upcoming booking</h3>
+                    <div className="booking__header">
+                        <h3 className="booking__header-title">Upcoming booking</h3>
+                        {bookingBox ?
+                            <img 
+                                className="booking__header-remove-icon" 
+                                onClick={()=>setBookingBox(!bookingBox)} 
+                                src={remove} 
+                                alt="remove icon"/>
+                            :
+                            <img 
+                                className="booking__header-add-icon" 
+                                onClick={() => setBookingBox(!bookingBox)} 
+                                src={add} 
+                                alt="add icon"/>
+                        }
+                    </div>
                     <p className="booking__subtitle">
                         {dateTimeConvert(userInfo.bookings[0].date)}
                     </p>
@@ -98,7 +108,9 @@ const UserBooking = ({userInfo, updateProfileState, handleInfoUpdate, handleSele
                     return <article 
                                 key={booking.bookingID} 
                                 className="booking__container">
-                                    <h3 className="booking__title">Upcoming booking</h3>
+                                    <div className="booking__header">
+                                        <h3 className="booking__header-title">Upcoming booking</h3>
+                                    </div>
                                     <p className="booking__subtitle">{dateTimeConvert(booking.date)}</p>
                                     <p className="booking__text">{booking.restaurant}</p>
 

@@ -58,7 +58,10 @@ class RestaurantPage extends Component {
 
         return (
             <section className={this.props.selected ? "RestaurantPage RestaurantPage--popup" : "RestaurantPage"}>
-                <TopHeader location={this.props.location}/>
+                <TopHeader 
+                    location={this.props.location} 
+                    handleLocationUpdate={this.props.handleLocationUpdate}
+                    resetRestaurantList={() => this.setState({restaurants:null})}/>
 
                 {this.state.restaurants ? 
                     nearby.map(restaurant => {

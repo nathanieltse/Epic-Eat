@@ -9,8 +9,8 @@ import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import { Component } from 'react'
 import './App.scss'
 
-//will reassign
-let userToken = sessionStorage.getItem("usertoken")
+
+const userToken = sessionStorage.getItem("usertoken")
 
 class App extends Component {
   state={
@@ -75,7 +75,6 @@ class App extends Component {
   }
 
   handlelogin = () =>{
-    userToken = sessionStorage.getItem("usertoken")
 
     axios
       .get('/api/user',{
@@ -110,6 +109,15 @@ class App extends Component {
       .catch(err => {
         this.setState({loggedIn:false})
       })
+  }
+
+  handleLocationUpdate = (geoCode, locationName) => {
+    const location = locationName.split(",")[0]
+    this.setState({
+      latitude:geoCode[1],
+      longitude:geoCode[0],
+      location:location,
+    })
   }
 
   
@@ -150,6 +158,7 @@ class App extends Component {
                   longitude={longitude}
                   selected={selected}
                   handleSelect={this.handleSelect}
+                  handleLocationUpdate={this.handleLocationUpdate}
                   />
                   :
                   <Redirect to="/" />
