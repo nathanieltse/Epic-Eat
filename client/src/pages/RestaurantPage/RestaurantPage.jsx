@@ -27,7 +27,7 @@ class RestaurantPage extends Component {
         }
     }
 
-    componentDidUpdate(prevProps){{
+    componentDidUpdate(prevProps){
         if(prevProps !== this.props){
             axios
                 .get('/api/restaurants',{
@@ -43,7 +43,7 @@ class RestaurantPage extends Component {
                 })
                 .catch(err => console.log(err))
         }
-    }}
+    }
 
     noScroll = () => {
         window.scrollTo(0, 0)

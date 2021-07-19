@@ -12,7 +12,7 @@ const Preference = ({userInfo, handleInfoUpdate}) => {
 
     useEffect(()=> {
         setUserPrefer(userInfo.categories.filter(category => category.rate !== 0) )
-    },[])
+    },[userInfo])
 
     const handleCategorySubmmit = (category, action) => {
         const newCategories = userInfo.categories.map(data => {

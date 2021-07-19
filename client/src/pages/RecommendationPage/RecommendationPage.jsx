@@ -22,6 +22,36 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
         const userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
         
         useEffect(()=>{
+            const displayRec = (recArr) => {
+                if (!!recArr.length){
+                    const selectIndex = Math.floor(Math.random() * recArr.length)
+                    let nextIndex = Math.floor(Math.random() * recArr.length)
+                    if(!nextView){
+                        while (nextIndex){
+                            if (selectIndex === nextIndex){
+                                nextIndex = Math.floor(Math.random() * recArr.length)
+                            }
+                            break
+                        }
+                    setCurrentView(recArr[selectIndex])
+                    setNextView(recArr[nextIndex])
+                    } else {
+                        let nextIndex = Math.floor(Math.random() * recArr.length)
+    
+                        while (nextIndex){
+                            if (nextView.id === recArr[nextIndex].id){
+                                nextIndex = Math.floor(Math.random() * recArr.length)
+                            }
+                            break
+                        }
+                        setCurrentView(nextView)
+                        setNextView(recArr[nextIndex])
+                    }
+                } else {
+                    setCurrentView(null)
+                    setNextView(null)
+                }
+            }
             displayRec(userRec)
         },[userRec])
         
@@ -32,7 +62,7 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                     setCategoryList(res.data)
                 })
                 .catch(err => console.log(err))
-        },[categoryList])
+        },[])
 
 
         const picked = (reason) => {
@@ -67,38 +97,7 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
             sessionStorage.setItem("lastpickReason",reason)
         }
 
-        const displayRec = (recArr) => {
-            if (!!recArr.length){
-                const selectIndex = Math.floor(Math.random() * recArr.length)
-                let nextIndex = Math.floor(Math.random() * recArr.length)
-                if(!nextView){
-                    while (nextIndex){
-                        if (selectIndex === nextIndex){
-                            nextIndex = Math.floor(Math.random() * recArr.length)
-                        }
-                        break
-                    }
-                setCurrentView(recArr[selectIndex])
-                setNextView(recArr[nextIndex])
-                } else {
-                    let nextIndex = Math.floor(Math.random() * recArr.length)
-
-                    while (nextIndex){
-                        if (nextView.id === recArr[nextIndex].id){
-                            nextIndex = Math.floor(Math.random() * recArr.length)
-                        }
-                        break
-                    }
-                    setCurrentView(nextView)
-                    setNextView(recArr[nextIndex])
-                }
-            } else {
-                setCurrentView(null)
-                setNextView(null)
-            }
-            
-            
-        }
+        
 
 
         const removeDuplicate = (arr) => {
