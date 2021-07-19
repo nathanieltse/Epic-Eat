@@ -23,6 +23,7 @@ const TopHeader = ({location, handleLocationUpdate, resetRestaurantList}) => {
             })
             .catch(err => {
                 setFormInput(false)
+                setFormInvalid(false)
             })
     }
     return(

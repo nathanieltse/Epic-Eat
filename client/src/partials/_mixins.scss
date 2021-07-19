@@ -105,7 +105,8 @@
     @include tablet {
         font-size: $normal-label-btn-link-font;
         line-height: $normal-label-btn-link-line-height;
-        height: 2.375rem;
+        height: 2.5rem;
+        padding: 0 1.5rem;
         width: auto;
     }
 } 

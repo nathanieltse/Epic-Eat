@@ -17,11 +17,11 @@
         }
         z-index: 1;
         padding:1rem 0 0.5rem;
+        cursor: pointer;
         
         &__icon{
             margin-left: 0.5rem;
             width: 1.5rem;
-            cursor: pointer;
         }
 
         &-text{
@@ -41,6 +41,7 @@
         &-subtitle{
             @include medium-body-text;
             color: $secondary-color-cloud;
+            text-align: center
         }
     }
     
@@ -58,6 +59,7 @@
             position: absolute;
             right:1rem;
             top:1.25rem;
+            cursor: pointer;
         }
 
         &-title{
@@ -69,6 +71,7 @@
     }
 
     &__form{
+        @include flex-column;
         position: relative;
 
         &-icon{
@@ -96,6 +99,10 @@
             @include button;
             @include button-cta;
             margin-top: 1rem;
+
+            @include tablet{
+                margin-left:auto;
+            }
         }
     }
 }

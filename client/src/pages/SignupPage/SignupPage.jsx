@@ -185,7 +185,7 @@ class SignupPage extends Component {
                         <div className="SignupPage__form-validate">
                             <img className="SignupPage__form-validate-icon" src={userNameValid ? checkValid : check} alt="check icon"/>
                             <p className={userNameValid ? "SignupPage__form-validate-text SignupPage__form-validate-text--valid" : "SignupPage__form-validate-text"}>
-                                No one has this Username
+                                Username available
                             </p>
                         </div>
                     </label>

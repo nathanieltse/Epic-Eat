@@ -18,6 +18,10 @@
     box-shadow: $card-shadow;
     opacity: 0;
     animation: block-zoom-in 0.5s 0.4s forwards;
+    
+    @include tablet{
+        padding:1.5rem;
+    }
 
     &__subtitle{
         color:$secondary-color-cloud;

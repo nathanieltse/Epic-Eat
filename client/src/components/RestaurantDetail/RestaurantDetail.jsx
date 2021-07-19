@@ -8,7 +8,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import phone from '../../assets/icons/phone.svg'
 import cross from '../../assets/icons/close-cross.svg'
-// import check from '../../assets/icons/check-done.svg'
 import './RestaurantDetail.scss'
 
 const RestaurantDetail = ({handleModalBack, id, distance}) => {
@@ -204,7 +203,5 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
         
     )
 }
-
-{/* <img className="RestaurantDetail__book-btn-check" src={check} alt="check icon"/> */}
 
 export default RestaurantDetail

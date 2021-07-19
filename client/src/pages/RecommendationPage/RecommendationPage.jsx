@@ -226,39 +226,39 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
             <section className="RecommendationPage">
                 {!pickReason && latitude && longitude && <PickReason picked={picked}/>}
                 {currentView && pickReason && latitude && longitude?
-                 <section className="RecommendationPage__image">
-                     
-                        {nextView && 
-                            <div className="RecommendationPage__image-wrapper">
-                                <div className="RecommendationPage__image-text">
-                                    <h1 className="RecommendationPage__image-title">{nextView.name}</h1>
-                                    <p className="RecommendationPage__image-distance">{(nextView.distance/1000).toFixed(1)} km away</p>
+                    <section className="RecommendationPage__image">
+                        
+                            {nextView && 
+                                <div className="RecommendationPage__image-wrapper">
+                                    <div className="RecommendationPage__image-text">
+                                        <h1 className="RecommendationPage__image-title">{nextView.name}</h1>
+                                        <p className="RecommendationPage__image-distance">{(nextView.distance/1000).toFixed(1)} km away</p>
+                                    </div>
+                                    <img className="RecommendationPage__image-image" src={nextView.image_url} alt={nextView.name}/>
                                 </div>
-                                <img className="RecommendationPage__image-image" src={nextView.image_url} alt={nextView.name}/>
+                            }
+                            <div 
+                                onClick={() => handleSelect(currentView)}
+                                className={currentView.id === dislike? "RecommendationPage__image-wrapper RecommendationPage__image-wrapper--dislike" :
+                                            currentView.id === like? "RecommendationPage__image-wrapper RecommendationPage__image-wrapper--like" :
+                                            "RecommendationPage__image-wrapper"}>
+                                <div className="RecommendationPage__image-text">
+                                    <h1 className="RecommendationPage__image-title">{currentView.name}</h1>
+                                    <p className="RecommendationPage__image-distance">{(currentView.distance/1000).toFixed(1)} km away</p>
+                                </div>
+                                <img className="RecommendationPage__image-image" src={currentView.image_url} alt={currentView.name}/>
                             </div>
-                        }
-                        <div 
-                            onClick={() => handleSelect(currentView)}
-                            className={currentView.id === dislike? "RecommendationPage__image-wrapper RecommendationPage__image-wrapper--dislike" :
-                                        currentView.id === like? "RecommendationPage__image-wrapper RecommendationPage__image-wrapper--like" :
-                                        "RecommendationPage__image-wrapper"}>
-                            <div className="RecommendationPage__image-text">
-                                <h1 className="RecommendationPage__image-title">{currentView.name}</h1>
-                                <p className="RecommendationPage__image-distance">{(currentView.distance/1000).toFixed(1)} km away</p>
-                            </div>
-                            <img className="RecommendationPage__image-image" src={currentView.image_url} alt={currentView.name}/>
-                        </div>
-                </section>
+                    </section>
                 :
-                pickReason && 
-                <section className="RecommendationPage__image RecommendationPage__image--loading">
-                    <Lottie  options={searchAni} height={300} width={300}/>
-                    {like || dislike ? 
-                        <h1 className="RecommendationPage__image-loading-text">That's all we can find for the moment. Try picking other occasions.</h1>
-                        :
-                        <h1 className="RecommendationPage__image-loading-text">Looking for your new favourite</h1>
-                    }
-                </section>
+                    pickReason && 
+                    <section className="RecommendationPage__image RecommendationPage__image--loading">
+                        <Lottie  options={searchAni} height={300} width={300}/>
+                        {like || dislike ? 
+                            <h1 className="RecommendationPage__image-loading-text">That's all we can find for the moment. Try picking other occasions.</h1>
+                            :
+                            <h1 className="RecommendationPage__image-loading-text">Looking for your new favourite</h1>
+                        }
+                    </section>
                 }
                 {pickReason &&
                     <section className="RecommendationPage__button-container">
@@ -272,10 +272,10 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                     </section>
                 }
                 {!longitude && !latitude && 
-                <section className="RecommendationPage__loading-screen">
-                    <Lottie  options={locatingAni} height={150} width={150}/>
-                    <h1 className="RecommendationPage__loading-screen-text">Looking around places near you</h1>
-                </section>
+                    <section className="RecommendationPage__loading-screen">
+                        <Lottie  options={locatingAni} height={150} width={150}/>
+                        <h1 className="RecommendationPage__loading-screen-text">Looking around places near you</h1>
+                    </section>
                 }
                 <NavBar onPage="recommends"/>
             </section>

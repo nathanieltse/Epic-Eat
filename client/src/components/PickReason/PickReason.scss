@@ -50,9 +50,18 @@
         animation: block-zoom-in 0.4s;
         cursor: pointer;
 
+        @include tablet{
+            width: 9rem;
+            height:9rem;
+        }
+
         &-icon{
             position: absolute;
             height:1.75rem;
+
+            @include tablet{
+                height:2rem;
+            }
         }
 
         &-text{

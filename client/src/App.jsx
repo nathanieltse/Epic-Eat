@@ -10,7 +10,7 @@ import { Component } from 'react'
 import './App.scss'
 
 
-const userToken = sessionStorage.getItem("usertoken")
+let userToken = sessionStorage.getItem("usertoken")
 
 class App extends Component {
   state={
@@ -87,6 +87,7 @@ class App extends Component {
   }
 
   handlelogin = () =>{
+    userToken = sessionStorage.getItem("usertoken")
 
     axios
       .get('/api/user',{

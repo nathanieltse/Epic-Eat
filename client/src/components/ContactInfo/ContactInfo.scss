@@ -17,6 +17,10 @@
     opacity: 0;
     animation: block-zoom-in 0.3s 0.2s forwards;
 
+    @include tablet{
+        padding:1.5rem;
+    }
+
     &__container{
         @include flex-row{
             justify-content: space-between;

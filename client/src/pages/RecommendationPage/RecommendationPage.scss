@@ -16,7 +16,7 @@
         animation: block-zoom-in 0.5s forwards;
         opacity: 0;
         position: relative;
-        height:55vh;
+        height:60vh;
         margin:0 auto 2.5%;
         width: 95%;
         border-radius: $card-radius;
@@ -39,7 +39,10 @@
         }
 
         
-        &-wrapper,&-wrapper-2{
+        &-wrapper{
+            @include flex-row{
+                align-items: center;
+            }
             position: absolute;
             cursor: pointer;
             height:100%;
@@ -54,6 +57,7 @@
 
             }
         }
+
         &-wrapper--dislike{
             animation: swipe-left 0.8s forwards;
 
@@ -113,13 +117,13 @@
             align-items: center;
         }
         width: 95%;
-        height:35vh;
+        height:37vh;
         padding-bottom: 6rem;
         margin:0 auto;
 
         &-header{
             position: absolute;
-            top:-0.5rem;
+            top:0;
             color:$secondary-color-gold;
             font-weight: $weight-regular;
         }

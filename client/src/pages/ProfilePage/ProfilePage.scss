@@ -5,6 +5,7 @@
 @use '../../partials/mixins' as *;
 
 .ProfilePage{
+    @include flex-column;
     width: 95%;
     margin: 0 auto;
     padding: 1.5rem 0;
@@ -17,5 +18,9 @@
         margin-bottom: 1rem;
         opacity: 0;
         animation: block-zoom-in 0.5s 0.7s forwards;
+
+        @include tablet{
+            margin-left: auto;
+        }
     }
 }

@@ -28,6 +28,10 @@
         overflow: hidden;
         height: 10rem;
         border-radius: $card-radius;
+
+        @include tablet{
+            height:15rem;
+        }
         
         &::before{
             position: absolute;
@@ -47,6 +51,10 @@
         position: relative;
         z-index: 1;
 
+        @include tablet{
+            margin:1.5rem;
+        }
+
         &-title{
             color: $white;
         }
@@ -65,6 +73,10 @@
         margin: 0.5rem 1rem;
         z-index: 1;
         color: $white;
+
+        @include tablet{
+            margin-left:1.5rem;
+        }
     }
 
     &__subtitle{
@@ -118,6 +130,10 @@
         bottom:0;
         right:0;
         z-index: 1;
+
+        @include tablet{
+            margin-right:1.5rem;
+        }
     }
 
     &__remove-btn{

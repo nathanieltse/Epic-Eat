@@ -122,6 +122,10 @@
             justify-content: space-between;
             gap:1rem;
         }
+
+        @include tablet{
+            justify-content: flex-end;
+        }
     }
 
     &__signup-btn, &__login-btn{
@@ -136,6 +140,10 @@
         @include button-secondary;
         text-decoration: none;
         padding:0.75rem;
+
+        @include tablet{
+            padding:0.45rem 1.5rem;
+        }
     }
 
     &__login-btn{
