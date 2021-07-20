@@ -11,13 +11,13 @@ const Preference = ({userInfo, handleInfoUpdate}) => {
     const userToken = sessionStorage.getItem("usertoken")
 
     useEffect(()=> {
-        setUserPrefer(userInfo.categories.filter(category => category.rate !== 0) )
+        setUserPrefer(userInfo.categories.filter(category => category.rate >= 5) )
     },[userInfo])
 
     const handleCategorySubmmit = (category, action) => {
         const newCategories = userInfo.categories.map(data => {
             if(data === category){
-                action === "add" ? data.rate++ : data.rate = 0
+                action === "add" ? data.rate+=5 : data.rate = 0
             }
             return data
         })
@@ -42,7 +42,7 @@ const Preference = ({userInfo, handleInfoUpdate}) => {
     let filterCategory = []
     if (userInfo){
         filterCategory = userInfo.categories.filter(data => {
-        return data.rate === 0
+        return data.rate < 5
     })}
 
     return (

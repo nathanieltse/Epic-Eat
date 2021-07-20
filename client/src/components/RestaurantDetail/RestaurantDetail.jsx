@@ -12,12 +12,14 @@ import './RestaurantDetail.scss'
 
 const RestaurantDetail = ({handleModalBack, id, distance}) => {
     const [selectedDate, handleDateChange] = useState(new Date());
-    const [details, setDetails] = useState(null);
+    const [details, setDetails] = useState(null)
+    const [categoryList, setCategoryList] = useState([])
     const [bookingform, setBookingform] = useState(false)
     const [bookingSuccess, setBookingSuccess] = useState(false)
     const [showcheck, setShowcheck] = useState(false)
 
     const userToken = sessionStorage.getItem("usertoken")
+    const userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
 
     const pickertheme = createTheme({
         palette: {
@@ -40,6 +42,15 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
             .catch(err => console.log(err))
     },[id])
 
+    useEffect(() => {
+        axios 
+            .get('api/categories')
+            .then(res => {
+                setCategoryList(res.data)
+            })
+            .catch(err => console.log(err))
+    },[])
+
     const timeConvert = (time) => {
         let newTime = time[0]+time[1]+":"+time[2]+time[3]+(time >= 1200 ? "pm" : "am")
         return newTime
@@ -60,6 +71,7 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
     }
 
     const bookdate = () => {
+        scroeUpdate(details)
         axios
             .post('api/booking',{
                 id:details.id,
@@ -81,6 +93,45 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
             .catch(err => {
                 console.log(err)
             })
+    }
+
+    const scroeUpdate = (restaurant) => {
+        const restuarantCategory = restaurant.categories.map(category => category.alias)
+                
+        const newUserCategory = restuarantCategory.reduce((acc,cur) => {
+            categoryList.map(category => {
+                if (category.category === cur){
+                    acc.map(userCategory =>  {
+                        console.log(cur)
+                        if(userCategory.category === cur){
+                            return userCategory.rate+= 5
+                        } else {
+                            return cur
+                        }
+                    })
+                } else{
+                    return acc
+                }
+                return acc
+            })
+            return acc
+        },userInfo.categories)
+
+        axios
+            .put('/api/user/categories',{
+                categories:newUserCategory,
+            },{
+                headers:{
+                    authorization:`bearer ${userToken}`
+                }
+            })
+            .then(res => {
+                return res
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
     }
 
     const checkAni = {

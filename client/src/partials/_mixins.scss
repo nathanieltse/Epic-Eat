@@ -29,18 +29,6 @@
     @content;
 }
 
-@mixin wrapper-sidespace {
-    margin:$mobile-block-sidespace;
-
-    @include tablet {
-        margin:$tablet-block-sidespace;
-    }
-
-    @include desktop {
-        margin: $normal-block-sidespace;
-    }
-}
-
 //typography mixins
 @mixin medium-body-text{
     font-weight: $weight-regular;
@@ -65,27 +53,6 @@
 }
 
 //elements mixins
-
-@mixin element-body {
-    position: relative;
-    top:-4rem;
-    background-color: $white;
-    box-shadow: 0px 2px 5px rgba(19, 24, 44, 0.1);
-    border-radius: 0.1875rem;
-
-    @include tablet{
-        top:-5.5rem;
-    }
-}
-
-@mixin element-block{
-    padding:$normal-space;
-
-    @include tablet{
-        padding: $normal-space $medium-space;
-
-    }
-}
 
 @mixin button {
     font-size: $mobile-label-btn-link-font;
@@ -126,12 +93,6 @@
     background-color: $primary-color-sunflower;
     color:$white;
 }
-
-@mixin button-warning {
-    background-color: $support-color-red;
-    color:$white
-}
-
 
 @mixin formfield {
     border-radius: 0.5rem;

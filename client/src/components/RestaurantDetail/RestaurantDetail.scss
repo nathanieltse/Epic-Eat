@@ -264,9 +264,10 @@
         margin: 1.5rem 0 4.5rem;
 
         &-message{
+            @include block-zoom-in;
             opacity: 0;
             color: $support-color-green;
-            animation:successcheck 0.4s 1.3s forwards;
+            animation:block-zoom-in 0.4s 1.1s forwards;
 
         }
         
@@ -279,6 +280,7 @@
 
 
         &--success{
+            
             @include flex-row{
                 justify-content: center;
                 align-items: center;
@@ -313,6 +315,7 @@
                     border-radius: 50%;
                     width: 2.5rem;
                     height:2.5rem;
+                    opacity: 1;
                     transform: translateY(-8rem);
                 } 
             }
