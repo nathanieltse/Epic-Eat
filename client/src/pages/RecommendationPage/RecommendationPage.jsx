@@ -189,7 +189,6 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                 categoryList.map(category => {
                     if (category.category === cur){
                         acc.map(userCategory =>  {
-                            console.log(cur)
                             if(userCategory.category === cur){
                                 return userCategory.rate++
                             } else {

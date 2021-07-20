@@ -102,7 +102,6 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
             categoryList.map(category => {
                 if (category.category === cur){
                     acc.map(userCategory =>  {
-                        console.log(cur)
                         if(userCategory.category === cur){
                             return userCategory.rate+= 5
                         } else {
@@ -230,15 +229,17 @@ const RestaurantDetail = ({handleModalBack, id, distance}) => {
                         <section className="RestaurantDetail__action">
                             {bookingSuccess && <h3 className="RestaurantDetail__action-message">Your table is booked!</h3>}
                             {bookingform ? 
-                                <button className={bookingSuccess ? "RestaurantDetail__book-btn RestaurantDetail__book-btn--success" : "RestaurantDetail__book-btn"} onClick={bookdate}>
-                                {bookingSuccess? 
-                                    showcheck && 
-                                    <div className="RestaurantDetail__book-btn-check">
-                                        <Lottie options={checkAni} height={80} width={70}/>
-                                    </div>
-                                    : 
-                                    "Confirm Booking"
-                                }
+                                <button 
+                                    className={bookingSuccess ? "RestaurantDetail__book-btn RestaurantDetail__book-btn--success" : "RestaurantDetail__book-btn"} 
+                                    onClick={bookdate}>
+                                    {bookingSuccess? 
+                                        showcheck && 
+                                        <div className="RestaurantDetail__book-btn-check">
+                                            <Lottie options={checkAni} height={80} width={70}/>
+                                        </div>
+                                        : 
+                                        "Confirm Booking"
+                                    }
                                 </button>
                                 :
                                 <button className="RestaurantDetail__book-btn" onClick={showbooking}>

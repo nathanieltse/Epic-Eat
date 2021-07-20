@@ -103,6 +103,47 @@
             @include tablet{
                 margin-left:auto;
             }
+
+            &--success{
+                @include flex-row{
+                    justify-content: center;
+                    align-items: center;
+                }
+                margin:1rem auto 0;
+                animation: formsuccessbtn 4s forwards;
+
+                @keyframes formsuccessbtn {
+                    0%{
+                        transform: translateY(0);
+                    }
+                
+                    15%{
+                        width: 2.5rem;
+                        height:2.5rem;
+                        border-radius: 50%;
+                    } 
+                     
+                    30%{
+                        background-color:$support-color-green ;
+                    } 
+
+                    90%{
+                        opacity: 1;
+                    } 
+
+                    100%{
+                        background-color:$support-color-green ;
+                        width: 2.5rem;
+                        height:2.5rem;
+                        border-radius: 50%;
+                        opacity: 0;
+                    }
+                }   
+            }
+
+            &-check{
+                transform: translateY(-5%);
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
+import Lottie from 'react-lottie'
+import check from'../../assets/animation/check.json'
 import locationIcon from '../../assets/icons/location.svg'
 import search from '../../assets/icons/search.svg'
 import './TopHeader.scss'
@@ -8,7 +10,9 @@ import './TopHeader.scss'
 const TopHeader = ({location, handleLocationUpdate, resetRestaurantList}) => {
     const [expandform, setExpandform] = useState(false)
     const [formInput, setFormInput] = useState("")
-    const [formValid, setFormInvalid] = useState(true)
+    const [formValid, setFormValid] = useState(true)
+    const [btnSuccess, setBtnSuccess] = useState(false)
+    const [showcheck, setShowcheck] = useState(false)
 
     const changeLocation = (e) => {
         e.preventDefault()
@@ -17,15 +21,32 @@ const TopHeader = ({location, handleLocationUpdate, resetRestaurantList}) => {
                 userSearch:formInput
             })
             .then(res => {
-                handleLocationUpdate(res.data.center, res.data.place_name)
-                setFormInput(true)
                 resetRestaurantList()
+                setFormValid(true)
+                setBtnSuccess(true)
+                setTimeout(() => {
+                    handleLocationUpdate(res.data.center, res.data.place_name) 
+                    setShowcheck(true)
+                }, 800);
+                setTimeout(() => {
+                    setBtnSuccess(false)
+                    setShowcheck(false)
+                }, 4000);
             })
             .catch(err => {
-                setFormInput(false)
-                setFormInvalid(false)
+                setFormValid(false)
             })
     }
+
+    const checkAni = {
+        loop: false,
+        autoplay: true,
+        animationData: check,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        }
+    }
+
     return(
         <section className="TopHeader">
                 <div className="TopHeader__header" onClick={()=>setExpandform(true)}>
@@ -55,7 +76,19 @@ const TopHeader = ({location, handleLocationUpdate, resetRestaurantList}) => {
                                 value={formInput}
                                 onChange={(e)=>setFormInput(e.target.value)}/>
                             {!formValid && <p className="TopHeader__form-message">Unable to find the address, try search for nearby intersaction</p>}
-                            <button className="TopHeader__form-submit">Change location</button>
+                            {btnSuccess ? 
+                                <button className="TopHeader__form-submit TopHeader__form-submit--success">
+                                        {showcheck &&
+                                            <div className="TopHeader__form-submit-check">
+                                                <Lottie options={checkAni} height={80} width={70}/>
+                                            </div>
+                                        }
+                                </button>
+                                :
+                                <button className="TopHeader__form-submit">
+                                    Change location
+                                </button>
+                            }
                         </form>
                     </div>
                 }

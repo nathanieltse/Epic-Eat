@@ -31,7 +31,7 @@ const Preference = ({userInfo, handleInfoUpdate}) => {
                 }
             })
             .then(res => {
-                setUserPrefer(newCategories.filter(category => category.rate !== 0))
+                setUserPrefer(newCategories.filter(category => category.rate >= 5))
                 handleInfoUpdate()
             })
             .catch(err => {
