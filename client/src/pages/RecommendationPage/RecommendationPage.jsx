@@ -230,7 +230,11 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                                 <div className="RecommendationPage__image-wrapper">
                                     <div className="RecommendationPage__image-text">
                                         <h1 className="RecommendationPage__image-title">{nextView.name}</h1>
-                                        <p className="RecommendationPage__image-distance">{(nextView.distance/1000).toFixed(1)} km away</p>
+                                        <div className="RecommendationPage__image-category-container">
+                                        {nextView.categories.map(category => {
+                                            return <p className="RecommendationPage__image-category">{category.title}</p>
+                                        })}
+                                    </div>
                                     </div>
                                     <img className="RecommendationPage__image-image" src={nextView.image_url} alt={nextView.name}/>
                                 </div>
@@ -242,7 +246,11 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                                             "RecommendationPage__image-wrapper"}>
                                 <div className="RecommendationPage__image-text">
                                     <h1 className="RecommendationPage__image-title">{currentView.name}</h1>
-                                    <p className="RecommendationPage__image-distance">{(currentView.distance/1000).toFixed(1)} km away</p>
+                                    <div className="RecommendationPage__image-category-container">
+                                        {currentView.categories.map((category, i) => {
+                                            return <p key={i} className="RecommendationPage__image-category">{category.title}</p>
+                                        })}
+                                    </div>
                                 </div>
                                 <img className="RecommendationPage__image-image" src={currentView.image_url} alt={currentView.name}/>
                             </div>

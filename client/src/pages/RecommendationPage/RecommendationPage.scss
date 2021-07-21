@@ -16,7 +16,7 @@
         animation: block-zoom-in 0.5s forwards;
         opacity: 0;
         position: relative;
-        height:60vh;
+        height:55vh;
         margin:0 auto 2.5%;
         width: 95%;
         border-radius: $card-radius;
@@ -41,6 +41,7 @@
         
         &-wrapper{
             @include flex-row{
+                justify-content: center;
                 align-items: center;
             }
             position: absolute;
@@ -97,9 +98,15 @@
             color: $white;
     
         }
+
+        &-category-container{
+            @include flex-row;
+        }
     
-        &-distance{
+        &-category{
+            @include medium-body-text;
             color: $white;
+            margin-right: 0.5rem;
         }
 
 
@@ -117,7 +124,7 @@
             align-items: center;
         }
         width: 95%;
-        height:37vh;
+        height:42vh;
         padding-bottom: 6rem;
         margin:0 auto;
 
