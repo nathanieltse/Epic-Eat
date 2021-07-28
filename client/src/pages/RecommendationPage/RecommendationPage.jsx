@@ -36,8 +36,6 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                     setCurrentView(recArr[selectIndex])
                     setNextView(recArr[nextIndex])
                     } else {
-                        let nextIndex = Math.floor(Math.random() * recArr.length)
-    
                         while (nextIndex){
                             if (nextView.id === recArr[nextIndex].id){
                                 nextIndex = Math.floor(Math.random() * recArr.length)
