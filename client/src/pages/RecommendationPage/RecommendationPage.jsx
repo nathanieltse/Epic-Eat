@@ -231,8 +231,8 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                                     <div className="RecommendationPage__image-text">
                                         <h1 className="RecommendationPage__image-title">{nextView.name}</h1>
                                         <div className="RecommendationPage__image-category-container">
-                                        {nextView.categories.map(category => {
-                                            return <p className="RecommendationPage__image-category">{category.title}</p>
+                                        {nextView.categories.map((category,i) => {
+                                            return <p key={i} className="RecommendationPage__image-category">{category.title}</p>
                                         })}
                                     </div>
                                     </div>
@@ -266,7 +266,7 @@ const RecommendationPage = ({latitude, longitude, handleSelect, handleInfoUpdate
                         }
                     </section>
                 }
-                {pickReason &&
+                {pickReason && currentView &&
                     <section className="RecommendationPage__button-container">
                         <h3 className="RecommendationPage__button-container-header">Tab to book or view details</h3>
                         <button className="RecommendationPage__button" onClick={()=>userAction(currentView, "dislike")}>
